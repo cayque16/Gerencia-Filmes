@@ -79,7 +79,6 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
     private ContentValues pegaDadosDoFilme(Filme filme) {
         ContentValues dados = new ContentValues();
-        dados.put("id", filme.getId());
         dados.put("imdbID", filme.getImdbID());
         dados.put("titulo", filme.getTitulo());
         dados.put("ano", filme.getAno());
@@ -94,6 +93,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(sql, null);
 
         List<Filme> filmes = populaFilmes(c);
+        c.close();
 
         return filmes;
     }
@@ -104,6 +104,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(sql, null);
 
         List<FilmesAssistidos> filmesAssistidos = populaFilmesAssistidos(c);
+        c.close();
 
         return filmesAssistidos;
     }

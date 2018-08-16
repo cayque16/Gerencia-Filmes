@@ -43,7 +43,7 @@ public class AddFilmeActivity extends AppCompatActivity {
                 dao.insereFilme(filme);
                 dao.close();
 
-                Toast.makeText(this, "Filme salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Filme " + filme.getTitulo() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }

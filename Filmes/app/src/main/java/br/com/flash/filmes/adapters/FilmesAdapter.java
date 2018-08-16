@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.R.*;
@@ -20,10 +21,10 @@ import br.com.flash.filmes.models.FilmesAssistidos;
  */
 
 public class FilmesAdapter extends BaseAdapter {
-    private ArrayList<FilmesAssistidos> list;
+    private List<FilmesAssistidos> list;
     private Context context;
 
-    public FilmesAdapter(ArrayList<FilmesAssistidos> list, Context context) {
+    public FilmesAdapter(List<FilmesAssistidos> list, Context context) {
         this.list = list;
         this.context = context;
     }

@@ -97,7 +97,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
     }
 
     public List<FilmesAssistidos> buscaFilmesAssistidos() {
-        String sql = "SELECT * FROM Filmes_Assisitidos";
+        String sql = "SELECT * FROM Filmes_Assistidos";
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(sql, null);
 

@@ -19,15 +19,6 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos> {
 
     }
 
-    public FilmesAssistidos(String imdbID, int inedito, int posAno, int dataDia, int dataMes, int dataAno) {
-        this.imdbID = imdbID;
-        this.inedito = inedito;
-        this.posAno = posAno;
-        this.dataDia = dataDia;
-        this.dataMes = dataMes;
-        this.dataAno = dataAno;
-    }
-
     public String getImdbID() {
         return imdbID;
     }
@@ -139,5 +130,13 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos> {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void tornaInedito(){
+        inedito = 1;
+    }
+
+    public void tiraInedito(){
+        inedito = 0;
     }
 }

@@ -71,6 +71,9 @@ public class FilmesAdapter extends BaseAdapter {
         TextView tv3 = v.findViewById(R.id.list_adapter_posicao_ano);
         tv3.setText(filme.getPosAnoFormatado());
 
+        TextView tv4 = v.findViewById(id.list_adapter_data);
+        tv4.setText(filme.getDataFormatada());
+
         return v;
     }
 }

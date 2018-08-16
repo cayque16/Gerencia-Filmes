@@ -1,5 +1,6 @@
 package br.com.flash.filmes;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,14 +28,18 @@ public class MainActivity extends AppCompatActivity {
         lista = findViewById(R.id.main_lista);
 
         filmes = new ArrayList();
-        filmes.add(new FilmesAssistidos("tt5362988", 1, 1, 8,1,2018));
-        filmes.add(new FilmesAssistidos("tt1843866", 0, 10, 5,1,2018));
-        filmes.add(new FilmesAssistidos("tt4881806", 1, 11, 15,8,2018));
-        filmes.add(new FilmesAssistidos("tt4881806", 1, 100, 15,8,2018));
-        filmes.add(new FilmesAssistidos("tt4881806", 1, 101, 15,8,2018));
-        filmes.add(new FilmesAssistidos("tt4881806", 0, 50, 15,8,2018));
-        filmes.add(new FilmesAssistidos("tt4881806", 0, 55, 15,8,2018));
-        filmes.add(new FilmesAssistidos("tt4881806", 0, 999, 15,8,2018));
+        filmes.add(new FilmesAssistidos("tt5362988", 1, 1, 8, 1, 2018));
+        filmes.add(new FilmesAssistidos("tt1843866", 0, 10, 5, 2, 2018));
+        filmes.add(new FilmesAssistidos("tt4881806", 1, 11, 15, 3, 2018));
+        filmes.add(new FilmesAssistidos("tt4881806", 1, 100, 15, 4, 2018));
+        filmes.add(new FilmesAssistidos("tt4881806", 1, 101, 15, 5, 2018));
+        filmes.add(new FilmesAssistidos("tt4881806", 0, 50, 15, 6, 2018));
+        filmes.add(new FilmesAssistidos("tt4881806", 0, 55, 15, 7, 2018));
+        filmes.add(new FilmesAssistidos("tt4881806", 0, 999, 15, 8, 2018));
+        filmes.add(new FilmesAssistidos("tt4881806", 1, 101, 15, 9, 2018));
+        filmes.add(new FilmesAssistidos("tt4881806", 0, 50, 15, 10, 2018));
+        filmes.add(new FilmesAssistidos("tt4881806", 0, 55, 15, 11, 2018));
+        filmes.add(new FilmesAssistidos("tt4881806", 0, 999, 15, 12, 2018));
 
         Collections.sort(filmes);
 
@@ -54,7 +59,14 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_main_add:
-                Toast.makeText(this, "Adicionar!", Toast.LENGTH_SHORT).show();
+                Intent vaiParaAddFilme = new Intent(this, AddFilmeActivity.class);
+                startActivity(vaiParaAddFilme);
+                break;
+            case R.id.menu_main_ano:
+                break;
+            case R.id.menu_main_filmes:
+                Intent vaiParaListaFilmes = new Intent(this, ListaFilmesActivity.class);
+                startActivity(vaiParaListaFilmes);
                 break;
         }
 

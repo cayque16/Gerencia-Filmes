@@ -59,4 +59,9 @@ public class Filme {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return imdbID + ": " + titulo;
+    }
 }

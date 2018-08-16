@@ -7,12 +7,17 @@ import android.support.annotation.NonNull;
  */
 
 public class FilmesAssistidos implements Comparable<FilmesAssistidos> {
+    private int id;
     private String imdbID;
     private int inedito; //1 para sim e 0 para nao
     private int posAno; //posicao do filme no ano
     private int dataDia;
     private int dataMes;
     private int dataAno;
+
+    public FilmesAssistidos(){
+
+    }
 
     public FilmesAssistidos(String imdbID, int inedito, int posAno, int dataDia, int dataMes, int dataAno) {
         this.imdbID = imdbID;
@@ -85,8 +90,8 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos> {
 
     public String getDataFormatada() {
 
-        return "assistido em " + dataDia + " " + numToMes(dataMes)
-                + " " + dataAno;
+        return "assistido em " + dataDia + " de " + numToMes(dataMes)
+                + " de " + dataAno;
     }
 
     public String numToMes(int num) {
@@ -126,5 +131,13 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos> {
         if (this.posAno < filmesAssistidos.getPosAno())
             return 1;
         return 0;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -1,4 +1,4 @@
-package br.com.flash.filmes;
+package br.com.flash.filmes.add;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import br.com.flash.filmes.R;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.helper.FormularioFilmeHelper;
 import br.com.flash.filmes.models.Filme;

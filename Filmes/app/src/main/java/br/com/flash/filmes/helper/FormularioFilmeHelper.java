@@ -3,7 +3,7 @@ package br.com.flash.filmes.helper;
 import android.widget.EditText;
 
 
-import br.com.flash.filmes.AddFilmeActivity;
+import br.com.flash.filmes.add.AddFilmeActivity;
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.models.Filme;
 

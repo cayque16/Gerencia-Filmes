@@ -65,8 +65,6 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
     private ContentValues pegaDadosDoFilmeAssistido(FilmesAssistidos filmesAssistidos) {
         ContentValues dados = new ContentValues();
-
-        dados.put("id", filmesAssistidos.getId());
         dados.put("imdbID", filmesAssistidos.getImdbID());
         dados.put("inedito", filmesAssistidos.getInedito());
         dados.put("posAno", filmesAssistidos.getPosAno());

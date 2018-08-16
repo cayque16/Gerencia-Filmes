@@ -7,12 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import br.com.flash.filmes.MainActivity;
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.R.*;
 import br.com.flash.filmes.models.FilmesAssistidos;
@@ -52,7 +50,7 @@ public class FilmesAdapter extends BaseAdapter {
         FilmesAssistidos filme = list.get(i);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.list_adapter_filme, null);
+        View v = inflater.inflate(R.layout.list_adapter_filmes_assistidos, null);
 
         TextView tv1 = v.findViewById(R.id.list_adapter_titulo);
         tv1.setText(filme.getImdbID());

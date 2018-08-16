@@ -5,45 +5,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="br.com.flash.filmes.add.AddFilmeActivity">
+    tools:context="br.com.flash.filmes.add.AddFilmeAssistidoActivity">
 
     <EditText
-        android:id="@+id/add_filme_titulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Título..."
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/add_filme_imdbID"
+        android:id="@+id/add_filme_assistido_imdbID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="IMDB ID..."
         android:inputType="text" />
 
+    <Switch
+        android:id="@+id/add_filme_assistido_inedito"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inédito"
+        android:layout_margin="8dp"/>
+
     <EditText
-        android:id="@+id/add_filme_ano"
+        android:id="@+id/add_filme_assistido_posAno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Posição no ano"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_filme_assistido_dataDia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Dia..."
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_filme_assistido_dataMes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Mês..."
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_filme_assistido_dataAno"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Ano..."
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/add_filme_duracao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Duracao..."
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/add_filme_nota"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Nota do IMDB..."
-        android:inputType="numberDecimal" />
+        android:inputType="text" />
 </LinearLayout>

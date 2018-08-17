@@ -1,11 +1,13 @@
 package br.com.flash.filmes.models;
 
+import java.io.Serializable;
+
 /**
  * Created by cayqu on 14/08/2018.
  */
 
-public class Filme {
-    private int id;
+public class Filme implements Serializable{
+    private Long id;
     private String imdbID;
     private String titulo;
     private int ano;
@@ -53,13 +55,7 @@ public class Filme {
         this.nota = nota;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {
@@ -72,5 +68,13 @@ public class Filme {
 
     public void setPoster(String poster) {
         this.poster = poster;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

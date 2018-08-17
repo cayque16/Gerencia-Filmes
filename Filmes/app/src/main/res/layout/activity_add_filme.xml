@@ -46,4 +46,13 @@
         android:layout_margin="8dp"
         android:hint="Nota do IMDB..."
         android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/add_filme_poster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Http..."
+        android:inputType="text" />
+
 </LinearLayout>

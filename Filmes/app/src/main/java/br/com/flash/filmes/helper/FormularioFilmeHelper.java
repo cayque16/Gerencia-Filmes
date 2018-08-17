@@ -15,7 +15,7 @@ public class FormularioFilmeHelper {
 
     private EditText campoTitulo, campoImdbID;
     private EditText campoAno, campoDuracao;
-    private EditText campoNota;
+    private EditText campoNota, campoPoster;
 
     private Filme filme;
 
@@ -25,6 +25,7 @@ public class FormularioFilmeHelper {
         campoAno = activity.findViewById(R.id.add_filme_ano);
         campoDuracao = activity.findViewById(R.id.add_filme_duracao);
         campoNota = activity.findViewById(R.id.add_filme_nota);
+        campoPoster = activity.findViewById(R.id.add_filme_poster);
         filme = new Filme();
     }
 
@@ -34,7 +35,17 @@ public class FormularioFilmeHelper {
         filme.setDuracao(Integer.parseInt(campoDuracao.getText().toString()));
         filme.setAno(Integer.valueOf(campoAno.getText().toString()));
         filme.setNota(Double.valueOf(campoNota.getText().toString()));
-
+        filme.setPoster(campoPoster.getText().toString());
         return filme;
+    }
+
+    public void preencheFormulario(Filme filme) {
+        campoTitulo.setText(filme.getTitulo());
+        campoImdbID.setText(filme.getImdbID());
+        campoAno.setText(Integer.toString(filme.getAno()));
+        campoDuracao.setText(Integer.toString(filme.getDuracao()));
+        campoNota.setText(Double.toString(filme.getNota()));
+        campoPoster.setText(filme.getPoster());
+        this.filme = filme;
     }
 }

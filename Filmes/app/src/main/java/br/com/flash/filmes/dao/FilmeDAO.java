@@ -134,7 +134,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
         while (c.moveToNext()) {
             Filme filme = new Filme();
-            filme.setId(c.getInt(c.getColumnIndex("id")));
+            filme.setId(c.getLong(c.getColumnIndex("id")));
             filme.setImdbID(c.getString(c.getColumnIndex("imdbID")));
             filme.setTitulo(c.getString(c.getColumnIndex("titulo")));
             filme.setAno(c.getInt(c.getColumnIndex("ano")));
@@ -150,7 +150,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
     public void deletaFilme(Filme filme) {
         SQLiteDatabase db = getWritableDatabase();
 
-        String[] params = {Integer.toString(filme.getId())};
+        String[] params = {Long.toString(filme.getId())};
 
         db.delete("Filmes", "id = ?", params);
     }
@@ -168,7 +168,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
         ContentValues dados = pegaDadosDoFilme(filme);
 
-        String[] params = {Integer.toString(filme.getId())};
+        String[] params = {Long.toString(filme.getId())};
         db.update("Filmes", dados, "id = ?", params);
     }
 

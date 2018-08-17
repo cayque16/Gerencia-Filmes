@@ -1,5 +1,6 @@
 package br.com.flash.filmes.add;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,7 +22,14 @@ public class AddFilmeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_filme);
 
+        Intent intent = getIntent();
+        Filme filme = (Filme) intent.getSerializableExtra("filme");
+
         helper = new FormularioFilmeHelper(this);
+
+        if (filme != null) {
+            helper.preencheFormulario(filme);
+        }
     }
 
     @Override
@@ -35,13 +43,17 @@ public class AddFilmeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_add_filme_ok:
                 Filme filme = helper.pegaFilme();
 
                 FilmeDAO dao = new FilmeDAO(this);
 
-                dao.insereFilme(filme);
+                if (filme.getId() != null) {
+                    dao.alteraFilme(filme);
+                } else {
+                    dao.insereFilme(filme);
+                }
                 dao.close();
 
                 Toast.makeText(this, "Filme " + filme.getTitulo() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();

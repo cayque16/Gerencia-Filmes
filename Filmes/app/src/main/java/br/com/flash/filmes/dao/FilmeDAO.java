@@ -176,7 +176,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
         db.update("Filmes_Assisitdos", dados, "id = ?", params);
     }
 
-    private boolean existeFilme(String imdbID) {
+    public boolean existeFilme(String imdbID) {
         SQLiteDatabase db = getReadableDatabase();
         String existe = "SELECT imdbID FROM Filmes WHERE imdbID = ? LIMIT 1";
         Cursor cursor = db.rawQuery(existe, new String[]{imdbID});
@@ -185,7 +185,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
         return resultados > 0;
     }
 
-    private boolean filmeInedito(String imdbID) {
+    public boolean filmeInedito(String imdbID) {
         SQLiteDatabase db = getReadableDatabase();
         String existe = "SELECT imdbID FROM Filmes_Assistidos WHERE imdbID = ? LIMIT 1";
         Cursor cursor = db.rawQuery(existe, new String[]{imdbID});
@@ -194,7 +194,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
         return resultados == 0;
     }
 
-    private Filme retornaUmFilme(String imdbID) {
+    public Filme retornaUmFilme(String imdbID) {
         String sql = "SELECT * FROM Filmes WHERE imdbID = ?";
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(sql, new String[]{imdbID});

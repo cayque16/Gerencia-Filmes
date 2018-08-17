@@ -11,6 +11,7 @@ public class Filme {
     private int ano;
     private int duracao; //em minutos
     private double nota; //nota do IMDB
+    private String poster;
 
     public String getImdbID() {
         return imdbID;
@@ -63,5 +64,13 @@ public class Filme {
     @Override
     public String toString() {
         return imdbID + ": " + titulo;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
     }
 }

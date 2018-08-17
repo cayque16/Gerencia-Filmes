@@ -19,7 +19,7 @@ import br.com.flash.filmes.models.FilmesAssistidos;
 public class FilmeDAO extends SQLiteOpenHelper {
 
     public FilmeDAO(Context context) {
-        super(context, "Filmes", null, 1);
+        super(context, "Filmes", null, 2);
     }
 
     @Override
@@ -29,7 +29,8 @@ public class FilmeDAO extends SQLiteOpenHelper {
                 "titulo TEXT NOT NULL, " +
                 "ano INTEGER, " +
                 "duracao INTEGER, " +
-                "nota REAL);";
+                "nota REAL, " +
+                "poster TEXT);";
         sqLiteDatabase.execSQL(sql);
 
         sql = "CREATE TABLE Filmes_Assistidos (id INTEGER PRIMARY KEY, " +
@@ -45,10 +46,12 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        String sql = "DROP TABLE IF EXISTS Filmes";
-        sqLiteDatabase.execSQL(sql);
-        sql = "DROP TABLE IF EXISTS Filmes_Assistidos";
-        sqLiteDatabase.execSQL(sql);
+        String sql = "";
+        switch (i) {
+            case 1: //indo para versão 2
+                sql = "ALTER TABLE Filmes ADD COLUMN poster TEXT";
+                sqLiteDatabase.execSQL(sql);
+        }
     }
 
     public void insereFilme(Filme filme) {
@@ -82,6 +85,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
         dados.put("ano", filme.getAno());
         dados.put("duracao", filme.getDuracao());
         dados.put("nota", filme.getNota());
+        dados.put("poster", filme.getPoster());
         return dados;
     }
 
@@ -136,6 +140,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
             filme.setAno(c.getInt(c.getColumnIndex("ano")));
             filme.setDuracao(c.getInt(c.getColumnIndex("duracao")));
             filme.setNota(c.getDouble(c.getColumnIndex("nota")));
+            filme.setPoster(c.getString(c.getColumnIndex("poster")));
 
             filmes.add(filme);
         }

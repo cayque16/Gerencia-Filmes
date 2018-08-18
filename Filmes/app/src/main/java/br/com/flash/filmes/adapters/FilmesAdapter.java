@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -117,7 +118,8 @@ public class FilmesAdapter extends BaseAdapter {
                 final Bitmap imgAux = img;
                 handler.post(new Runnable() {
                     public void run() {
-                        poster.setImageBitmap(imgAux);
+                        if (imgAux != null)
+                            poster.setImageBitmap(imgAux);
                     }
                 });
             }

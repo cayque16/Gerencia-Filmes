@@ -8,6 +8,7 @@
 
 
     <LinearLayout
+        android:id="@+id/teste"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -29,7 +30,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/list_adapter_foto"
+            android:id="@+id/list_adapter_poster"
             android:layout_width="48dp"
             android:layout_height="64dp"
             android:layout_margin="8dp"

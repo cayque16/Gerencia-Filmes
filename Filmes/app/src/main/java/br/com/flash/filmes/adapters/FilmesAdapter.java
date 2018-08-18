@@ -2,18 +2,26 @@ package br.com.flash.filmes.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import br.com.flash.filmes.R;
-import br.com.flash.filmes.R.*;
+import br.com.flash.filmes.R.color;
+import br.com.flash.filmes.R.id;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
@@ -25,6 +33,7 @@ import br.com.flash.filmes.models.FilmesAssistidos;
 public class FilmesAdapter extends BaseAdapter {
     private List<FilmesAssistidos> list;
     private Context context;
+    private Handler handler = new Handler();
 
     public FilmesAdapter(List<FilmesAssistidos> list, Context context) {
         this.list = list;
@@ -85,6 +94,33 @@ public class FilmesAdapter extends BaseAdapter {
         TextView tv7 = v.findViewById(id.list_adapter_nota);
         tv7.setText("IMDB: " + filme.getNota());
 
+        ImageView poster = v.findViewById(id.list_adapter_poster);
+
+        carregaPoster(poster, filme);
+
         return v;
+    }
+
+    private void carregaPoster(final ImageView poster, final Filme filme) {
+        new Thread() {
+            public void run() {
+                Bitmap img = null;
+
+                try {
+                    URL url = new URL(filme.getPoster());
+                    HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
+                    InputStream input = conexao.getInputStream();
+                    img = BitmapFactory.decodeStream(input);
+                } catch (IOException e) {
+
+                }
+                final Bitmap imgAux = img;
+                handler.post(new Runnable() {
+                    public void run() {
+                        poster.setImageBitmap(imgAux);
+                    }
+                });
+            }
+        }.start();
     }
 }

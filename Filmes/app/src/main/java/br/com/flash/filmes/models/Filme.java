@@ -9,10 +9,10 @@ import java.io.Serializable;
 public class Filme implements Serializable{
     private Long id;
     private String imdbID;
-    private String titulo;
-    private int ano;
-    private int duracao; //em minutos
-    private double nota; //nota do IMDB
+    private String title;
+    private int year;
+    private int runtime; //em minutos
+    private double imdbRating; //imdbRating do IMDB
     private String poster;
 
     public String getImdbID() {
@@ -23,43 +23,43 @@ public class Filme implements Serializable{
         this.imdbID = imdbID;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public int getAno() {
-        return ano;
+    public int getYear() {
+        return year;
     }
 
-    public void setAno(int ano) {
-        this.ano = ano;
+    public void setYear(int year) {
+        this.year = year;
     }
 
-    public int getDuracao() {
-        return duracao;
+    public int getRuntime() {
+        return runtime;
     }
 
-    public void setDuracao(int duracao) {
-        this.duracao = duracao;
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
     }
 
-    public double getNota() {
-        return nota;
+    public double getImdbRating() {
+        return imdbRating;
     }
 
-    public void setNota(double nota) {
-        this.nota = nota;
+    public void setImdbRating(double imdbRating) {
+        this.imdbRating = imdbRating;
     }
 
 
 
     @Override
     public String toString() {
-        return imdbID + ": " + titulo;
+        return imdbID + ": " + title;
     }
 
     public String getPoster() {

@@ -81,10 +81,10 @@ public class FilmeDAO extends SQLiteOpenHelper {
     private ContentValues pegaDadosDoFilme(Filme filme) {
         ContentValues dados = new ContentValues();
         dados.put("imdbID", filme.getImdbID());
-        dados.put("titulo", filme.getTitulo());
-        dados.put("ano", filme.getAno());
-        dados.put("duracao", filme.getDuracao());
-        dados.put("nota", filme.getNota());
+        dados.put("titulo", filme.getTitle());
+        dados.put("ano", filme.getYear());
+        dados.put("duracao", filme.getRuntime());
+        dados.put("nota", filme.getImdbRating());
         dados.put("poster", filme.getPoster());
         return dados;
     }
@@ -136,10 +136,10 @@ public class FilmeDAO extends SQLiteOpenHelper {
             Filme filme = new Filme();
             filme.setId(c.getLong(c.getColumnIndex("id")));
             filme.setImdbID(c.getString(c.getColumnIndex("imdbID")));
-            filme.setTitulo(c.getString(c.getColumnIndex("titulo")));
-            filme.setAno(c.getInt(c.getColumnIndex("ano")));
-            filme.setDuracao(c.getInt(c.getColumnIndex("duracao")));
-            filme.setNota(c.getDouble(c.getColumnIndex("nota")));
+            filme.setTitle(c.getString(c.getColumnIndex("titulo")));
+            filme.setYear(c.getInt(c.getColumnIndex("ano")));
+            filme.setRuntime(c.getInt(c.getColumnIndex("duracao")));
+            filme.setImdbRating(c.getDouble(c.getColumnIndex("nota")));
             filme.setPoster(c.getString(c.getColumnIndex("poster")));
 
             filmes.add(filme);

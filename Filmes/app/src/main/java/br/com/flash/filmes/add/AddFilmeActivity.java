@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.flash.filmes.R;
@@ -16,11 +18,15 @@ import br.com.flash.filmes.models.Filme;
 public class AddFilmeActivity extends AppCompatActivity {
 
     private FormularioFilmeHelper helper;
+    private TextView imdb;
+    private String chave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_filme);
+
+        imdb = findViewById(R.id.add_filme_imdbID);
 
         Intent intent = getIntent();
         Filme filme = (Filme) intent.getSerializableExtra("filme");
@@ -56,11 +62,16 @@ public class AddFilmeActivity extends AppCompatActivity {
                 }
                 dao.close();
 
-                Toast.makeText(this, "Filme " + filme.getTitulo() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Filme " + filme.getTitle() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void buscaIMDB(View view) {
+        chave = imdb.getText().toString();
+
     }
 }

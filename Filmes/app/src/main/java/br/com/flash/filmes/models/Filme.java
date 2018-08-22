@@ -1,22 +1,18 @@
 package br.com.flash.filmes.models;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
 
 /**
  * Created by cayqu on 14/08/2018.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Filme implements Serializable{
+public class Filme implements Serializable {
     private Long id;
     private String imdbID;
-    private String Title;
-    private int Year;
-    private int Runtime; //em minutos
-    private double imdbRating; //imdbRating do IMDB
-    private String Poster;
+    private String titulo;
+    private int ano;
+    private int duracao; //em minutos
+    private double nota; //nota do IMDB
+    private String poster;
 
     public String getImdbID() {
         return imdbID;
@@ -26,51 +22,50 @@ public class Filme implements Serializable{
         this.imdbID = imdbID;
     }
 
-    public String getTitle() {
-        return Title;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setTitle(String title) {
-        this.Title = title;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public int getYear() {
-        return Year;
+    public int getAno() {
+        return ano;
     }
 
-    public void setYear(int year) {
-        this.Year = year;
+    public void setAno(int ano) {
+        this.ano = ano;
     }
 
-    public int getRuntime() {
-        return Runtime;
+    public int getDuracao() {
+        return duracao;
     }
 
-    public void setRuntime(int runtime) {
-        this.Runtime = runtime;
+    public void setDuracao(int duracao) {
+        this.duracao = duracao;
     }
 
-    public double getImdbRating() {
-        return imdbRating;
+    public double getNota() {
+        return nota;
     }
 
-    public void setImdbRating(double imdbRating) {
-        this.imdbRating = imdbRating;
+    public void setNota(double nota) {
+        this.nota = nota;
     }
-
 
 
     @Override
     public String toString() {
-        return imdbID + ": " + Title;
+        return imdbID + ": " + titulo;
     }
 
     public String getPoster() {
-        return Poster;
+        return poster;
     }
 
     public void setPoster(String poster) {
-        this.Poster = poster;
+        this.poster = poster;
     }
 
     public Long getId() {

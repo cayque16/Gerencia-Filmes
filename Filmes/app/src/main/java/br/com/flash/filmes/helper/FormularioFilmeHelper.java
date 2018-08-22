@@ -30,21 +30,21 @@ public class FormularioFilmeHelper {
     }
 
     public Filme pegaFilme() {
-        filme.setTitle(campoTitulo.getText().toString());
+        filme.setTitulo(campoTitulo.getText().toString());
         filme.setImdbID(campoImdbID.getText().toString());
-        filme.setRuntime(Integer.parseInt(campoDuracao.getText().toString()));
-        filme.setYear(Integer.valueOf(campoAno.getText().toString()));
-        filme.setImdbRating(Double.valueOf(campoNota.getText().toString()));
+        filme.setDuracao(Integer.parseInt(campoDuracao.getText().toString()));
+        filme.setAno(Integer.valueOf(campoAno.getText().toString()));
+        filme.setNota(Double.valueOf(campoNota.getText().toString()));
         filme.setPoster(campoPoster.getText().toString());
         return filme;
     }
 
     public void preencheFormulario(Filme filme) {
-        campoTitulo.setText(filme.getTitle());
+        campoTitulo.setText(filme.getTitulo());
         campoImdbID.setText(filme.getImdbID());
-        campoAno.setText(Integer.toString(filme.getYear()));
-        campoDuracao.setText(Integer.toString(filme.getRuntime()));
-        campoNota.setText(Double.toString(filme.getImdbRating()));
+        campoAno.setText(Integer.toString(filme.getAno()));
+        campoDuracao.setText(Integer.toString(filme.getDuracao()));
+        campoNota.setText(Double.toString(filme.getNota()));
         campoPoster.setText(filme.getPoster());
         this.filme = filme;
     }

@@ -1,8 +1,8 @@
 package br.com.flash.filmes.add;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.RetrofitInicializador;
 import br.com.flash.filmes.dao.FilmeDAO;
+import br.com.flash.filmes.dto.Movie;
 import br.com.flash.filmes.helper.FormularioFilmeHelper;
 import br.com.flash.filmes.models.Filme;
 import retrofit2.Call;
@@ -67,7 +68,7 @@ public class AddFilmeActivity extends AppCompatActivity {
                 }
                 dao.close();
 
-                Toast.makeText(this, "Filme " + filme.getTitle() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Filme " + filme.getTitulo() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }
@@ -77,20 +78,17 @@ public class AddFilmeActivity extends AppCompatActivity {
 
     public void buscaIMDB(View view) {
         chave = imdb.getText().toString();
-        Call<Filme> call = new RetrofitInicializador().getFilmeService().buscaFilme(chave);
-        call.enqueue(new Callback<Filme>() {
+        Call<Movie> call = new RetrofitInicializador().getFilmeService().buscaFilme(chave);
+
+        call.enqueue(new Callback<Movie>() {
             @Override
-            public void onResponse(Call<Filme> call, Response<Filme> response) {
-                Log.i("ok", "deu certo");
-                if (response.body() == null)
-                    Toast.makeText(AddFilmeActivity.this, "Nulo", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(AddFilmeActivity.this,response.body().toString(), Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+
             }
 
             @Override
-            public void onFailure(Call<Filme> call, Throwable t) {
-                Log.e("Falha",t.getMessage());
+            public void onFailure(Call<Movie> call, Throwable t) {
+                Toast.makeText(AddFilmeActivity.this, "Não foi possível carregar os dados!!!", Toast.LENGTH_SHORT).show();
             }
         });
     }

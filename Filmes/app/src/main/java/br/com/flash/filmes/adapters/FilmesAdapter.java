@@ -66,7 +66,7 @@ public class FilmesAdapter extends BaseAdapter {
         View v = inflater.inflate(R.layout.list_adapter_filmes_assistidos, null);
 
         TextView tv1 = v.findViewById(R.id.list_adapter_titulo);
-        tv1.setText(filme.getTitle());
+        tv1.setText(filme.getTitulo());
 
         TextView tv2 = v.findViewById(R.id.list_adapter_inedito);
         LinearLayout caixa = v.findViewById(R.id.list_adapter_caixa_posicao);
@@ -86,13 +86,13 @@ public class FilmesAdapter extends BaseAdapter {
         tv4.setText(filmesAssistidos.getDataFormatada());
 
         TextView tv5 = v.findViewById(R.id.list_adapter_ano);
-        tv5.setText(Integer.toString(filme.getYear()));
+        tv5.setText(Integer.toString(filme.getAno()));
 
         TextView tv6 = v.findViewById(id.list_adapter_duracao);
-        tv6.setText(filme.getRuntime() + "min");
+        tv6.setText(filme.getDuracao() + "min");
 
         TextView tv7 = v.findViewById(id.list_adapter_nota);
-        tv7.setText("IMDB: " + filme.getImdbRating());
+        tv7.setText("IMDB: " + filme.getNota());
 
         ImageView poster = v.findViewById(id.list_adapter_poster);
 

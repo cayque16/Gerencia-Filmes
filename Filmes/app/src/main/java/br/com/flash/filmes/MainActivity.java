@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +17,7 @@ import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.add.AddFilmeActivity;
 import br.com.flash.filmes.add.AddFilmeAssistidoActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
+import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 
 public class MainActivity extends AppCompatActivity {

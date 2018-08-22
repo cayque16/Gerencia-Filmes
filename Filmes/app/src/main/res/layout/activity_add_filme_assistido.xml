@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="br.com.flash.filmes.add.AddFilmeAssistidoActivity">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/add_filme_assistido_imdbID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,8 +19,8 @@
         android:id="@+id/add_filme_assistido_inedito"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Inédito"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:text="Inédito" />
 
     <EditText
         android:id="@+id/add_filme_assistido_posAno"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Posição no ano"
-        android:inputType="text" />
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/add_filme_assistido_dataDia"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Dia..."
-        android:inputType="text" />
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/add_filme_assistido_dataMes"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Mês..."
-        android:inputType="text" />
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/add_filme_assistido_dataAno"
@@ -52,5 +52,5 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Ano..."
-        android:inputType="text" />
+        android:inputType="number" />
 </LinearLayout>

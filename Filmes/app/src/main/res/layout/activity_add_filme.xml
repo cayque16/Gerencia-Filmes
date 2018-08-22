@@ -7,20 +7,36 @@
     android:orientation="vertical"
     tools:context="br.com.flash.filmes.add.AddFilmeActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/add_filme_imdbID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="IMDB ID..."
+            android:inputType="text"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:onClick="buscaIMDB"
+            android:background="@drawable/fundo_botao_busca"
+            android:layout_margin="8dp"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
     <EditText
         android:id="@+id/add_filme_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="Título..."
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/add_filme_imdbID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="IMDB ID..."
         android:inputType="text" />
 
     <EditText
@@ -55,10 +71,6 @@
         android:hint="Http..."
         android:inputType="text" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="enviar"
-        android:onClick="buscaIMDB"/>
+
 
 </LinearLayout>

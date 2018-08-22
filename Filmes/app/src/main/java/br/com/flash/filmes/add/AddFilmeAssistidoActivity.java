@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import br.com.flash.filmes.R;
@@ -53,4 +54,7 @@ public class AddFilmeAssistidoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void retiraImdbID(View view) {
+        Toast.makeText(this, "Teste", Toast.LENGTH_SHORT).show();
+    }
 }

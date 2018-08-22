@@ -83,7 +83,10 @@ public class AddFilmeActivity extends AppCompatActivity {
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
+                Filme filme = response.body().getFilme();
 
+                FormularioFilmeHelper helper = new FormularioFilmeHelper(AddFilmeActivity.this);
+                helper.preencheFormulario(filme);
             }
 
             @Override

@@ -1,19 +1,22 @@
 package br.com.flash.filmes.models;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 
 /**
  * Created by cayqu on 14/08/2018.
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Filme implements Serializable{
     private Long id;
     private String imdbID;
-    private String title;
-    private int year;
-    private int runtime; //em minutos
+    private String Title;
+    private int Year;
+    private int Runtime; //em minutos
     private double imdbRating; //imdbRating do IMDB
-    private String poster;
+    private String Poster;
 
     public String getImdbID() {
         return imdbID;
@@ -24,27 +27,27 @@ public class Filme implements Serializable{
     }
 
     public String getTitle() {
-        return title;
+        return Title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.Title = title;
     }
 
     public int getYear() {
-        return year;
+        return Year;
     }
 
     public void setYear(int year) {
-        this.year = year;
+        this.Year = year;
     }
 
     public int getRuntime() {
-        return runtime;
+        return Runtime;
     }
 
     public void setRuntime(int runtime) {
-        this.runtime = runtime;
+        this.Runtime = runtime;
     }
 
     public double getImdbRating() {
@@ -59,15 +62,15 @@ public class Filme implements Serializable{
 
     @Override
     public String toString() {
-        return imdbID + ": " + title;
+        return imdbID + ": " + Title;
     }
 
     public String getPoster() {
-        return poster;
+        return Poster;
     }
 
     public void setPoster(String poster) {
-        this.poster = poster;
+        this.Poster = poster;
     }
 
     public Long getId() {

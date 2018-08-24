@@ -1,10 +1,12 @@
 package br.com.flash.filmes.helper;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -45,7 +47,7 @@ public class FormularioFilmeAssistidoHelper {
     }
 
     public FilmesAssistidos pegaFilmeAssistido() {
-        filmesAssistidos.setImdbID(campoImdbId.getText().toString());
+        filmesAssistidos.setImdbID(pegaImdb(campoImdbId.getText().toString()));
         if (campoInedito.isChecked())
             filmesAssistidos.tornaInedito();
         else
@@ -63,5 +65,17 @@ public class FormularioFilmeAssistidoHelper {
         for (Filme filme : dao.buscaFilmes()) {
             listaAutoComplete.add(filme.toString());
         }
+    }
+
+    public String pegaImdb(String campoImdbID) {
+        String concatenado = "";
+
+        for (int i = 0; i < campoImdbID.length(); i++) {
+            if (campoImdbID.charAt(i) == ':')
+                break;
+            concatenado += String.valueOf(campoImdbID.charAt(i));
+        }
+
+        return concatenado;
     }
 }

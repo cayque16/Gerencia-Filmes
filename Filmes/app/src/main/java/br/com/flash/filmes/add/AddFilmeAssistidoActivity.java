@@ -53,8 +53,4 @@ public class AddFilmeAssistidoActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void retiraImdbID(View view) {
-        Toast.makeText(this, "Teste", Toast.LENGTH_SHORT).show();
-    }
 }

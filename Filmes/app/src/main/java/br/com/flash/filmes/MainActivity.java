@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_main_add:
                 Intent vaiParaAddFilme = new Intent(this, AddFilmeAssistidoActivity.class);
                 startActivity(vaiParaAddFilme);
+//                FilmeDAO dao = new FilmeDAO(this);
+//                dao.deletaFilmeAssistidoErrado(55);
+//                Toast.makeText(this, "Apagou", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_main_ano:
                 break;

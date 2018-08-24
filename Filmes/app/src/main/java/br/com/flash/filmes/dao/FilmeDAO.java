@@ -155,6 +155,14 @@ public class FilmeDAO extends SQLiteOpenHelper {
         db.delete("Filmes", "id = ?", params);
     }
 
+    public void deletaFilmeAssistidoErrado(int posAno) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        String[] params = {Integer.toString(posAno)};
+
+        db.delete("Filmes_Assistidos", "posAno = ?", params);
+    }
+
     public void deletaFilmeAssistido(FilmesAssistidos filmesAssistidos) {
         SQLiteDatabase db = getWritableDatabase();
 

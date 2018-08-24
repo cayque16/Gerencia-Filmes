@@ -1,6 +1,6 @@
-package br.com.flash.filmes;
+package br.com.flash.filmes.retrofit;
 
-import br.com.flash.filmes.services.FilmeService;
+import br.com.flash.filmes.retrofit.services.FilmeService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

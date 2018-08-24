@@ -19,7 +19,8 @@ import br.com.flash.filmes.models.Filme;
         "Runtime",
         "Poster",
         "imdbRating",
-        "imdbID"
+        "imdbID",
+        "Response"
 })
 public class Movie {
     @JsonProperty("Title")
@@ -34,6 +35,8 @@ public class Movie {
     private String imdbRating;
     @JsonProperty("imdbID")
     private String imdbID;
+    @JsonProperty("Response")
+    private String response;
 
     @Override
     public String toString() {
@@ -113,4 +116,11 @@ public class Movie {
     }
 
 
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
 }

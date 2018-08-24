@@ -3,7 +3,6 @@ package br.com.flash.filmes.add;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.flash.filmes.R;
-import br.com.flash.filmes.RetrofitInicializador;
+import br.com.flash.filmes.retrofit.RetrofitInicializador;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.Movie;
 import br.com.flash.filmes.helper.FormularioFilmeHelper;
@@ -83,10 +82,16 @@ public class AddFilmeActivity extends AppCompatActivity {
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
-                Filme filme = response.body().getFilme();
+                String resposta = response.body().getResponse();
+                if (resposta.equals("True")) {
+                    Filme filme = response.body().getFilme();
 
-                FormularioFilmeHelper helper = new FormularioFilmeHelper(AddFilmeActivity.this);
-                helper.preencheFormulario(filme);
+                    FormularioFilmeHelper helper = new FormularioFilmeHelper(AddFilmeActivity.this);
+                    helper.preencheFormulario(filme);
+                }else{
+                    Toast.makeText(AddFilmeActivity.this, "Filme não encontrado!!!", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override

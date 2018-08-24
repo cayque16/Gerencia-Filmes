@@ -100,11 +100,14 @@ public class FilmeDAO extends SQLiteOpenHelper {
         return filmes;
     }
 
-    public List<FilmesAssistidos> buscaFilmesAssistidos() {
-        String sql = "SELECT * FROM Filmes_Assistidos";
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery(sql, null);
+    public List<FilmesAssistidos> buscaFilmesAssistidosNoAnoDe(int ano) {
+        String sql = "SELECT * FROM Filmes_Assistidos WHERE dataAno = ?";
 
+        SQLiteDatabase db = getReadableDatabase();
+
+        String[] params = {Integer.toString(ano)};
+
+        Cursor c = db.rawQuery(sql, params);
         List<FilmesAssistidos> filmesAssistidos = populaFilmesAssistidos(c);
         c.close();
 

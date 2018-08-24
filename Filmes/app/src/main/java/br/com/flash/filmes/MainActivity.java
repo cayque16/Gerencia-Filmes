@@ -3,12 +3,18 @@ package br.com.flash.filmes;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     private List<FilmesAssistidos> filmes;
     private ListView lista;
+    private TextView totalAssistidos, percentualAssistidos;
+    private int anoAtual, metaAtual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +39,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         lista = findViewById(R.id.main_lista);
+        totalAssistidos = findViewById(R.id.main_assistidos);
+        percentualAssistidos = findViewById(R.id.main_percentual_assistido);
+
+        anoAtual = 2018;
+        metaAtual = 67;
 
         atualizaLista();
+        atualizaDadosCabecalho();
+    }
+
+    private void atualizaDadosCabecalho() {
+        int quantidadeAssistidos = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoAtual).size();
+        float percentual = (quantidadeAssistidos / (float) metaAtual) * 100;
+        DecimalFormat df = new DecimalFormat("0.00");
+        totalAssistidos.setText(Integer.toString(quantidadeAssistidos));
+        percentualAssistidos.setText("(" + df.format(percentual) + "%)");
     }
 
     private void atualizaLista() {
-        filmes = new FilmeDAO(this).buscaFilmesAssistidos();
+        filmes = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoAtual);
         Collections.sort(filmes);
         lista.setAdapter(new FilmesAdapter(filmes, this));
     }
@@ -57,10 +79,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent vaiParaAddFilme = new Intent(this, AddFilmeAssistidoActivity.class);
                 startActivity(vaiParaAddFilme);
 //                FilmeDAO dao = new FilmeDAO(this);
-//                dao.deletaFilmeAssistidoErrado(55);
+//                dao.deletaFilmeAssistidoErrado(53);
 //                Toast.makeText(this, "Apagou", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_main_ano:
+                alteraAno();
                 break;
             case R.id.menu_main_filmes:
                 Intent vaiParaListaFilmes = new Intent(this, ListaFilmesActivity.class);
@@ -74,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         atualizaLista();
+        atualizaDadosCabecalho();
         super.onResume();
+    }
+
+    public void alteraAno() {
+        Toast.makeText(this, "Filé", Toast.LENGTH_SHORT).show();
     }
 }

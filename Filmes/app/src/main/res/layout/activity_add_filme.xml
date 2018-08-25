@@ -17,17 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:layout_weight="1"
             android:hint="IMDB ID..."
-            android:inputType="text"
-            android:layout_weight="1"/>
+            android:inputType="text" />
 
         <Button
             android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:onClick="buscaIMDB"
-            android:background="@drawable/fundo_botao_busca"
             android:layout_margin="8dp"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            android:background="@drawable/fundo_botao_busca"
+            android:onClick="buscaIMDB" />
 
     </LinearLayout>
 
@@ -36,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:enabled="false"
         android:hint="Título..."
         android:inputType="text" />
 
@@ -44,6 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:enabled="false"
         android:hint="Ano..."
         android:inputType="number" />
 
@@ -52,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:enabled="false"
         android:hint="Duracao..."
         android:inputType="number" />
 
@@ -60,6 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:enabled="false"
         android:hint="Nota do IMDB..."
         android:inputType="numberDecimal" />
 
@@ -68,9 +72,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:enabled="false"
         android:hint="Http..."
         android:inputType="text" />
-
 
 
 </LinearLayout>

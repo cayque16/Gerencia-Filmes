@@ -53,5 +53,5 @@
         android:layout_margin="8dp"
         android:hint="Ano..."
         android:inputType="number"
-        android:text="2018" />
+        android:text="2017" />
 </LinearLayout>

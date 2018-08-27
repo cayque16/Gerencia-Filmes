@@ -13,6 +13,7 @@ public class Filme implements Serializable {
     private int duracao; //em minutos
     private double nota; //nota do IMDB
     private String poster;
+    private byte[] posterBytes;
 
     public String getImdbID() {
         return imdbID;
@@ -74,5 +75,13 @@ public class Filme implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public byte[] getPosterBytes() {
+        return posterBytes;
+    }
+
+    public void setPosterBytes(byte[] posterBytes) {
+        this.posterBytes = posterBytes;
     }
 }

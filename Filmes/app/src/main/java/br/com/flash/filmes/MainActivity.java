@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private List<FilmesAssistidos> filmes;
     private ListView lista;
     private TextView totalAssistidos, percentualAssistidos;
+    private TextView metaDoAno;
     private int anoAtual, metaAtual;
 
     @Override
@@ -41,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
         lista = findViewById(R.id.main_lista);
         totalAssistidos = findViewById(R.id.main_assistidos);
         percentualAssistidos = findViewById(R.id.main_percentual_assistido);
+        metaDoAno = findViewById(R.id.main_meta);
 
-        anoAtual = 2018;
-        metaAtual = 67;
+        anoAtual = 2017;
+        metaAtual = 50;
 
         atualizaLista();
         atualizaDadosCabecalho();
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         DecimalFormat df = new DecimalFormat("0.00");
         totalAssistidos.setText(Integer.toString(quantidadeAssistidos));
         percentualAssistidos.setText("(" + df.format(percentual) + "%)");
+        metaDoAno.setText(Integer.toString(metaAtual));
     }
 
     private void atualizaLista() {
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent vaiParaAddFilme = new Intent(this, AddFilmeAssistidoActivity.class);
                 startActivity(vaiParaAddFilme);
 //                FilmeDAO dao = new FilmeDAO(this);
-//                dao.deletaFilmeAssistidoErrado(53);
+//                dao.deletaFilmeAssistidoErrado(14);
 //                Toast.makeText(this, "Apagou", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_main_ano:

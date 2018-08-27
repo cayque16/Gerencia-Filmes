@@ -19,7 +19,7 @@ import br.com.flash.filmes.models.FilmesAssistidos;
 public class FilmeDAO extends SQLiteOpenHelper {
 
     public FilmeDAO(Context context) {
-        super(context, "Filmes", null, 2);
+        super(context, "Filmes", null, 3);
     }
 
     @Override
@@ -30,7 +30,8 @@ public class FilmeDAO extends SQLiteOpenHelper {
                 "ano INTEGER, " +
                 "duracao INTEGER, " +
                 "nota REAL, " +
-                "poster TEXT);";
+                "poster TEXT, " +
+                "posterBytes);";
         sqLiteDatabase.execSQL(sql);
 
         sql = "CREATE TABLE Filmes_Assistidos (id INTEGER PRIMARY KEY, " +
@@ -50,6 +51,9 @@ public class FilmeDAO extends SQLiteOpenHelper {
         switch (i) {
             case 1: //indo para versão 2
                 sql = "ALTER TABLE Filmes ADD COLUMN poster TEXT";
+                sqLiteDatabase.execSQL(sql);
+            case 2: //indo para versão 3
+                sql = "ALTER TABLE Filmes ADD COLUMN posterBytes TEXT";
                 sqLiteDatabase.execSQL(sql);
         }
     }
@@ -86,6 +90,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
         dados.put("duracao", filme.getDuracao());
         dados.put("nota", filme.getNota());
         dados.put("poster", filme.getPoster());
+        dados.put("posterBytes", filme.getPosterBytes());
         return dados;
     }
 
@@ -144,6 +149,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
             filme.setDuracao(c.getInt(c.getColumnIndex("duracao")));
             filme.setNota(c.getDouble(c.getColumnIndex("nota")));
             filme.setPoster(c.getString(c.getColumnIndex("poster")));
+            filme.setPosterBytes(c.getBlob(c.getColumnIndex("posterBytes")));
 
             filmes.add(filme);
         }

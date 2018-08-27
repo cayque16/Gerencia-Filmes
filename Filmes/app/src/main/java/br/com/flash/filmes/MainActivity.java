@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         percentualAssistidos = findViewById(R.id.main_percentual_assistido);
         metaDoAno = findViewById(R.id.main_meta);
 
-        anoAtual = 2017;
-        metaAtual = 50;
+        anoAtual = 2018;
+        metaAtual = 67;
 
         atualizaLista();
         atualizaDadosCabecalho();

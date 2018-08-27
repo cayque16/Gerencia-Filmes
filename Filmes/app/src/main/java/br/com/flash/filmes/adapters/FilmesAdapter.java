@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -96,12 +98,21 @@ public class FilmesAdapter extends BaseAdapter {
 
         ImageView poster = v.findViewById(id.list_adapter_poster);
 
-        carregaPoster(poster, filme);
+        if (filme.getPosterBytes() == null)
+            carregaPosterDaWeb(poster, filme);
+        else
+            carregaPosterDoBanco(poster, filme);
 
         return v;
     }
 
-    private void carregaPoster(final ImageView poster, final Filme filme) {
+    private void carregaPosterDoBanco(ImageView poster, Filme filme) {
+        Bitmap raw = BitmapFactory.decodeByteArray(filme.getPosterBytes(), 0,
+                filme.getPosterBytes().length);
+        poster.setImageBitmap(raw);
+    }
+
+    private void carregaPosterDaWeb(final ImageView poster, final Filme filme) {
         new Thread() {
             public void run() {
                 Bitmap img = null;
@@ -117,8 +128,13 @@ public class FilmesAdapter extends BaseAdapter {
                 final Bitmap imgAux = img;
                 handler.post(new Runnable() {
                     public void run() {
-                        if (imgAux != null)
+                        if (imgAux != null) {
                             poster.setImageBitmap(imgAux);
+                            ByteArrayOutputStream saida = new ByteArrayOutputStream();
+                            imgAux.compress(Bitmap.CompressFormat.JPEG, 100, saida);
+                            filme.setPosterBytes(saida.toByteArray());
+                            new FilmeDAO(context).alteraFilme(filme);
+                        }
                     }
                 });
             }

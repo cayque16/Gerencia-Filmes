@@ -78,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
                     .buscaAnoMetaDoAno(anoAtual)
                     .get(0)
                     .getMeta();
+            AnoMeta anoMetaAux = new AnoMeta();
+            anoMetaAux.setAno(anoAtual);
+            anoMetaAux.setMeta(metaAtual);
+            for (int i = 0; i < dao.buscaAnoMeta().size(); i++) {
+                if (dao.buscaAnoMeta().get(i).equals(anoMetaAux)) {
+                    spinnerAnoMeta.setSelection(i);
+                }
+            }
 
         } else {
             anoAtual = 0;

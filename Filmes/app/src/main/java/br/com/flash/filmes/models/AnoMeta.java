@@ -36,4 +36,10 @@ public class AnoMeta {
     public String toString() {
         return "Ano: " + ano;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        AnoMeta anoMeta = (AnoMeta) obj;
+        return this.ano == anoMeta.ano;
+    }
 }

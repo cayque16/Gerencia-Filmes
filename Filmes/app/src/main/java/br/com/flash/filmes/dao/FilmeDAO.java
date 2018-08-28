@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 
@@ -19,7 +20,7 @@ import br.com.flash.filmes.models.FilmesAssistidos;
 public class FilmeDAO extends SQLiteOpenHelper {
 
     public FilmeDAO(Context context) {
-        super(context, "Filmes", null, 3);
+        super(context, "Filmes", null, 4);
     }
 
     @Override
@@ -43,6 +44,12 @@ public class FilmeDAO extends SQLiteOpenHelper {
                 "dataAno INTEGER);";
 
         sqLiteDatabase.execSQL(sql);
+
+        sql = "CREATE TABLE Ano_Meta (id INTEGER PRIMARY KEY, " +
+                "ano INTEGER, " +
+                "meta INTEGER);";
+
+        sqLiteDatabase.execSQL(sql);
     }
 
     @Override
@@ -54,6 +61,11 @@ public class FilmeDAO extends SQLiteOpenHelper {
                 sqLiteDatabase.execSQL(sql);
             case 2: //indo para versão 3
                 sql = "ALTER TABLE Filmes ADD COLUMN posterBytes TEXT";
+                sqLiteDatabase.execSQL(sql);
+            case 3: //indo para versão 4
+                sql = "CREATE TABLE Ano_Meta (id INTEGER PRIMARY KEY, " +
+                        "ano INTEGER, " +
+                        "meta INTEGER);";
                 sqLiteDatabase.execSQL(sql);
         }
     }
@@ -68,6 +80,20 @@ public class FilmeDAO extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues dados = pegaDadosDoFilmeAssistido(filmesAssistidos);
         db.insert("Filmes_Assistidos", null, dados);
+    }
+
+    public void insereAnoMeta(AnoMeta anoMeta) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues dados = pegaDadosDoAnoMeta(anoMeta);
+        db.insert("Ano_Meta", null, dados);
+    }
+
+    private ContentValues pegaDadosDoAnoMeta(AnoMeta anoMeta) {
+        ContentValues dados = new ContentValues();
+        dados.put("ano", anoMeta.getAno());
+        dados.put("meta", anoMeta.getMeta());
+
+        return dados;
     }
 
     private ContentValues pegaDadosDoFilmeAssistido(FilmesAssistidos filmesAssistidos) {
@@ -117,6 +143,31 @@ public class FilmeDAO extends SQLiteOpenHelper {
         c.close();
 
         return filmesAssistidos;
+    }
+
+    public List<AnoMeta> buscaAnoMetaDoAno(int ano) {
+        String sql = "SELECT * FROM Ano_Meta WHERE ano = ?";
+        SQLiteDatabase db = getReadableDatabase();
+
+        String[] params = {Integer.toString(ano)};
+        Cursor c = db.rawQuery(sql, params);
+
+        List<AnoMeta> anoMetas = populaAnoMeta(c);
+
+        return anoMetas;
+    }
+
+    private List<AnoMeta> populaAnoMeta(Cursor c) {
+        List<AnoMeta> anoMetas = new ArrayList<AnoMeta>();
+
+        while (c.moveToNext()) {
+            AnoMeta anoMeta = new AnoMeta();
+            anoMeta.setAno(c.getInt(c.getColumnIndex("ano")));
+            anoMeta.setMeta(c.getInt(c.getColumnIndex("meta")));
+
+            anoMetas.add(anoMeta);
+        }
+        return anoMetas;
     }
 
     private List<FilmesAssistidos> populaFilmesAssistidos(Cursor c) {
@@ -180,6 +231,12 @@ public class FilmeDAO extends SQLiteOpenHelper {
         db.delete("Filmes_Assistidos", "id = ?", params);
     }
 
+    public void deletaAnoMeta(AnoMeta anoMeta) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String[] params = {Long.toString(anoMeta.getId())};
+    }
+
     public void alteraFilme(Filme filme) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -196,6 +253,15 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
         String[] params = {Integer.toString(filmesAssistidos.getId())};
         db.update("Filmes_Assisitdos", dados, "id = ?", params);
+    }
+
+    public void alteraAnoMeta(AnoMeta anoMeta) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues dados = pegaDadosDoAnoMeta(anoMeta);
+
+        String[] params = {Long.toString(anoMeta.getId())};
+        db.update("Ano_Meta", dados, "id = ?", params);
     }
 
     public boolean existeFilme(String imdbID) {

@@ -16,13 +16,17 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.add.AddFilmeActivity;
 import br.com.flash.filmes.add.AddFilmeAssistidoActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
+import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 
@@ -44,11 +48,26 @@ public class MainActivity extends AppCompatActivity {
         percentualAssistidos = findViewById(R.id.main_percentual_assistido);
         metaDoAno = findViewById(R.id.main_meta);
 
-        anoAtual = 2018;
-        metaAtual = 67;
-
+        atualizaAnoMeta();
         atualizaLista();
         atualizaDadosCabecalho();
+    }
+
+    private void atualizaAnoMeta() {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTimeZone(TimeZone.getDefault());
+        FilmeDAO dao = new FilmeDAO(this);
+
+        anoAtual = calendar.get(Calendar.YEAR);
+        if (dao.existeAnoMeta(anoAtual)) {
+            metaAtual = dao
+                    .buscaAnoMetaDoAno(anoAtual)
+                    .get(0)
+                    .getMeta();
+        } else {
+            anoAtual = 0;
+            metaAtual = 0;
+        }
     }
 
     private void atualizaDadosCabecalho() {

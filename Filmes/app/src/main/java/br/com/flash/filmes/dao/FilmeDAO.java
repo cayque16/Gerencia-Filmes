@@ -157,6 +157,17 @@ public class FilmeDAO extends SQLiteOpenHelper {
         return anoMetas;
     }
 
+    public List<AnoMeta> buscaAnoMeta() {
+        String sql = "SELECT * FROM Ano_Meta";
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor c = db.rawQuery(sql, null);
+
+        List<AnoMeta> anoMetas = populaAnoMeta(c);
+
+        return anoMetas;
+    }
+
     private List<AnoMeta> populaAnoMeta(Cursor c) {
         List<AnoMeta> anoMetas = new ArrayList<AnoMeta>();
 
@@ -268,6 +279,15 @@ public class FilmeDAO extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String existe = "SELECT imdbID FROM Filmes WHERE imdbID = ? LIMIT 1";
         Cursor cursor = db.rawQuery(existe, new String[]{imdbID});
+        int resultados = cursor.getCount();
+        cursor.close();
+        return resultados > 0;
+    }
+
+    public boolean existeAnoMeta(int ano){
+        SQLiteDatabase db = getReadableDatabase();
+        String existe = "SELECT * FROM Ano_Meta WHERE ano = ? LIMIT 1";
+        Cursor cursor = db.rawQuery(existe, new String[]{Integer.toString(ano)});
         int resultados = cursor.getCount();
         cursor.close();
         return resultados > 0;

@@ -31,4 +31,9 @@ public class AnoMeta {
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Ano: " + ano + " Meta: " + meta;
+    }
 }

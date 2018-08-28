@@ -34,6 +34,6 @@ public class AnoMeta {
 
     @Override
     public String toString() {
-        return "Ano: " + ano + " Meta: " + meta;
+        return "Ano: " + ano;
     }
 }

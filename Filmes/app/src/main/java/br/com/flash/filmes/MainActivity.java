@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView totalAssistidos, percentualAssistidos;
     private TextView metaDoAno;
     private int anoAtual, metaAtual;
+    private ArrayList<String> listaAnoMeta = new ArrayList<String>();
+    private Spinner spinnerAnoMeta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,22 @@ public class MainActivity extends AppCompatActivity {
         totalAssistidos = findViewById(R.id.main_assistidos);
         percentualAssistidos = findViewById(R.id.main_percentual_assistido);
         metaDoAno = findViewById(R.id.main_meta);
+        spinnerAnoMeta = findViewById(R.id.main_spinner_ano_meta);
+
+        preencheListaAnoMeta();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.adapter_spinner_ano_meta, listaAnoMeta);
+        spinnerAnoMeta.setAdapter(adapter);
 
         atualizaAnoMeta();
         atualizaLista();
         atualizaDadosCabecalho();
+    }
+
+    private void preencheListaAnoMeta() {
+        FilmeDAO dao = new FilmeDAO(this);
+        for (AnoMeta anoMeta : dao.buscaAnoMeta()) {
+            listaAnoMeta.add(anoMeta.toString());
+        }
     }
 
     private void atualizaAnoMeta() {
@@ -64,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     .buscaAnoMetaDoAno(anoAtual)
                     .get(0)
                     .getMeta();
+
         } else {
             anoAtual = 0;
             metaAtual = 0;

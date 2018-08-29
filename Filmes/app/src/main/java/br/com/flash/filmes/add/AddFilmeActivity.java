@@ -77,27 +77,33 @@ public class AddFilmeActivity extends AppCompatActivity {
 
     public void buscaIMDB(View view) {
         chave = imdb.getText().toString();
-        Call<Movie> call = new RetrofitInicializador().getFilmeService().buscaFilme(chave);
 
-        call.enqueue(new Callback<Movie>() {
-            @Override
-            public void onResponse(Call<Movie> call, Response<Movie> response) {
-                String resposta = response.body().getResponse();
-                if (resposta.equals("True")) {
-                    Filme filme = response.body().getFilme();
+        if (!new FilmeDAO(this).existeFilme(chave)) {
 
-                    FormularioFilmeHelper helper = new FormularioFilmeHelper(AddFilmeActivity.this);
-                    helper.preencheFormulario(filme);
-                }else{
-                    Toast.makeText(AddFilmeActivity.this, "Filme não encontrado!!!", Toast.LENGTH_SHORT).show();
+            Call<Movie> call = new RetrofitInicializador().getFilmeService().buscaFilme(chave);
+
+            call.enqueue(new Callback<Movie>() {
+                @Override
+                public void onResponse(Call<Movie> call, Response<Movie> response) {
+                    String resposta = response.body().getResponse();
+                    if (resposta.equals("True")) {
+                        Filme filme = response.body().getFilme();
+
+                        FormularioFilmeHelper helper = new FormularioFilmeHelper(AddFilmeActivity.this);
+                        helper.preencheFormulario(filme);
+                    } else {
+                        Toast.makeText(AddFilmeActivity.this, "Filme não encontrado!!!", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
-            }
-
-            @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
-                Toast.makeText(AddFilmeActivity.this, "Não foi possível carregar os dados!!!", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<Movie> call, Throwable t) {
+                    Toast.makeText(AddFilmeActivity.this, "Não foi possível carregar os dados!!!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(this, "Esse filme já está cadastrado!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

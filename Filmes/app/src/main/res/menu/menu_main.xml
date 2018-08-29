@@ -3,11 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_main_ano"
-        android:title="2018"
-        app:showAsAction="always"></item>
-
-    <item
         android:id="@+id/menu_main_add"
         android:icon="@drawable/ic_add_black"
         android:title="Adicionar"

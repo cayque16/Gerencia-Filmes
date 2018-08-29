@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -57,8 +58,28 @@ public class MainActivity extends AppCompatActivity {
 
 //        anoAtual = 2017;
 //        metaAtual = 50;
+        spinnerAnoMeta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                AnoMeta anoMeta = new FilmeDAO(MainActivity.this)
+                        .buscaAnoMeta().get(i);
+                atualizaAnoMeta(anoMeta);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         atualizaAnoMeta();
+        atualizaLista();
+        atualizaDadosCabecalho();
+    }
+
+    private void atualizaAnoMeta(AnoMeta anoMeta) {
+        anoAtual = anoMeta.getAno();
+        metaAtual = anoMeta.getMeta();
         atualizaLista();
         atualizaDadosCabecalho();
     }
@@ -139,9 +160,6 @@ public class MainActivity extends AppCompatActivity {
 //                new FilmeDAO(this).alteraFilmeAssistido(filme);
 //                Toast.makeText(this, "Apagou", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.menu_main_ano:
-                alteraAno();
-                break;
             case R.id.menu_main_filmes:
                 Intent vaiParaListaFilmes = new Intent(this, ListaFilmesActivity.class);
                 startActivity(vaiParaListaFilmes);
@@ -158,7 +176,4 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    public void alteraAno() {
-        Toast.makeText(this, "Filé", Toast.LENGTH_SHORT).show();
-    }
 }

@@ -263,7 +263,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
         ContentValues dados = pegaDadosDoFilmeAssistido(filmesAssistidos);
 
         String[] params = {Integer.toString(filmesAssistidos.getId())};
-        db.update("Filmes_Assisitdos", dados, "id = ?", params);
+        db.update("Filmes_Assistidos", dados, "id = ?", params);
     }
 
     public void alteraAnoMeta(AnoMeta anoMeta) {

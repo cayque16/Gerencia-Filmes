@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.adapter_spinner_ano_meta, listaAnoMeta);
         spinnerAnoMeta.setAdapter(adapter);
 
+//        anoAtual = 2017;
+//        metaAtual = 50;
+
         atualizaAnoMeta();
         atualizaLista();
         atualizaDadosCabecalho();
@@ -125,6 +128,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(vaiParaAddFilme);
 //                FilmeDAO dao = new FilmeDAO(this);
 //                dao.deletaFilmeAssistidoErrado(14);
+//                FilmesAssistidos filme = new FilmesAssistidos();
+//                filme.setDataAno(2018);
+//                filme.setDataMes(8);
+//                filme.setDataDia(28);
+//                filme.setPosAno(70);
+//                filme.setImdbID("tt6212478");
+//                filme.setId(73);
+//                filme.setInedito(1);
+//                new FilmeDAO(this).alteraFilmeAssistido(filme);
 //                Toast.makeText(this, "Apagou", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_main_ano:

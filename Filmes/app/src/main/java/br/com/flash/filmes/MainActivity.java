@@ -56,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.adapter_spinner_ano_meta, listaAnoMeta);
         spinnerAnoMeta.setAdapter(adapter);
 
-//        anoAtual = 2017;
-//        metaAtual = 50;
+//        anoAtual = 2018;
+//        metaAtual = 67;
+
+        //captura o clique do spinner que altera o ano
         spinnerAnoMeta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -150,14 +152,15 @@ public class MainActivity extends AppCompatActivity {
 //                FilmeDAO dao = new FilmeDAO(this);
 //                dao.deletaFilmeAssistidoErrado(14);
 //                FilmesAssistidos filme = new FilmesAssistidos();
-//                filme.setDataAno(2018);
-//                filme.setDataMes(8);
-//                filme.setDataDia(28);
-//                filme.setPosAno(70);
-//                filme.setImdbID("tt6212478");
-//                filme.setId(73);
-//                filme.setInedito(1);
+//                filme.setDataAno(2017);
+//                filme.setDataMes(1);
+//                filme.setDataDia(4);
+//                filme.setPosAno(3);
+//                filme.setImdbID("tt2109248");
+//                filme.setId(75);
+//                filme.setInedito(0);
 //                new FilmeDAO(this).alteraFilmeAssistido(filme);
+
 //                Toast.makeText(this, "Apagou", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_main_filmes:

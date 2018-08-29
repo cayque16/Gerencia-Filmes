@@ -89,7 +89,7 @@ public class FormularioFilmeAssistidoHelper {
             filmesAssistidos.tiraInedito();
         filmesAssistidos.setPosAno(Integer.valueOf(campoPosAno.getText().toString()));
         filmesAssistidos.setDataDia(calendar.get(Calendar.DAY_OF_MONTH));
-        filmesAssistidos.setDataMes(calendar.get(Calendar.MONTH));
+        filmesAssistidos.setDataMes(calendar.get(Calendar.MONTH) + 1);
         filmesAssistidos.setDataAno(calendar.get(Calendar.YEAR));
 
         return filmesAssistidos;

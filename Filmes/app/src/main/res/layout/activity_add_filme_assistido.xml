@@ -31,27 +31,11 @@
         android:inputType="number" />
 
     <EditText
-        android:id="@+id/add_filme_assistido_dataDia"
+        android:id="@+id/add_filme_assistido_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="Dia..."
-        android:inputType="number" />
+        android:focusable="false"
+        android:hint="Data..." />
 
-    <EditText
-        android:id="@+id/add_filme_assistido_dataMes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Mês..."
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/add_filme_assistido_dataAno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Ano..."
-        android:inputType="number"
-        android:text="2017" />
 </LinearLayout>

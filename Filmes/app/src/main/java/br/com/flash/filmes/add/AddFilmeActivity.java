@@ -65,7 +65,11 @@ public class AddFilmeActivity extends AppCompatActivity {
 
                 FilmeDAO dao = new FilmeDAO(this);
 
-                if (filme.getId() != null)
+//                if (filme.getId() != null)
+//                    dao.alteraFilme(filme);
+//                else
+
+                if (!dao.existeFilme(filme.getImdbID()))
                     dao.insereFilme(filme);
 
                 dao.insereFilmeAssistido(filmesAssistidos);

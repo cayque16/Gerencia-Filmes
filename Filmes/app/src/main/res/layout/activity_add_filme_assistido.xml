@@ -14,28 +14,4 @@
         android:layout_margin="8dp"
         android:hint="IMDB ID..."
         android:inputType="text" />
-
-    <Switch
-        android:id="@+id/add_filme_assistido_inedito"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="Inédito" />
-
-    <EditText
-        android:id="@+id/add_filme_assistido_posAno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Posição no ano"
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/add_filme_assistido_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:focusable="false"
-        android:hint="Data..." />
-
 </LinearLayout>

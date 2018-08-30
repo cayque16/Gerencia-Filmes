@@ -18,8 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:hint="IMDB ID..."
-            android:inputType="text" />
+            android:hint="IMDB ID..." />
 
         <Button
             android:layout_width="230dp"
@@ -31,50 +30,118 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/add_filme_titulo"
+    <Switch
+        android:id="@+id/add_filme_assistido_inedito"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:enabled="false"
-        android:hint="Título..."
-        android:inputType="text" />
+        android:text="Inédito" />
 
     <EditText
-        android:id="@+id/add_filme_ano"
+        android:id="@+id/add_filme_assistido_posAno"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:enabled="false"
-        android:hint="Ano..."
+        android:hint="Posição no ano"
         android:inputType="number" />
 
     <EditText
-        android:id="@+id/add_filme_duracao"
+        android:id="@+id/add_filme_assistido_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:enabled="false"
-        android:hint="Duracao..."
-        android:inputType="number" />
+        android:focusable="false"
+        android:hint="Data..." />
 
-    <EditText
-        android:id="@+id/add_filme_nota"
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:enabled="false"
-        android:hint="Nota do IMDB..."
-        android:inputType="numberDecimal" />
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
 
-    <EditText
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/add_filme_poster_img"
+                android:layout_width="96dp"
+                android:layout_height="128dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/img_1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/add_filme_titulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Título do filme"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/add_filme_ano"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ano"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/add_filme_duracao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Duraçao"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Inédito"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/add_filme_nota"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nota IMDB"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
         android:id="@+id/add_filme_poster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:enabled="false"
-        android:hint="Http..."
-        android:inputType="text" />
-
-
+        android:visibility="invisible" />
 </LinearLayout>

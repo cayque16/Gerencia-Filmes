@@ -1,10 +1,19 @@
 package br.com.flash.filmes.helper;
 
-import android.widget.EditText;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-import br.com.flash.filmes.add.AddFilmeActivity;
 import br.com.flash.filmes.R;
+import br.com.flash.filmes.add.AddFilmeActivity;
 import br.com.flash.filmes.models.Filme;
 
 /**
@@ -13,9 +22,11 @@ import br.com.flash.filmes.models.Filme;
 
 public class FormularioFilmeHelper {
 
-    private EditText campoTitulo, campoImdbID;
-    private EditText campoAno, campoDuracao;
-    private EditText campoNota, campoPoster;
+    private TextView campoTitulo, campoImdbID;
+    private TextView campoAno, campoDuracao;
+    private TextView campoNota, campoPoster;
+    public static ImageView imagemPoster;
+    private Handler handler = new Handler();
 
     private Filme filme;
 
@@ -26,6 +37,7 @@ public class FormularioFilmeHelper {
         campoDuracao = activity.findViewById(R.id.add_filme_duracao);
         campoNota = activity.findViewById(R.id.add_filme_nota);
         campoPoster = activity.findViewById(R.id.add_filme_poster);
+        imagemPoster = activity.findViewById(R.id.add_filme_poster_img);
         filme = new Filme();
     }
 
@@ -46,6 +58,37 @@ public class FormularioFilmeHelper {
         campoDuracao.setText(Integer.toString(filme.getDuracao()));
         campoNota.setText(Double.toString(filme.getNota()));
         campoPoster.setText(filme.getPoster());
+        carregaPosterDaWeb(imagemPoster, filme);
         this.filme = filme;
+    }
+
+    private void carregaPosterDaWeb(final ImageView poster, final Filme filme) {
+        new Thread() {
+            public void run() {
+                Bitmap img = null;
+                final Filme filmeAux = filme;
+
+                try {
+                    URL url = new URL(filmeAux.getPoster());
+                    HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
+                    InputStream input = conexao.getInputStream();
+                    img = BitmapFactory.decodeStream(input);
+                } catch (IOException e) {
+
+                }
+                final Bitmap imgAux = img;
+                handler.post(new Runnable() {
+                    public void run() {
+                        if (imgAux != null) {
+                            poster.setImageBitmap(imgAux);
+                            ByteArrayOutputStream saida = new ByteArrayOutputStream();
+                            imgAux.compress(Bitmap.CompressFormat.JPEG, 100, saida);
+                            filmeAux.setPosterBytes(saida.toByteArray());
+//                            new FilmeDAO(AddFilmeActivity.this).alteraFilme(filmeAux);
+                        }
+                    }
+                });
+            }
+        }.start();
     }
 }

@@ -19,6 +19,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import br.com.flash.filmes.R;
+import br.com.flash.filmes.add.AddFilmeActivity;
 import br.com.flash.filmes.add.AddFilmeAssistidoActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.models.Filme;
@@ -29,8 +30,9 @@ import br.com.flash.filmes.models.FilmesAssistidos;
  */
 
 public class FormularioFilmeAssistidoHelper {
-    private AutoCompleteTextView campoImdbId;
+    //    private AutoCompleteTextView campoImdbId;
     private Switch campoInedito;
+    private EditText campoImdbId;
     private EditText campoPosAno, campoData;
     private ArrayList<String> listaAutoComplete = new ArrayList<String>();
     private Context context;
@@ -40,14 +42,14 @@ public class FormularioFilmeAssistidoHelper {
 
     private FilmesAssistidos filmesAssistidos;
 
-    public FormularioFilmeAssistidoHelper(AddFilmeAssistidoActivity activity) {
+    public FormularioFilmeAssistidoHelper(AddFilmeActivity activity) {
         context = activity;
 
-        campoImdbId = activity.findViewById(R.id.add_filme_assistido_imdbID);
-        preencheListaAutoComplete();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, listaAutoComplete);
-        campoImdbId.setAdapter(adapter);
-
+//        campoImdbId = activity.findViewById(R.id.add_filme_assistido_imdbID);
+//        preencheListaAutoComplete();
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, listaAutoComplete);
+//        campoImdbId.setAdapter(adapter);
+        campoImdbId = activity.findViewById(R.id.add_filme_imdbID);
         campoInedito = activity.findViewById(R.id.add_filme_assistido_inedito);
         campoPosAno = activity.findViewById(R.id.add_filme_assistido_posAno);
         campoData = activity.findViewById(R.id.add_filme_assistido_data);
@@ -82,7 +84,8 @@ public class FormularioFilmeAssistidoHelper {
     }
 
     public FilmesAssistidos pegaFilmeAssistido() {
-        filmesAssistidos.setImdbID(pegaImdb(campoImdbId.getText().toString()));
+//        filmesAssistidos.setImdbID(pegaImdb(campoImdbId.getText().toString()));
+        filmesAssistidos.setImdbID(campoImdbId.getText().toString());
         if (campoInedito.isChecked())
             filmesAssistidos.tornaInedito();
         else

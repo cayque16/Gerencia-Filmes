@@ -23,7 +23,7 @@ public class AddFilmeAssistidoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_filme_assistido);
 
-        helper = new FormularioFilmeAssistidoHelper(this);
+//        helper = new FormularioFilmeAssistidoHelper(this);
     }
 
     @Override

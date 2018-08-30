@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.adapter_spinner_ano_meta, listaAnoMeta);
         spinnerAnoMeta.setAdapter(adapter);
 
-//        anoAtual = 2018;
-//        metaAtual = 67;
+//        anoAtual = 2017;
+//        metaAtual = 50;
 
         //captura o clique do spinner que altera o ano
         spinnerAnoMeta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -150,8 +150,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent vaiParaAddFilme = new Intent(this, AddFilmeAssistidoActivity.class);
                 startActivity(vaiParaAddFilme);
 //                FilmeDAO dao = new FilmeDAO(this);
-//                dao.deletaFilmeAssistidoErrado(14);
+//
 //                FilmesAssistidos filme = new FilmesAssistidos();
+//                filme.setPosAno(80);
+//                dao.deletaFilmeAssistidoErrado(80);
 //                filme.setDataAno(2017);
 //                filme.setDataMes(1);
 //                filme.setDataDia(4);

@@ -11,18 +11,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.flash.filmes.R;
-import br.com.flash.filmes.retrofit.RetrofitInicializador;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.Movie;
+import br.com.flash.filmes.helper.FormularioFilmeAssistidoHelper;
 import br.com.flash.filmes.helper.FormularioFilmeHelper;
 import br.com.flash.filmes.models.Filme;
+import br.com.flash.filmes.models.FilmesAssistidos;
+import br.com.flash.filmes.retrofit.RetrofitInicializador;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddFilmeActivity extends AppCompatActivity {
 
-    private FormularioFilmeHelper helper;
+    private FormularioFilmeHelper helperFilme;
+    private FormularioFilmeAssistidoHelper helperFilmeAssistido;
     private TextView imdb;
     private String chave;
 
@@ -36,10 +39,11 @@ public class AddFilmeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Filme filme = (Filme) intent.getSerializableExtra("filme");
 
-        helper = new FormularioFilmeHelper(this);
+        helperFilme = new FormularioFilmeHelper(this);
+        helperFilmeAssistido = new FormularioFilmeAssistidoHelper(this);
 
         if (filme != null) {
-            helper.preencheFormulario(filme);
+            helperFilme.preencheFormulario(filme);
         }
     }
 
@@ -56,15 +60,16 @@ public class AddFilmeActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_add_filme_ok:
-                Filme filme = helper.pegaFilme();
+                Filme filme = helperFilme.pegaFilme();
+                FilmesAssistidos filmesAssistidos = helperFilmeAssistido.pegaFilmeAssistido();
 
                 FilmeDAO dao = new FilmeDAO(this);
 
-                if (filme.getId() != null) {
-                    dao.alteraFilme(filme);
-                } else {
+                if (filme.getId() != null)
                     dao.insereFilme(filme);
-                }
+
+                dao.insereFilmeAssistido(filmesAssistidos);
+
                 dao.close();
 
                 Toast.makeText(this, "Filme " + filme.getTitulo() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
@@ -94,7 +99,6 @@ public class AddFilmeActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(AddFilmeActivity.this, "Filme não encontrado!!!", Toast.LENGTH_SHORT).show();
                     }
-
                 }
 
                 @Override
@@ -103,7 +107,8 @@ public class AddFilmeActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "Esse filme já está cadastrado!", Toast.LENGTH_SHORT).show();
+            FormularioFilmeHelper helper = new FormularioFilmeHelper(AddFilmeActivity.this);
+            helper.preencheFormulario(new FilmeDAO(this).retornaUmFilme(chave));
         }
     }
 }

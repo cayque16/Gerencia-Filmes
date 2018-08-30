@@ -37,13 +37,14 @@ public class AddFilmeActivity extends AppCompatActivity {
         imdb = findViewById(R.id.add_filme_imdbID);
 
         Intent intent = getIntent();
-        Filme filme = (Filme) intent.getSerializableExtra("filme");
+        FilmesAssistidos filmesAssistidos = (FilmesAssistidos) intent.getSerializableExtra("filme");
 
         helperFilme = new FormularioFilmeHelper(this);
         helperFilmeAssistido = new FormularioFilmeAssistidoHelper(this);
 
-        if (filme != null) {
-            helperFilme.preencheFormulario(filme);
+        if (filmesAssistidos != null) {
+            helperFilmeAssistido.preencheFormulario(filmesAssistidos);
+            helperFilme.preencheFormulario(new FilmeDAO(this).retornaUmFilme(filmesAssistidos.getImdbID()));
         }
     }
 
@@ -71,8 +72,13 @@ public class AddFilmeActivity extends AppCompatActivity {
 
                 if (!dao.existeFilme(filme.getImdbID()))
                     dao.insereFilme(filme);
+                else
+                    dao.alteraFilme(filme);
 
-                dao.insereFilmeAssistido(filmesAssistidos);
+                if (filmesAssistidos.getId() != null)
+                    dao.alteraFilmeAssistido(filmesAssistidos);
+                else
+                    dao.insereFilmeAssistido(filmesAssistidos);
 
                 dao.close();
 

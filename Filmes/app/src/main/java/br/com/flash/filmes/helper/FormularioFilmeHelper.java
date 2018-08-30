@@ -56,6 +56,7 @@ public class FormularioFilmeHelper {
     public void preencheFormulario(Filme filme) {
         campoTitulo.setText(filme.getTitulo());
         campoImdbID.setText(filme.getImdbID());
+        campoImdbID.setEnabled(false);
         campoAno.setText(Integer.toString(filme.getAno()));
         campoDuracao.setText(Integer.toString(filme.getDuracao()));
         campoNota.setText(Double.toString(filme.getNota()));

@@ -47,6 +47,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         lista = findViewById(R.id.main_lista);
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                FilmesAssistidos filme = (FilmesAssistidos) lista.getItemAtPosition(i);
+                Intent vaiProFormulario = new Intent(
+                        MainActivity.this, AddFilmeActivity.class);
+                vaiProFormulario.putExtra("filme", filme);
+                startActivity(vaiProFormulario);
+            }
+        });
+
         totalAssistidos = findViewById(R.id.main_assistidos);
         percentualAssistidos = findViewById(R.id.main_percentual_assistido);
         metaDoAno = findViewById(R.id.main_meta);

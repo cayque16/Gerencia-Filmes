@@ -2,11 +2,13 @@ package br.com.flash.filmes.models;
 
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
+
 /**
  * Created by cayqu on 14/08/2018.
  */
 
-public class FilmesAssistidos implements Comparable<FilmesAssistidos> {
+public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializable {
     private int id;
     private String imdbID;
     private int inedito; //1 para sim e 0 para nao
@@ -15,7 +17,7 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos> {
     private int dataMes;
     private int dataAno;
 
-    public FilmesAssistidos(){
+    public FilmesAssistidos() {
 
     }
 
@@ -132,11 +134,11 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos> {
         this.id = id;
     }
 
-    public void tornaInedito(){
+    public void tornaInedito() {
         inedito = 1;
     }
 
-    public void tiraInedito(){
+    public void tiraInedito() {
         inedito = 0;
     }
 }

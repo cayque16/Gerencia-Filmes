@@ -131,4 +131,16 @@ public class FormularioFilmeAssistidoHelper {
 
         return concatenado;
     }
+
+    public void preencheFormulario(FilmesAssistidos filmesAssistidos) {
+        calendar.set(Calendar.YEAR, filmesAssistidos.getDataAno());
+        calendar.set(Calendar.MONTH, filmesAssistidos.getDataMes());
+        calendar.set(Calendar.DAY_OF_MONTH, filmesAssistidos.getDataDia());
+
+        campoData.setText(dateFormat.format(calendar.getTime()));
+        campoInedito.setChecked(filmesAssistidos.ehInedito());
+        campoImdbId.setText(filmesAssistidos.getImdbID());
+        campoImdbId.setEnabled(false);
+        campoPosAno.setText(Integer.toString(filmesAssistidos.getPosAno()));
+    }
 }

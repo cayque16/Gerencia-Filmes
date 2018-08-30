@@ -113,6 +113,9 @@ public class AddFilmeActivity extends AppCompatActivity {
         } else {
             FormularioFilmeHelper helper = new FormularioFilmeHelper(AddFilmeActivity.this);
             helper.preencheFormulario(new FilmeDAO(this).retornaUmFilme(chave));
+//            helper.campoInedito.setText(R.string.jaVisto);
+//            new FormularioFilmeAssistidoHelper(AddFilmeActivity.this).campoInedito.setChecked(false);
+//            new FormularioFilmeAssistidoHelper(AddFilmeActivity.this).campoInedito.setEnabled(false);
         }
     }
 }

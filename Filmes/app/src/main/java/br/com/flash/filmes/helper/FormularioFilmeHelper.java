@@ -25,6 +25,7 @@ public class FormularioFilmeHelper {
     private TextView campoTitulo, campoImdbID;
     private TextView campoAno, campoDuracao;
     private TextView campoNota, campoPoster;
+    public TextView campoInedito;
     public static ImageView imagemPoster;
     private Handler handler = new Handler();
 
@@ -38,6 +39,7 @@ public class FormularioFilmeHelper {
         campoNota = activity.findViewById(R.id.add_filme_nota);
         campoPoster = activity.findViewById(R.id.add_filme_poster);
         imagemPoster = activity.findViewById(R.id.add_filme_poster_img);
+        campoInedito = activity.findViewById(R.id.add_filme_inedito);
         filme = new Filme();
     }
 

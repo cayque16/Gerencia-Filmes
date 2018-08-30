@@ -18,7 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:hint="IMDB ID..." />
+            android:hint="IMDB ID..."
+            android:text="tt"
+            android:inputType="number"/>
 
         <Button
             android:layout_width="230dp"
@@ -117,6 +119,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/add_filme_inedito"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

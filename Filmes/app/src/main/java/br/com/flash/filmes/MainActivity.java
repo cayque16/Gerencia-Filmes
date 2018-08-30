@@ -147,28 +147,28 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_main_add:
-                Intent vaiParaAddFilme = new Intent(this, AddFilmeAssistidoActivity.class);
+                Intent vaiParaAddFilme = new Intent(this, AddFilmeActivity.class);
                 startActivity(vaiParaAddFilme);
 //                FilmeDAO dao = new FilmeDAO(this);
 //
 //                FilmesAssistidos filme = new FilmesAssistidos();
-//                filme.setPosAno(80);
+//                filme.setPosAno(22);
 //                dao.deletaFilmeAssistidoErrado(80);
 //                filme.setDataAno(2017);
-//                filme.setDataMes(1);
-//                filme.setDataDia(4);
+//                filme.setDataMes(4);
+//                filme.setDataDia(10);
 //                filme.setPosAno(3);
-//                filme.setImdbID("tt2109248");
-//                filme.setId(75);
-//                filme.setInedito(0);
+//                filme.setImdbID("tt1921064");
+//                filme.setId(93);
+//                filme.setInedito(1);
 //                new FilmeDAO(this).alteraFilmeAssistido(filme);
-
+//
 //                Toast.makeText(this, "Apagou", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.menu_main_filmes:
-                Intent vaiParaListaFilmes = new Intent(this, ListaFilmesActivity.class);
-                startActivity(vaiParaListaFilmes);
-                break;
+//            case R.id.menu_main_filmes:
+//                Intent vaiParaListaFilmes = new Intent(this, ListaFilmesActivity.class);
+//                startActivity(vaiParaListaFilmes);
+//                break;
         }
 
         return super.onOptionsItemSelected(item);

@@ -7,9 +7,4 @@
         android:icon="@drawable/ic_add_black"
         android:title="Adicionar"
         app:showAsAction="always"></item>
-
-    <item
-        android:id="@+id/menu_main_filmes"
-        android:title="Filmes"
-        app:showAsAction="always"></item>
 </menu>

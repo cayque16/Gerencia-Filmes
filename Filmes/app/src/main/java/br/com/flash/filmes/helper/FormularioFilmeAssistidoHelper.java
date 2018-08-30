@@ -31,7 +31,7 @@ import br.com.flash.filmes.models.FilmesAssistidos;
 
 public class FormularioFilmeAssistidoHelper {
     //    private AutoCompleteTextView campoImdbId;
-    private Switch campoInedito;
+    public Switch campoInedito;
     private EditText campoImdbId;
     private EditText campoPosAno, campoData;
     private ArrayList<String> listaAutoComplete = new ArrayList<String>();
@@ -51,6 +51,21 @@ public class FormularioFilmeAssistidoHelper {
 //        campoImdbId.setAdapter(adapter);
         campoImdbId = activity.findViewById(R.id.add_filme_imdbID);
         campoInedito = activity.findViewById(R.id.add_filme_assistido_inedito);
+
+        campoInedito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (campoInedito.isChecked())
+                    new FormularioFilmeHelper((AddFilmeActivity) context)
+                            .campoInedito
+                            .setText(R.string.inedito);
+                else
+                    new FormularioFilmeHelper((AddFilmeActivity) context)
+                            .campoInedito
+                            .setText(R.string.jaVisto);
+            }
+        });
+
         campoPosAno = activity.findViewById(R.id.add_filme_assistido_posAno);
         campoData = activity.findViewById(R.id.add_filme_assistido_data);
         filmesAssistidos = new FilmesAssistidos();

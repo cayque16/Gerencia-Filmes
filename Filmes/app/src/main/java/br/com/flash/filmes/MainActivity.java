@@ -3,7 +3,7 @@ package br.com.flash.filmes;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -25,16 +24,14 @@ import java.util.TimeZone;
 
 import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.add.AddFilmeActivity;
-import br.com.flash.filmes.add.AddFilmeAssistidoActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.models.AnoMeta;
-import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 
 public class MainActivity extends AppCompatActivity {
 
     private List<FilmesAssistidos> filmes;
-    private ListView lista;
+    private ListView listaFilmesAssistidos;
     private TextView totalAssistidos, percentualAssistidos;
     private TextView metaDoAno;
     private int anoAtual, metaAtual;
@@ -46,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lista = findViewById(R.id.main_lista);
+        listaFilmesAssistidos = findViewById(R.id.main_lista);
 
-        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listaFilmesAssistidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                FilmesAssistidos filme = (FilmesAssistidos) lista.getItemAtPosition(i);
+                FilmesAssistidos filme = (FilmesAssistidos) listaFilmesAssistidos.getItemAtPosition(i);
                 Intent vaiProFormulario = new Intent(
                         MainActivity.this, AddFilmeActivity.class);
                 vaiProFormulario.putExtra("filme", filme);
@@ -89,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         atualizaAnoMeta();
         atualizaLista();
         atualizaDadosCabecalho();
+        registerForContextMenu(listaFilmesAssistidos);
     }
 
     private void atualizaAnoMeta(AnoMeta anoMeta) {
@@ -143,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     private void atualizaLista() {
         filmes = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoAtual);
         Collections.sort(filmes);
-        lista.setAdapter(new FilmesAdapter(filmes, this));
+        listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmes, this));
     }
 
     @Override
@@ -193,4 +191,24 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        final FilmesAssistidos filme = (FilmesAssistidos) listaFilmesAssistidos.getItemAtPosition(info.position);
+
+        MenuItem deletar = menu.add("Deletar");
+        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                FilmeDAO dao = new FilmeDAO(MainActivity.this);
+                dao.deletaFilmeAssistido(filme);
+                dao.close();
+                atualizaLista();
+
+                return false;
+            }
+        });
+    }
 }

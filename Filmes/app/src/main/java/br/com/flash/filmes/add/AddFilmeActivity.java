@@ -3,6 +3,7 @@ package br.com.flash.filmes.add;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -66,14 +67,8 @@ public class AddFilmeActivity extends AppCompatActivity {
 
                 FilmeDAO dao = new FilmeDAO(this);
 
-//                if (filme.getId() != null)
-//                    dao.alteraFilme(filme);
-//                else
-
                 if (!dao.existeFilme(filme.getImdbID()))
                     dao.insereFilme(filme);
-                else
-                    dao.alteraFilme(filme);
 
                 if (filmesAssistidos.getId() != null)
                     dao.alteraFilmeAssistido(filmesAssistidos);

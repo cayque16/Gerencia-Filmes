@@ -142,5 +142,6 @@ public class FormularioFilmeAssistidoHelper {
         campoImdbId.setText(filmesAssistidos.getImdbID());
         campoImdbId.setEnabled(false);
         campoPosAno.setText(Integer.toString(filmesAssistidos.getPosAno()));
+        this.filmesAssistidos = filmesAssistidos;
     }
 }

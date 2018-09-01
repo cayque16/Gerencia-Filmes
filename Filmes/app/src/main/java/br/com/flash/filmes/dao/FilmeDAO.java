@@ -173,6 +173,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
         while (c.moveToNext()) {
             AnoMeta anoMeta = new AnoMeta();
+            anoMeta.setId(c.getLong(c.getColumnIndex("id")));
             anoMeta.setAno(c.getInt(c.getColumnIndex("ano")));
             anoMeta.setMeta(c.getInt(c.getColumnIndex("meta")));
 
@@ -275,6 +276,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
         String[] params = {Long.toString(anoMeta.getId())};
         db.update("Ano_Meta", dados, "id = ?", params);
     }
+
 
     public boolean existeFilme(String imdbID) {
         SQLiteDatabase db = getReadableDatabase();

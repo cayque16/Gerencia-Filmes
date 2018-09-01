@@ -19,9 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:layout_weight="1"
             android:text="Ano atual:"
-            android:textSize="15sp"
-            android:layout_weight="1"/>
+            android:textSize="15sp" />
 
         <Spinner
             android:id="@+id/main_spinner_ano_meta"
@@ -44,6 +44,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/fundo_layout"
+            android:onClick="alteraMeta"
             android:orientation="vertical">
 
             <TextView

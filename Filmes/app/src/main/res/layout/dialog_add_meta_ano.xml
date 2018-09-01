@@ -19,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
         android:layout_marginTop="2dp"
-        android:inputType="number"
-        android:text="50" />
+        android:inputType="number" />
 
 </LinearLayout>

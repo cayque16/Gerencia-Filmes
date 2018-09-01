@@ -30,7 +30,6 @@ import java.util.TimeZone;
 
 import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.add.AddFilmeActivity;
-import br.com.flash.filmes.add.AddFilmeAssistidoActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.FilmesAssistidos;
@@ -41,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView listaFilmesAssistidos;
     private TextView totalAssistidos, percentualAssistidos;
     private TextView metaDoAno;
-    private int anoAtual, metaAtual;
-    private ArrayList<String> listaAnoMeta = new ArrayList<String>();
+    private AnoMeta anoMetaAtual = new AnoMeta();
+    private ArrayList<AnoMeta> listaAnoMeta = new ArrayList<AnoMeta>();
     private Spinner spinnerAnoMeta;
     private Dialog dialog;
 
@@ -69,12 +68,21 @@ public class MainActivity extends AppCompatActivity {
         metaDoAno = findViewById(R.id.main_meta);
         spinnerAnoMeta = findViewById(R.id.main_spinner_ano_meta);
 
-        preencheListaAnoMeta();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.adapter_spinner_ano_meta, listaAnoMeta);
-        spinnerAnoMeta.setAdapter(adapter);
 
-//        anoAtual = 2017;
-//        metaAtual = 50;
+
+        dialog = new Dialog(this);
+        dialog = criaDialog();
+        atualizaAnoMeta();
+        criaSpinnerAnoMeta();
+        atualizaLista();
+        atualizaDadosCabecalho();
+        registerForContextMenu(listaFilmesAssistidos);
+    }
+
+    private void criaSpinnerAnoMeta() {
+        preencheListaAnoMeta();
+        ArrayAdapter<AnoMeta> adapter = new ArrayAdapter<AnoMeta>(this, R.layout.adapter_spinner_ano_meta, listaAnoMeta);
+        spinnerAnoMeta.setAdapter(adapter);
 
         //captura o clique do spinner que altera o ano
         spinnerAnoMeta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -90,12 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        dialog = new Dialog(this);
-        dialog = criaDialog();
-        atualizaAnoMeta();
-        atualizaLista();
-        atualizaDadosCabecalho();
-        registerForContextMenu(listaFilmesAssistidos);
     }
 
     private Dialog criaDialog() {
@@ -107,23 +109,26 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         EditText valorInserido = dialog.findViewById(R.id.dialog_add_meta_valor);
-                        int valorMeta;
+                        int valorMetaNova;
+                        String mensagemErro = "Valor inválido, sem alteração!";
                         try {
-                            valorMeta = Integer.valueOf(valorInserido.getText().toString());
+                            valorMetaNova = Integer.valueOf(valorInserido.getText().toString());
                         } catch (NumberFormatException e) {
-                            Toast.makeText(MainActivity.this, "Valor inválido, padrão aplicado!", Toast.LENGTH_SHORT).show();
-                            metaAtual = 50;
+                            Toast.makeText(MainActivity.this, mensagemErro, Toast.LENGTH_SHORT).show();
                             return;
                         }
 
-                        if (valorMeta <= 0) {
-                            Toast.makeText(MainActivity.this, "Valor inválido, padrão aplicado!", Toast.LENGTH_SHORT).show();
-                            metaAtual = 50;
-                        } else if (valorMeta > 999) {
-                            Toast.makeText(MainActivity.this, "Valor inválido, padrão aplicado!", Toast.LENGTH_SHORT).show();
-                            metaAtual = 50;
+                        if (valorMetaNova <= 0) {
+                            Toast.makeText(MainActivity.this, mensagemErro, Toast.LENGTH_SHORT).show();
+                        } else if (valorMetaNova > 999) {
+                            Toast.makeText(MainActivity.this, mensagemErro, Toast.LENGTH_SHORT).show();
+                        } else {
+                            anoMetaAtual.setMeta(valorMetaNova);
+                            new FilmeDAO(MainActivity.this).alteraAnoMeta(anoMetaAtual);
+                            atualizaAnoMeta(anoMetaAtual);
+                            criaSpinnerAnoMeta();
+                            Toast.makeText(MainActivity.this, "Meta alterada!", Toast.LENGTH_LONG).show();
                         }
-                        metaAtual = valorMeta;
                     }
 
                 })
@@ -137,16 +142,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void atualizaAnoMeta(AnoMeta anoMeta) {
-        anoAtual = anoMeta.getAno();
-        metaAtual = anoMeta.getMeta();
+        anoMetaAtual = anoMeta;
         atualizaLista();
         atualizaDadosCabecalho();
     }
 
     private void preencheListaAnoMeta() {
         FilmeDAO dao = new FilmeDAO(this);
+        listaAnoMeta.clear();
         for (AnoMeta anoMeta : dao.buscaAnoMeta()) {
-            listaAnoMeta.add(anoMeta.toString());
+            listaAnoMeta.add(anoMeta);
         }
     }
 
@@ -156,15 +161,20 @@ public class MainActivity extends AppCompatActivity {
         FilmeDAO dao = new FilmeDAO(this);
         AnoMeta anoMetaAux = new AnoMeta();
 
-        anoAtual = calendar.get(Calendar.YEAR);
-        if (dao.existeAnoMeta(anoAtual)) {
-            metaAtual = dao
-                    .buscaAnoMetaDoAno(anoAtual)
-                    .get(0)
-                    .getMeta();
-
-            anoMetaAux.setAno(anoAtual);
-            anoMetaAux.setMeta(metaAtual);
+        anoMetaAtual.setAno(calendar.get(Calendar.YEAR));
+        if (dao.existeAnoMeta(anoMetaAtual.getAno())) {
+//            anoMetaAtual.setMeta(dao
+//                    .buscaAnoMetaDoAno(anoMetaAtual.getAno())
+//                    .get(0)
+//                    .getMeta());
+//            anoMetaAtual.setId(dao
+//                    .buscaAnoMetaDoAno(anoMetaAtual.getAno())
+//                    .get(0)
+//                    .getId());
+            anoMetaAtual = anoMetaAux = dao.buscaAnoMetaDoAno(anoMetaAtual.getAno())
+                    .get(0);
+//            anoMetaAux.setAno(anoMetaAtual.getAno());
+//            anoMetaAux.setMeta(anoMetaAtual.getMeta());
             for (int i = 0; i < dao.buscaAnoMeta().size(); i++) {
                 if (dao.buscaAnoMeta().get(i).equals(anoMetaAux)) {
                     spinnerAnoMeta.setSelection(i);
@@ -172,25 +182,25 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else {
-            anoMetaAux.setAno(anoAtual);
-            metaAtual = 50;
-            anoMetaAux.setMeta(metaAtual);
+            anoMetaAux.setAno(anoMetaAtual.getAno());
+            anoMetaAtual.setMeta(50);
+            anoMetaAux.setMeta(anoMetaAtual.getMeta());
             dao.insereAnoMeta(anoMetaAux);
         }
     }
 
 
     private void atualizaDadosCabecalho() {
-        int quantidadeAssistidos = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoAtual).size();
-        float percentual = (quantidadeAssistidos / (float) metaAtual) * 100;
+        int quantidadeAssistidos = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoMetaAtual.getAno()).size();
+        float percentual = (quantidadeAssistidos / (float) anoMetaAtual.getMeta()) * 100;
         DecimalFormat df = new DecimalFormat("0.00");
         totalAssistidos.setText(Integer.toString(quantidadeAssistidos));
         percentualAssistidos.setText("(" + df.format(percentual) + "%)");
-        metaDoAno.setText(Integer.toString(metaAtual));
+        metaDoAno.setText(Integer.toString(anoMetaAtual.getMeta()));
     }
 
     private void atualizaLista() {
-        filmes = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoAtual);
+        filmes = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoMetaAtual.getAno());
         Collections.sort(filmes);
         listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmes, this));
     }
@@ -263,5 +273,9 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public void alteraMeta(View view) {
+        dialog.show();
     }
 }

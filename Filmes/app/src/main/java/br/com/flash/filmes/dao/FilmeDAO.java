@@ -245,7 +245,8 @@ public class FilmeDAO extends SQLiteOpenHelper {
     public void deletaAnoMeta(AnoMeta anoMeta) {
         SQLiteDatabase db = getReadableDatabase();
 
-        String[] params = {Long.toString(anoMeta.getId())};
+        String[] params = {Integer.toString(anoMeta.getAno())};
+        db.delete("Ano_Meta", "ano = ?", params);
     }
 
     public void alteraFilme(Filme filme) {
@@ -284,7 +285,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
         return resultados > 0;
     }
 
-    public boolean existeAnoMeta(int ano){
+    public boolean existeAnoMeta(int ano) {
         SQLiteDatabase db = getReadableDatabase();
         String existe = "SELECT * FROM Ano_Meta WHERE ano = ? LIMIT 1";
         Cursor cursor = db.rawQuery(existe, new String[]{Integer.toString(ano)});

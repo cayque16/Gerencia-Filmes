@@ -1,18 +1,24 @@
 package br.com.flash.filmes;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -24,6 +30,7 @@ import java.util.TimeZone;
 
 import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.add.AddFilmeActivity;
+import br.com.flash.filmes.add.AddFilmeAssistidoActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.FilmesAssistidos;
@@ -37,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private int anoAtual, metaAtual;
     private ArrayList<String> listaAnoMeta = new ArrayList<String>();
     private Spinner spinnerAnoMeta;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,11 +90,50 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        dialog = new Dialog(this);
+        dialog = criaDialog();
         atualizaAnoMeta();
         atualizaLista();
         atualizaDadosCabecalho();
         registerForContextMenu(listaFilmesAssistidos);
+    }
+
+    private Dialog criaDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        builder.setView(inflater.inflate(R.layout.dialog_add_meta_ano, null))
+                .setPositiveButton("Salvar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        EditText valorInserido = dialog.findViewById(R.id.dialog_add_meta_valor);
+                        int valorMeta;
+                        try {
+                            valorMeta = Integer.valueOf(valorInserido.getText().toString());
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(MainActivity.this, "Valor inválido, padrão aplicado!", Toast.LENGTH_SHORT).show();
+                            metaAtual = 50;
+                            return;
+                        }
+
+                        if (valorMeta <= 0) {
+                            Toast.makeText(MainActivity.this, "Valor inválido, padrão aplicado!", Toast.LENGTH_SHORT).show();
+                            metaAtual = 50;
+                        } else if (valorMeta > 999) {
+                            Toast.makeText(MainActivity.this, "Valor inválido, padrão aplicado!", Toast.LENGTH_SHORT).show();
+                            metaAtual = 50;
+                        }
+                        metaAtual = valorMeta;
+                    }
+
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        return builder.create();
     }
 
     private void atualizaAnoMeta(AnoMeta anoMeta) {
@@ -107,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = new GregorianCalendar();
         calendar.setTimeZone(TimeZone.getDefault());
         FilmeDAO dao = new FilmeDAO(this);
+        AnoMeta anoMetaAux = new AnoMeta();
 
         anoAtual = calendar.get(Calendar.YEAR);
         if (dao.existeAnoMeta(anoAtual)) {
@@ -114,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     .buscaAnoMetaDoAno(anoAtual)
                     .get(0)
                     .getMeta();
-            AnoMeta anoMetaAux = new AnoMeta();
+
             anoMetaAux.setAno(anoAtual);
             anoMetaAux.setMeta(metaAtual);
             for (int i = 0; i < dao.buscaAnoMeta().size(); i++) {
@@ -124,10 +172,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else {
-            anoAtual = 0;
-            metaAtual = 0;
+            anoMetaAux.setAno(anoAtual);
+            metaAtual = 50;
+            anoMetaAux.setMeta(metaAtual);
+            dao.insereAnoMeta(anoMetaAux);
         }
     }
+
 
     private void atualizaDadosCabecalho() {
         int quantidadeAssistidos = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoAtual).size();
@@ -160,7 +211,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent vaiParaAddFilme = new Intent(this, AddFilmeActivity.class);
                 startActivity(vaiParaAddFilme);
 //                FilmeDAO dao = new FilmeDAO(this);
-//
+//                AnoMeta ano = new AnoMeta();
+//                ano.setAno(2019);
+//                dao.deletaAnoMeta(ano);
 //                FilmesAssistidos filme = new FilmesAssistidos();
 //                filme.setPosAno(22);
 //                dao.deletaFilmeAssistidoErrado(80);

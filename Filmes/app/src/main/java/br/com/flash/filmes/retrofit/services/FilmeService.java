@@ -11,8 +11,6 @@ import retrofit2.http.Query;
 
 public interface FilmeService {
 
-//    @Headers("apikey: 9eb1dfef")
-
     @GET("/?apikey=9eb1dfef")
     Call<Movie> buscaFilme(@Query("i") String imdbId);
 }

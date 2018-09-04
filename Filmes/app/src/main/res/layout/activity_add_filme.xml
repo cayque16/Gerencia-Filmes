@@ -19,8 +19,8 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:hint="IMDB ID..."
-            android:text="tt"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:text="tt" />
 
         <Button
             android:layout_width="230dp"
@@ -38,14 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="Inédito" />
-
-    <EditText
-        android:id="@+id/add_filme_assistido_posAno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Posição no ano"
-        android:inputType="number" />
 
     <EditText
         android:id="@+id/add_filme_assistido_data"
@@ -146,5 +138,14 @@
         android:id="@+id/add_filme_poster"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
+    <EditText
+        android:id="@+id/add_filme_assistido_posAno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Posição no ano"
+        android:inputType="number"
         android:visibility="invisible" />
 </LinearLayout>

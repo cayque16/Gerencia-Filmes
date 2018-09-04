@@ -314,4 +314,21 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
         return filmes.get(0);
     }
+
+    public FilmesAssistidos retornaUltimoFilmeAssistidoNoAnoDe(int ano) {
+        String sql = "SELECT * FROM Filmes_Assistidos " +
+                "WHERE (posAno = " +
+                "(SELECT MAX(posAno) FROM Filmes_Assistidos WHERE dataAno = ?) " +
+                "AND (dataAno = ?))";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(sql, new String[]{Integer.toString(ano), Integer.toString(ano)});
+
+        List<FilmesAssistidos> filmesAssistidos = populaFilmesAssistidos(c);
+
+        try {
+            return filmesAssistidos.get(0);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
 }

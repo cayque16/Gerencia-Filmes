@@ -67,6 +67,7 @@ public class FormularioFilmeAssistidoHelper {
         });
 
         campoPosAno = activity.findViewById(R.id.add_filme_assistido_posAno);
+
         campoData = activity.findViewById(R.id.add_filme_assistido_data);
         filmesAssistidos = new FilmesAssistidos();
 
@@ -75,6 +76,7 @@ public class FormularioFilmeAssistidoHelper {
         dateFormat = DateFormat.getDateInstance();
 
         campoData.setText(dateFormat.format(calendar.getTime()));
+        preenchePosAno(calendar.get(Calendar.YEAR));
 
         dialogDatePicker = new DatePickerDialog(context, AlertDialog.THEME_HOLO_LIGHT,
                 new DatePickerDialog.OnDateSetListener() {
@@ -84,6 +86,7 @@ public class FormularioFilmeAssistidoHelper {
                         calendar.set(Calendar.MONTH, i1);
                         calendar.set(Calendar.DAY_OF_MONTH, i2);
                         campoData.setText(dateFormat.format(calendar.getTime()));
+                        preenchePosAno(calendar.get(Calendar.YEAR));
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -96,6 +99,16 @@ public class FormularioFilmeAssistidoHelper {
                 dialogDatePicker.show();
             }
         });
+    }
+
+    private void preenchePosAno(int ano) {
+        FilmeDAO dao = new FilmeDAO(context);
+        FilmesAssistidos ultimoFilmeAssistido =
+                dao.retornaUltimoFilmeAssistidoNoAnoDe(ano);
+        if (ultimoFilmeAssistido != null)
+            campoPosAno.setText(Integer.toString(ultimoFilmeAssistido.getPosAno() + 1));
+        else
+            campoPosAno.setText(Integer.toString(1));
     }
 
     public FilmesAssistidos pegaFilmeAssistido() {

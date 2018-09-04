@@ -68,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
         metaDoAno = findViewById(R.id.main_meta);
         spinnerAnoMeta = findViewById(R.id.main_spinner_ano_meta);
 
-
-
         dialog = new Dialog(this);
         dialog = criaDialog();
         atualizaAnoMeta();
@@ -163,18 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
         anoMetaAtual.setAno(calendar.get(Calendar.YEAR));
         if (dao.existeAnoMeta(anoMetaAtual.getAno())) {
-//            anoMetaAtual.setMeta(dao
-//                    .buscaAnoMetaDoAno(anoMetaAtual.getAno())
-//                    .get(0)
-//                    .getMeta());
-//            anoMetaAtual.setId(dao
-//                    .buscaAnoMetaDoAno(anoMetaAtual.getAno())
-//                    .get(0)
-//                    .getId());
             anoMetaAtual = anoMetaAux = dao.buscaAnoMetaDoAno(anoMetaAtual.getAno())
                     .get(0);
-//            anoMetaAux.setAno(anoMetaAtual.getAno());
-//            anoMetaAux.setMeta(anoMetaAtual.getMeta());
             for (int i = 0; i < dao.buscaAnoMeta().size(); i++) {
                 if (dao.buscaAnoMeta().get(i).equals(anoMetaAux)) {
                     spinnerAnoMeta.setSelection(i);

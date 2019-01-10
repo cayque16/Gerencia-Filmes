@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         criaSpinnerAnoMeta();
         atualizaLista();
         atualizaDadosCabecalho();
+        atualizaAnoMeta();
         registerForContextMenu(listaFilmesAssistidos);
     }
 

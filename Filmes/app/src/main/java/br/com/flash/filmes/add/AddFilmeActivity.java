@@ -72,8 +72,10 @@ public class AddFilmeActivity extends AppCompatActivity {
 
                 if (filmesAssistidos.getId() != null)
                     dao.alteraFilmeAssistido(filmesAssistidos);
-                else
+                else {
+                    filmesAssistidos.setPosAno(helperFilmeAssistido.getUltimaPosAno());
                     dao.insereFilmeAssistido(filmesAssistidos);
+                }
 
                 dao.close();
 

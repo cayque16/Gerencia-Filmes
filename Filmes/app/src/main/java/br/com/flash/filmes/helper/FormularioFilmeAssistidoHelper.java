@@ -76,7 +76,8 @@ public class FormularioFilmeAssistidoHelper {
         dateFormat = DateFormat.getDateInstance();
 
         campoData.setText(dateFormat.format(calendar.getTime()));
-        preenchePosAno(calendar.get(Calendar.YEAR));
+
+//        preenchePosAno(calendar.get(Calendar.YEAR));
 
         dialogDatePicker = new DatePickerDialog(context, AlertDialog.THEME_HOLO_LIGHT,
                 new DatePickerDialog.OnDateSetListener() {
@@ -86,7 +87,7 @@ public class FormularioFilmeAssistidoHelper {
                         calendar.set(Calendar.MONTH, i1);
                         calendar.set(Calendar.DAY_OF_MONTH, i2);
                         campoData.setText(dateFormat.format(calendar.getTime()));
-                        preenchePosAno(calendar.get(Calendar.YEAR));
+                        //preenchePosAno(calendar.get(Calendar.YEAR));
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -101,14 +102,9 @@ public class FormularioFilmeAssistidoHelper {
         });
     }
 
-    private void preenchePosAno(int ano) {
-        FilmeDAO dao = new FilmeDAO(context);
-        FilmesAssistidos ultimoFilmeAssistido =
-                dao.retornaUltimoFilmeAssistidoNoAnoDe(ano);
-        if (ultimoFilmeAssistido != null)
-            campoPosAno.setText(Integer.toString(ultimoFilmeAssistido.getPosAno() + 1));
-        else
-            campoPosAno.setText(Integer.toString(1));
+    public int getUltimaPosAno(){
+        return new FilmeDAO(context).retornaUltimoFilmeAssistidoNoAnoDe(calendar.get(Calendar.YEAR))
+                .getPosAno() + 1;
     }
 
     public FilmesAssistidos pegaFilmeAssistido() {
@@ -118,7 +114,7 @@ public class FormularioFilmeAssistidoHelper {
             filmesAssistidos.tornaInedito();
         else
             filmesAssistidos.tiraInedito();
-        filmesAssistidos.setPosAno(Integer.valueOf(campoPosAno.getText().toString()));
+        //filmesAssistidos.setPosAno(Integer.valueOf(campoPosAno.getText().toString()));
         filmesAssistidos.setDataDia(calendar.get(Calendar.DAY_OF_MONTH));
         filmesAssistidos.setDataMes(calendar.get(Calendar.MONTH) + 1);
         filmesAssistidos.setDataAno(calendar.get(Calendar.YEAR));
@@ -126,12 +122,12 @@ public class FormularioFilmeAssistidoHelper {
         return filmesAssistidos;
     }
 
-    public void preencheListaAutoComplete() {
-        FilmeDAO dao = new FilmeDAO(context);
-        for (Filme filme : dao.buscaFilmes()) {
-            listaAutoComplete.add(filme.toString());
-        }
-    }
+//    public void preencheListaAutoComplete() {
+//        FilmeDAO dao = new FilmeDAO(context);
+//        for (Filme filme : dao.buscaFilmes()) {
+//            listaAutoComplete.add(filme.toString());
+//        }
+//    }
 
     public String pegaImdb(String campoImdbID) {
         String concatenado = "";

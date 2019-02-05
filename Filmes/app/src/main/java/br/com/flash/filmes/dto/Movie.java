@@ -98,13 +98,19 @@ public class Movie {
         filme.setTitulo(this.title);
         filme.setAno(Integer.parseInt(this.year));
         filme.setDuracao(getRuntimeEmInt());
-        filme.setNota(Double.valueOf(this.imdbRating));
+        if (!this.imdbRating.equals("N/A"))
+            filme.setNota(Double.valueOf(this.imdbRating));
+        else
+            filme.setNota(Double.valueOf(0));
         filme.setPoster(this.poster);
 
         return filme;
     }
 
     private int getRuntimeEmInt() {
+        if (runtime.equals("N/A"))
+            return 0;
+
         String concatena = "";
 
         for (int i = 0; i < runtime.length(); i++) {

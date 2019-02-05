@@ -94,10 +94,16 @@ public class FilmesAdapter extends BaseAdapter {
         tv5.setText(Integer.toString(filme.getAno()));
 
         TextView tv6 = v.findViewById(id.list_adapter_duracao);
-        tv6.setText(filme.getDuracao() + "min");
+        if (filme.getDuracao() > 0)
+            tv6.setText(filme.getDuracao() + "min");
+        else
+            tv6.setText("N/A");
 
         TextView tv7 = v.findViewById(id.list_adapter_nota);
-        tv7.setText("IMDB: " + filme.getNota());
+        if (filme.getNota() > 0)
+            tv7.setText("IMDB: " + filme.getNota());
+        else
+            tv7.setText("N/A");
 
         ImageView poster = v.findViewById(id.list_adapter_poster);
 

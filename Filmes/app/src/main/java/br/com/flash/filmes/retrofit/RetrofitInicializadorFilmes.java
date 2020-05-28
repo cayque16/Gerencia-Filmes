@@ -10,10 +10,10 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  * Created by cayqu on 21/08/2018.
  */
 
-public class RetrofitInicializador {
+public class RetrofitInicializadorFilmes {
     private final Retrofit retrofit;
 
-    public RetrofitInicializador() {
+    public RetrofitInicializadorFilmes() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

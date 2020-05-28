@@ -3,7 +3,6 @@ package br.com.flash.filmes.add;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +17,7 @@ import br.com.flash.filmes.helper.FormularioFilmeAssistidoHelper;
 import br.com.flash.filmes.helper.FormularioFilmeHelper;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
-import br.com.flash.filmes.retrofit.RetrofitInicializador;
+import br.com.flash.filmes.retrofit.RetrofitInicializadorFilmes;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -92,7 +91,7 @@ public class AddFilmeActivity extends AppCompatActivity {
 
         if (!new FilmeDAO(this).existeFilme(chave)) {
 
-            Call<Movie> call = new RetrofitInicializador().getFilmeService().buscaFilme(chave);
+            Call<Movie> call = new RetrofitInicializadorFilmes().getFilmeService().buscaFilme(chave);
 
             call.enqueue(new Callback<Movie>() {
                 @Override

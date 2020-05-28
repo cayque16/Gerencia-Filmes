@@ -62,13 +62,13 @@ public class FilmesAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         FilmesAssistidos filmesAssistidos = list.get(i);
-        Filme filme = new FilmeDAO(context).retornaUmFilme(filmesAssistidos.getImdbID());
+//        Filme filme = new FilmeDAO(context).retornaUmFilme(filmesAssistidos.getImdbID());
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.list_adapter_filmes_assistidos, null);
 
         TextView tv1 = v.findViewById(R.id.list_adapter_titulo);
-        tv1.setText(filme.getTitulo());
+        tv1.setText(filmesAssistidos.getImdbID());
 
         TextView tv2 = v.findViewById(R.id.list_adapter_inedito);
         LinearLayout caixa = v.findViewById(R.id.list_adapter_caixa_posicao);
@@ -88,29 +88,29 @@ public class FilmesAdapter extends BaseAdapter {
 //        tv3.setText(Long.toString(filmesAssistidos.getId()));
 
         TextView tv4 = v.findViewById(R.id.list_adapter_data);
-        tv4.setText(filmesAssistidos.getDataFormatada());
+        tv4.setText(filmesAssistidos.getData());
 
-        TextView tv5 = v.findViewById(R.id.list_adapter_ano);
-        tv5.setText(Integer.toString(filme.getAno()));
+//        TextView tv5 = v.findViewById(R.id.list_adapter_ano);
+//        tv5.setText(Integer.toString(filme.getAno()));
 
-        TextView tv6 = v.findViewById(id.list_adapter_duracao);
-        if (filme.getDuracao() > 0)
-            tv6.setText(filme.getDuracao() + "min");
-        else
-            tv6.setText("N/A");
+//        TextView tv6 = v.findViewById(id.list_adapter_duracao);
+//        if (filme.getDuracao() > 0)
+//            tv6.setText(filme.getDuracao() + "min");
+//        else
+//            tv6.setText("N/A");
 
-        TextView tv7 = v.findViewById(id.list_adapter_nota);
-        if (filme.getNota() > 0)
-            tv7.setText("IMDB: " + filme.getNota());
-        else
-            tv7.setText("N/A");
+//        TextView tv7 = v.findViewById(id.list_adapter_nota);
+//        if (filme.getNota() > 0)
+//            tv7.setText("IMDB: " + filme.getNota());
+//        else
+//            tv7.setText("N/A");
 
-        ImageView poster = v.findViewById(id.list_adapter_poster);
-
-        if (filme.getPosterBytes() == null)
-            carregaPosterDaWeb(poster, filme);
-        else
-            carregaPosterDoBanco(poster, filme);
+//        ImageView poster = v.findViewById(id.list_adapter_poster);
+//
+//        if (filme.getPosterBytes() == null)
+//            carregaPosterDaWeb(poster, filme);
+//        else
+//            carregaPosterDoBanco(poster, filme);
 
         return v;
     }

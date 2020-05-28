@@ -16,6 +16,7 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializa
     private int dataDia;
     private int dataMes;
     private int dataAno;
+    private String data;
 
     @Override
     public String toString() {
@@ -69,6 +70,14 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializa
 
     public void setPosAno(int posAno) {
         this.posAno = posAno;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     public String getPosAnoFormatado() {

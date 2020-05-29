@@ -5,24 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.flash.filmes.add.AddFilmeActivity;
-import br.com.flash.filmes.dto.DadosBd;
-import br.com.flash.filmes.dto.Movie;
-import br.com.flash.filmes.helper.FormularioFilmeHelper;
 import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
-import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
-import br.com.flash.filmes.retrofit.RetrofitInicializadorFilmes;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by cayqu on 15/08/2018.
@@ -185,7 +174,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
         while (c.moveToNext()) {
             AnoMeta anoMeta = new AnoMeta();
-            anoMeta.setId(c.getLong(c.getColumnIndex("id")));
+            anoMeta.setId(c.getInt(c.getColumnIndex("id")));
             anoMeta.setAno(c.getInt(c.getColumnIndex("ano")));
             anoMeta.setMeta(c.getInt(c.getColumnIndex("meta")));
 

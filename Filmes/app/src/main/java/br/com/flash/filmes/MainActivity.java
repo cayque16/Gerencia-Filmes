@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,7 +23,6 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -32,7 +30,8 @@ import java.util.TimeZone;
 import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.add.AddFilmeActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
-import br.com.flash.filmes.dto.DadosBd;
+import br.com.flash.filmes.dto.AnoMetaBd;
+import br.com.flash.filmes.dto.FilmeAssistidoBd;
 import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.FilmesAssistidos;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
@@ -153,11 +152,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void preencheListaAnoMeta() {
-        FilmeDAO dao = new FilmeDAO(this);
         listaAnoMeta.clear();
-        for (AnoMeta anoMeta : dao.buscaAnoMeta()) {
-            listaAnoMeta.add(anoMeta);
-        }
+        Call<List<AnoMetaBd>> call = new RetrofitInicializadorBd().getBdService().buscaAnosMeta();
+
+        call.enqueue(new Callback<List<AnoMetaBd>>() {
+            @Override
+            public void onResponse(Call<List<AnoMetaBd>> call, Response<List<AnoMetaBd>> response) {
+                for (AnoMetaBd i :response.body()){
+                    listaAnoMeta.add(i.getAnoMeta());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<AnoMetaBd>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void atualizaAnoMeta() {
@@ -194,36 +204,25 @@ public class MainActivity extends AppCompatActivity {
         metaDoAno.setText(Integer.toString(anoMetaAtual.getMeta()));
     }
 
-//    private void atualizaLista() {
-//        filmes = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoMetaAtual.getAno());
-//        Collections.sort(filmes);
-//        listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmes, this));
-//    }
-
     private void atualizaLista() {
 
-        Call<List<DadosBd>> call = new RetrofitInicializadorBd().getBdService().buscaFilme(anoMetaAtual.getAno());
+        Call<List<FilmeAssistidoBd>> call = new RetrofitInicializadorBd().getBdService().buscaListaFilmesAssistidos(anoMetaAtual.getAno());
 
-        call.enqueue(new Callback<List<DadosBd>>() {
+        call.enqueue(new Callback<List<FilmeAssistidoBd>>() {
             @Override
-            public void onResponse(Call<List<DadosBd>> call, Response<List<DadosBd>> response) {
+            public void onResponse(Call<List<FilmeAssistidoBd>> call, Response<List<FilmeAssistidoBd>> response) {
                 List<FilmesAssistidos> filmesAssistidos = new ArrayList<FilmesAssistidos>();
-                for (DadosBd i :response.body()){
-//                    Log.w("TESTE",i.getTitulo());
+                for (FilmeAssistidoBd i :response.body()){
                     filmesAssistidos.add(i.getFilme());
                 }
                 listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmesAssistidos, MainActivity.this));
             }
 
             @Override
-            public void onFailure(Call<List<DadosBd>> call, Throwable t) {
-
+            public void onFailure(Call<List<FilmeAssistidoBd>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-//        Collections.sort(filmes);
-
     }
 
     @Override

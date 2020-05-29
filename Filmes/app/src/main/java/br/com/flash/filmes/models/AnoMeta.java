@@ -5,7 +5,7 @@ package br.com.flash.filmes.models;
  */
 
 public class AnoMeta {
-    private Long id;
+    private int id;
     private int ano, meta;
 
     public int getMeta() {
@@ -24,11 +24,11 @@ public class AnoMeta {
         this.ano = ano;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

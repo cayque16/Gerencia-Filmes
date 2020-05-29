@@ -62,7 +62,6 @@ public class FilmesAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         FilmesAssistidos filmesAssistidos = list.get(i);
-//        Filme filme = new FilmeDAO(context).retornaUmFilme(filmesAssistidos.getImdbID());
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.list_adapter_filmes_assistidos, null);

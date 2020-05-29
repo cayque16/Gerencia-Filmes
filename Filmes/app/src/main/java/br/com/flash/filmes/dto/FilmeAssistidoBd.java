@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import java.time.format.DateTimeFormatter;
-
 import br.com.flash.filmes.models.FilmesAssistidos;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -19,7 +17,7 @@ import br.com.flash.filmes.models.FilmesAssistidos;
         "data",
         "inedito"
 })
-public class DadosBd {
+public class FilmeAssistidoBd {
     @JsonProperty("posano")
     private int posano;
     @JsonProperty("titulo")

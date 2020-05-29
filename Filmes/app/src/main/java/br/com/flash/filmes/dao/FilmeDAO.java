@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -142,30 +143,17 @@ public class FilmeDAO extends SQLiteOpenHelper {
     }
 
     public List<FilmesAssistidos> buscaFilmesAssistidosNoAnoDe(int ano) {
-//        String sql = "SELECT * FROM Filmes_Assistidos WHERE dataAno = ?";
-//
-//        SQLiteDatabase db = getReadableDatabase();
-//
-//        String[] params = {Integer.toString(ano)};
-//
-//        Cursor c = db.rawQuery(sql, params);
-//        List<FilmesAssistidos> filmesAssistidos = populaFilmesAssistidos(c);
-//        c.close();
-        Call<DadosBd> call = new RetrofitInicializadorBd().getBdService().buscaFilme(ano);
-        final List<FilmesAssistidos> filmesAssistidos = new ArrayList<FilmesAssistidos>();
-        call.enqueue(new Callback<DadosBd>() {
-            @Override
-            public void onResponse(Call<DadosBd> call, Response<DadosBd> response) {
-                FilmesAssistidos filme = response.body().getFilme();
 
-                filmesAssistidos.add(filme);
-            }
+        String sql = "SELECT * FROM Filmes_Assistidos WHERE dataAno = ?";
 
-            @Override
-            public void onFailure(Call<DadosBd> call, Throwable t) {
-//                Toast.makeText(AddFilmeActivity.this, "Não foi possível carregar os dados!!!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        SQLiteDatabase db = getReadableDatabase();
+
+        String[] params = {Integer.toString(ano)};
+
+        Cursor c = db.rawQuery(sql, params);
+        List<FilmesAssistidos> filmesAssistidos = populaFilmesAssistidos(c);
+        c.close();
+
         return filmesAssistidos;
     }
 

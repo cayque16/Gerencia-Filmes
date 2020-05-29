@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,8 +32,13 @@ import java.util.TimeZone;
 import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.add.AddFilmeActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
+import br.com.flash.filmes.dto.DadosBd;
 import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.FilmesAssistidos;
+import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -188,10 +194,36 @@ public class MainActivity extends AppCompatActivity {
         metaDoAno.setText(Integer.toString(anoMetaAtual.getMeta()));
     }
 
+//    private void atualizaLista() {
+//        filmes = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoMetaAtual.getAno());
+//        Collections.sort(filmes);
+//        listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmes, this));
+//    }
+
     private void atualizaLista() {
-        filmes = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoMetaAtual.getAno());
-        Collections.sort(filmes);
-        listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmes, this));
+
+        Call<List<DadosBd>> call = new RetrofitInicializadorBd().getBdService().buscaFilme(anoMetaAtual.getAno());
+
+        call.enqueue(new Callback<List<DadosBd>>() {
+            @Override
+            public void onResponse(Call<List<DadosBd>> call, Response<List<DadosBd>> response) {
+                List<FilmesAssistidos> filmesAssistidos = new ArrayList<FilmesAssistidos>();
+                for (DadosBd i :response.body()){
+//                    Log.w("TESTE",i.getTitulo());
+                    filmesAssistidos.add(i.getFilme());
+                }
+                listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmesAssistidos, MainActivity.this));
+            }
+
+            @Override
+            public void onFailure(Call<List<DadosBd>> call, Throwable t) {
+
+            }
+        });
+
+
+//        Collections.sort(filmes);
+
     }
 
     @Override

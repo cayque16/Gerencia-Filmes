@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -78,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         atualizaAnoMeta();
         criaSpinnerAnoMeta();
         atualizaLista();
-        atualizaDadosCabecalho();
         atualizaAnoMeta();
         registerForContextMenu(listaFilmesAssistidos);
     }
@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerAnoMeta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                AnoMeta anoMeta = new FilmeDAO(MainActivity.this)
-                        .buscaAnoMeta().get(i);
+                AnoMeta anoMeta = listaAnoMeta.get(i);
                 atualizaAnoMeta(anoMeta);
             }
 
@@ -145,12 +144,6 @@ public class MainActivity extends AppCompatActivity {
         return builder.create();
     }
 
-    private void atualizaAnoMeta(AnoMeta anoMeta) {
-        anoMetaAtual = anoMeta;
-        atualizaLista();
-        atualizaDadosCabecalho();
-    }
-
     private void preencheListaAnoMeta() {
         listaAnoMeta.clear();
         Call<List<AnoMetaBd>> call = new RetrofitInicializadorBd().getBdService().buscaAnosMeta();
@@ -161,6 +154,8 @@ public class MainActivity extends AppCompatActivity {
                 for (AnoMetaBd i :response.body()){
                     listaAnoMeta.add(i.getAnoMeta());
                 }
+                ArrayAdapter<AnoMeta> adapter = new ArrayAdapter<AnoMeta>(MainActivity.this, R.layout.adapter_spinner_ano_meta, listaAnoMeta);
+                spinnerAnoMeta.setAdapter(adapter);
             }
 
             @Override
@@ -170,39 +165,74 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void atualizaAnoMeta(AnoMeta anoMeta) {
+        anoMetaAtual = anoMeta;
+        atualizaLista();
+    }
+
     private void atualizaAnoMeta() {
         Calendar calendar = new GregorianCalendar();
         calendar.setTimeZone(TimeZone.getDefault());
-        FilmeDAO dao = new FilmeDAO(this);
-        AnoMeta anoMetaAux = new AnoMeta();
+        final AnoMeta[] anoMetaAux = {new AnoMeta()};
+        Call<AnoMetaBd> call = new RetrofitInicializadorBd().getBdService().getAnoMeta(calendar.get(Calendar.YEAR));
 
         anoMetaAtual.setAno(calendar.get(Calendar.YEAR));
-        if (dao.existeAnoMeta(anoMetaAtual.getAno())) {
-            anoMetaAtual = anoMetaAux = dao.buscaAnoMetaDoAno(anoMetaAtual.getAno())
+
+        call.enqueue(new Callback<AnoMetaBd>() {
+            @Override
+            public void onResponse(Call<AnoMetaBd> call, Response<AnoMetaBd> response) {
+                if (response.body().getAnoMeta() != null){
+                    anoMetaAtual = anoMetaAux[0] = response.body().getAnoMeta();
+                    Log.d("teste",anoMetaAtual.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AnoMetaBd> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*if (dao.existeAnoMeta(anoMetaAtual.getAno())) {
+            anoMetaAtual = anoMetaAux[0] = dao.buscaAnoMetaDoAno(anoMetaAtual.getAno())
                     .get(0);
             for (int i = 0; i < dao.buscaAnoMeta().size(); i++) {
-                if (dao.buscaAnoMeta().get(i).equals(anoMetaAux)) {
+                if (dao.buscaAnoMeta().get(i).equals(anoMetaAux[0])) {
                     spinnerAnoMeta.setSelection(i);
                 }
             }
 
         } else {
-            anoMetaAux.setAno(anoMetaAtual.getAno());
+            anoMetaAux[0].setAno(anoMetaAtual.getAno());
             anoMetaAtual.setMeta(50);
-            anoMetaAux.setMeta(anoMetaAtual.getMeta());
-            dao.insereAnoMeta(anoMetaAux);
-        }
+            anoMetaAux[0].setMeta(anoMetaAtual.getMeta());
+            dao.insereAnoMeta(anoMetaAux[0]);
+        }*/
     }
 
-
-    private void atualizaDadosCabecalho() {
-        int quantidadeAssistidos = new FilmeDAO(this).buscaFilmesAssistidosNoAnoDe(anoMetaAtual.getAno()).size();
-        float percentual = (quantidadeAssistidos / (float) anoMetaAtual.getMeta()) * 100;
-        DecimalFormat df = new DecimalFormat("0.00");
-        totalAssistidos.setText(Integer.toString(quantidadeAssistidos));
-        percentualAssistidos.setText("(" + df.format(percentual) + "%)");
-        metaDoAno.setText(Integer.toString(anoMetaAtual.getMeta()));
-    }
+//    private void atualizaAnoMeta() {
+//        Calendar calendar = new GregorianCalendar();
+//        calendar.setTimeZone(TimeZone.getDefault());
+//        FilmeDAO dao = new FilmeDAO(this);
+//        AnoMeta anoMetaAux = new AnoMeta();
+//
+//        anoMetaAtual.setAno(calendar.get(Calendar.YEAR));
+//        if (dao.existeAnoMeta(anoMetaAtual.getAno())) {
+//            anoMetaAtual = anoMetaAux = dao.buscaAnoMetaDoAno(anoMetaAtual.getAno())
+//                    .get(0);
+//            for (int i = 0; i < dao.buscaAnoMeta().size(); i++) {
+//                if (dao.buscaAnoMeta().get(i).equals(anoMetaAux)) {
+//                    spinnerAnoMeta.setSelection(i);
+//                }
+//            }
+//
+//        } else {
+//            anoMetaAux.setAno(anoMetaAtual.getAno());
+//            anoMetaAtual.setMeta(50);
+//            anoMetaAux.setMeta(anoMetaAtual.getMeta());
+//            dao.insereAnoMeta(anoMetaAux);
+//        }
+//    }
 
     private void atualizaLista() {
 
@@ -216,6 +246,13 @@ public class MainActivity extends AppCompatActivity {
                     filmesAssistidos.add(i.getFilme());
                 }
                 listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmesAssistidos, MainActivity.this));
+                //ATUALIZA O CABECALHO
+                int quantidadeAssistidos = filmesAssistidos.size();
+                float percentual = (quantidadeAssistidos / (float) anoMetaAtual.getMeta()) * 100;
+                DecimalFormat df = new DecimalFormat("0.00");
+                totalAssistidos.setText(Integer.toString(quantidadeAssistidos));
+                percentualAssistidos.setText("(" + df.format(percentual) + "%)");
+                metaDoAno.setText(Integer.toString(anoMetaAtual.getMeta()));
             }
 
             @Override
@@ -270,7 +307,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         atualizaLista();
-        atualizaDadosCabecalho();
         super.onResume();
     }
 

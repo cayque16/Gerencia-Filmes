@@ -15,4 +15,7 @@ public interface BdService {
 
     @GET("/filmes/api/anosmeta/")
     Call<List<AnoMetaBd>> buscaAnosMeta();
+
+    @GET("/filmes/api/anosmeta/{ano}")
+    Call<AnoMetaBd> getAnoMeta(@Path("ano") int ano);
 }

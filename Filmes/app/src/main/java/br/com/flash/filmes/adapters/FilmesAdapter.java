@@ -84,10 +84,10 @@ public class FilmesAdapter extends BaseAdapter {
         tv3.setText(filmesAssistidos.getPosAnoFormatado());
 
         //para visualizar o id de um filme assistido
-//        tv3.setText(Long.toString(filmesAssistidos.getId()));
+//        tv3.setText(Long.toString(filmesAssistidos.getIdFilme()));
 
         TextView tv4 = v.findViewById(R.id.list_adapter_data);
-        tv4.setText(filmesAssistidos.getData());
+        tv4.setText(filmesAssistidos.getDataFormatada());
 
 //        TextView tv5 = v.findViewById(R.id.list_adapter_ano);
 //        tv5.setText(Integer.toString(filme.getAno()));

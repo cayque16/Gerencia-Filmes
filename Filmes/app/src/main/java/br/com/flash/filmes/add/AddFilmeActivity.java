@@ -3,6 +3,7 @@ package br.com.flash.filmes.add;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,11 +13,13 @@ import android.widget.Toast;
 
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.dao.FilmeDAO;
+import br.com.flash.filmes.dto.FilmeBd;
 import br.com.flash.filmes.dto.Movie;
 import br.com.flash.filmes.helper.FormularioFilmeAssistidoHelper;
 import br.com.flash.filmes.helper.FormularioFilmeHelper;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
+import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorFilmes;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +31,7 @@ public class AddFilmeActivity extends AppCompatActivity {
     private FormularioFilmeAssistidoHelper helperFilmeAssistido;
     private TextView imdb;
     private String chave;
+    private FilmesAssistidos filmesAssistidos = new FilmesAssistidos();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +41,27 @@ public class AddFilmeActivity extends AppCompatActivity {
         imdb = findViewById(R.id.add_filme_imdbID);
 
         Intent intent = getIntent();
-        FilmesAssistidos filmesAssistidos = (FilmesAssistidos) intent.getSerializableExtra("filme");
+        filmesAssistidos = (FilmesAssistidos) intent.getSerializableExtra("filme");
 
         helperFilme = new FormularioFilmeHelper(this);
         helperFilmeAssistido = new FormularioFilmeAssistidoHelper(this);
 
         if (filmesAssistidos != null) {
-            helperFilmeAssistido.preencheFormulario(filmesAssistidos);
-            helperFilme.preencheFormulario(new FilmeDAO(this).retornaUmFilme(filmesAssistidos.getImdbID()));
+
+            Call<FilmeBd> call = new RetrofitInicializadorBd().getBdService().getFilmeById(filmesAssistidos.getId());
+
+            call.enqueue(new Callback<FilmeBd>() {
+                @Override
+                public void onResponse(Call<FilmeBd> call, Response<FilmeBd> response) {
+                    helperFilmeAssistido.preencheFormulario(filmesAssistidos);
+                    helperFilme.preencheFormulario(response.body().getFilme());
+                }
+
+                @Override
+                public void onFailure(Call<FilmeBd> call, Throwable t) {
+
+                }
+            });
         }
     }
 
@@ -69,7 +86,7 @@ public class AddFilmeActivity extends AppCompatActivity {
                 if (!dao.existeFilme(filme.getImdbID()))
                     dao.insereFilme(filme);
 
-                if (filmesAssistidos.getId() != null)
+                if (filmesAssistidos.getId() != 0)
                     dao.alteraFilmeAssistido(filmesAssistidos);
                 else {
                     filmesAssistidos.setPosAno(helperFilmeAssistido.getUltimaPosAno());

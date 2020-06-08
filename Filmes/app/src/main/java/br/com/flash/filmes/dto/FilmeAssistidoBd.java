@@ -8,16 +8,21 @@ import br.com.flash.filmes.models.FilmesAssistidos;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder({
+        "idFilme",
         "posano",
         "titulo",
         "ano",
         "duracao",
         "nota",
         "poster",
-        "data",
+        "dataDia",
+        "dataMes",
+        "dataAno",
         "inedito"
 })
 public class FilmeAssistidoBd {
+    @JsonProperty("idFilme")
+    private int idFilme;
     @JsonProperty("posano")
     private int posano;
     @JsonProperty("titulo")
@@ -30,10 +35,22 @@ public class FilmeAssistidoBd {
     private String nota;
     @JsonProperty("poster")
     private String poster;
-    @JsonProperty("data")
-    private String data;
+    @JsonProperty("dataDia")
+    private int dataDia;
+    @JsonProperty("dataMes")
+    private int dataMes;
+    @JsonProperty("dataAno")
+    private int dataAno;
     @JsonProperty("inedito")
     private int inedito;
+
+    public int getIdFilme() {
+        return idFilme;
+    }
+
+    public void setIdFilme(int idFilme) {
+        this.idFilme = idFilme;
+    }
 
     public int getPosano() {
         return posano;
@@ -83,12 +100,28 @@ public class FilmeAssistidoBd {
         this.poster = poster;
     }
 
-    public String getData() {
-        return data;
+    public int getDataDia() {
+        return dataDia;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDataDia(int dataDia) {
+        this.dataDia = dataDia;
+    }
+
+    public int getDataMes() {
+        return dataMes;
+    }
+
+    public void setDataMes(int dataMes) {
+        this.dataMes = dataMes;
+    }
+
+    public int getDataAno() {
+        return dataAno;
+    }
+
+    public void setDataAno(int dataAno) {
+        this.dataAno = dataAno;
     }
 
     public int getInedito() {
@@ -105,7 +138,10 @@ public class FilmeAssistidoBd {
         filme.setImdbID(titulo);
         filme.setInedito(inedito);
         filme.setPosAno(posano);
-        filme.setData(data);
+        filme.setDataDia(dataDia);
+        filme.setDataMes(dataMes);
+        filme.setDataAno(dataAno);
+        filme.setId(idFilme);
 
         return filme;
     }

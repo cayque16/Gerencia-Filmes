@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 
 public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializable {
-    private Long id;
+    private int id;
     private String imdbID;
     private int inedito; //1 para sim e 0 para nao
     private int posAno; //posicao do filme no ano
@@ -146,11 +146,11 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializa
         inedito = 0;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

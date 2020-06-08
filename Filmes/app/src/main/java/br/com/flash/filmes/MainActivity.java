@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
 //                filme.setDataDia(10);
 //                filme.setPosAno(3);
 //                filme.setImdbID("tt1921064");
-//                filme.setId(93);
+//                filme.setIdFilme(93);
 //                filme.setInedito(1);
 //                new FilmeDAO(this).alteraFilmeAssistido(filme);
 //

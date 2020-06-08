@@ -143,7 +143,7 @@ public class FormularioFilmeAssistidoHelper {
 
     public void preencheFormulario(FilmesAssistidos filmesAssistidos) {
         calendar.set(Calendar.YEAR, filmesAssistidos.getDataAno());
-        calendar.set(Calendar.MONTH, filmesAssistidos.getDataMes());
+        calendar.set(Calendar.MONTH, filmesAssistidos.getDataMes()-1);
         calendar.set(Calendar.DAY_OF_MONTH, filmesAssistidos.getDataDia());
 
         campoData.setText(dateFormat.format(calendar.getTime()));

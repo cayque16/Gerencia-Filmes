@@ -188,7 +188,7 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
         while (c.moveToNext()) {
             FilmesAssistidos filme = new FilmesAssistidos();
-            filme.setId(c.getLong(c.getColumnIndex("id")));
+            filme.setId(c.getInt(c.getColumnIndex("id")));
             filme.setImdbID(c.getString(c.getColumnIndex("imdbID")));
             filme.setInedito(c.getInt(c.getColumnIndex("inedito")));
             filme.setPosAno(c.getInt(c.getColumnIndex("posAno")));

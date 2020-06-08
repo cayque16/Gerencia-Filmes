@@ -42,7 +42,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<FilmesAssistidos> filmes;
+    private List<FilmesAssistidos> filmes = new ArrayList<>();
     private ListView listaFilmesAssistidos;
     private TextView totalAssistidos, percentualAssistidos;
     private TextView metaDoAno;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         listaFilmesAssistidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                FilmesAssistidos filme = (FilmesAssistidos) listaFilmesAssistidos.getItemAtPosition(i);
+                FilmesAssistidos filme = filmes.get(i);
                 Intent vaiProFormulario = new Intent(
                         MainActivity.this, AddFilmeActivity.class);
                 vaiProFormulario.putExtra("filme", filme);
@@ -181,9 +181,9 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<AnoMetaBd>() {
             @Override
             public void onResponse(Call<AnoMetaBd> call, Response<AnoMetaBd> response) {
-                if (response.body().getAnoMeta() != null){
+                if (response.body().getAnoMeta() != null) {
                     anoMetaAtual = anoMetaAux[0] = response.body().getAnoMeta();
-                    Log.d("teste",anoMetaAtual.toString());
+                    Log.d("teste", anoMetaAtual.toString());
                 }
             }
 
@@ -192,47 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
             }
         });
-
-        /*if (dao.existeAnoMeta(anoMetaAtual.getAno())) {
-            anoMetaAtual = anoMetaAux[0] = dao.buscaAnoMetaDoAno(anoMetaAtual.getAno())
-                    .get(0);
-            for (int i = 0; i < dao.buscaAnoMeta().size(); i++) {
-                if (dao.buscaAnoMeta().get(i).equals(anoMetaAux[0])) {
-                    spinnerAnoMeta.setSelection(i);
-                }
-            }
-
-        } else {
-            anoMetaAux[0].setAno(anoMetaAtual.getAno());
-            anoMetaAtual.setMeta(50);
-            anoMetaAux[0].setMeta(anoMetaAtual.getMeta());
-            dao.insereAnoMeta(anoMetaAux[0]);
-        }*/
     }
-
-//    private void atualizaAnoMeta() {
-//        Calendar calendar = new GregorianCalendar();
-//        calendar.setTimeZone(TimeZone.getDefault());
-//        FilmeDAO dao = new FilmeDAO(this);
-//        AnoMeta anoMetaAux = new AnoMeta();
-//
-//        anoMetaAtual.setAno(calendar.get(Calendar.YEAR));
-//        if (dao.existeAnoMeta(anoMetaAtual.getAno())) {
-//            anoMetaAtual = anoMetaAux = dao.buscaAnoMetaDoAno(anoMetaAtual.getAno())
-//                    .get(0);
-//            for (int i = 0; i < dao.buscaAnoMeta().size(); i++) {
-//                if (dao.buscaAnoMeta().get(i).equals(anoMetaAux)) {
-//                    spinnerAnoMeta.setSelection(i);
-//                }
-//            }
-//
-//        } else {
-//            anoMetaAux.setAno(anoMetaAtual.getAno());
-//            anoMetaAtual.setMeta(50);
-//            anoMetaAux.setMeta(anoMetaAtual.getMeta());
-//            dao.insereAnoMeta(anoMetaAux);
-//        }
-//    }
 
     private void atualizaLista() {
 
@@ -241,13 +201,13 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<FilmeAssistidoBd>>() {
             @Override
             public void onResponse(Call<List<FilmeAssistidoBd>> call, Response<List<FilmeAssistidoBd>> response) {
-                List<FilmesAssistidos> filmesAssistidos = new ArrayList<FilmesAssistidos>();
+                filmes.clear();
                 for (FilmeAssistidoBd i :response.body()){
-                    filmesAssistidos.add(i.getFilme());
+                    filmes.add(i.getFilme());
                 }
-                listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmesAssistidos, MainActivity.this));
+                listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmes, MainActivity.this));
                 //ATUALIZA O CABECALHO
-                int quantidadeAssistidos = filmesAssistidos.size();
+                int quantidadeAssistidos = filmes.size();
                 float percentual = (quantidadeAssistidos / (float) anoMetaAtual.getMeta()) * 100;
                 DecimalFormat df = new DecimalFormat("0.00");
                 totalAssistidos.setText(Integer.toString(quantidadeAssistidos));

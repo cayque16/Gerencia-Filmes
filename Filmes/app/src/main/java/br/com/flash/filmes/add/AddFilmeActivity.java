@@ -48,7 +48,7 @@ public class AddFilmeActivity extends AppCompatActivity {
 
         if (filmesAssistidos != null) {
 
-            Call<FilmeBd> call = new RetrofitInicializadorBd().getBdService().getFilmeById(filmesAssistidos.getId());
+            Call<FilmeBd> call = new RetrofitInicializadorBd().getBdService().getFilmeById(filmesAssistidos.getFilme().getId());
 
             call.enqueue(new Callback<FilmeBd>() {
                 @Override
@@ -86,12 +86,12 @@ public class AddFilmeActivity extends AppCompatActivity {
                 if (!dao.existeFilme(filme.getImdbID()))
                     dao.insereFilme(filme);
 
-                if (filmesAssistidos.getId() != 0)
+          /*      if (filmesAssistidos.getId() != 0)
                     dao.alteraFilmeAssistido(filmesAssistidos);
                 else {
                     filmesAssistidos.setPosAno(helperFilmeAssistido.getUltimaPosAno());
                     dao.insereFilmeAssistido(filmesAssistidos);
-                }
+                }*/
 
                 dao.close();
 

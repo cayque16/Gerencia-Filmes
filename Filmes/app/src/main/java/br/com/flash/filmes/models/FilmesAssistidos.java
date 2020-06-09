@@ -9,27 +9,16 @@ import java.io.Serializable;
  */
 
 public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializable {
-    private int id;
-    private String imdbID;
     private int inedito; //1 para sim e 0 para nao
     private int posAno; //posicao do filme no ano
     private int dataDia;
     private int dataMes;
     private int dataAno;
-    private String data;
+    private Filme filme;
 
     @Override
     public String toString() {
-        return " " + id + " " + imdbID + " " +
-                " " + inedito + " " + posAno + " " + dataDia + " " + dataMes + " " + dataAno;
-    }
-
-    public String getImdbID() {
-        return imdbID;
-    }
-
-    public void setImdbID(String imdbID) {
-        this.imdbID = imdbID;
+        return " " + inedito + " " + posAno + " " + dataDia + " " + dataMes + " " + dataAno;
     }
 
     public int getInedito() {
@@ -72,12 +61,12 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializa
         this.posAno = posAno;
     }
 
-    public String getData() {
-        return data;
+    public Filme getFilme() {
+        return filme;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setFilme(Filme filme) {
+        this.filme = filme;
     }
 
     public String getPosAnoFormatado() {
@@ -137,7 +126,6 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializa
         return 0;
     }
 
-
     public void tornaInedito() {
         inedito = 1;
     }
@@ -146,11 +134,4 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializa
         inedito = 0;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 }

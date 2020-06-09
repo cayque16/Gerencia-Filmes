@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -132,17 +133,25 @@ public class FilmeAssistidoBd {
         this.inedito = inedito;
     }
 
-    public FilmesAssistidos getFilme() {
-        FilmesAssistidos filme = new FilmesAssistidos();
+    public FilmesAssistidos getFilmeAssistido() {
+        FilmesAssistidos filmesAssistidos = new FilmesAssistidos();
+        Filme filme = new Filme();
 
-        filme.setImdbID(titulo);
-        filme.setInedito(inedito);
-        filme.setPosAno(posano);
-        filme.setDataDia(dataDia);
-        filme.setDataMes(dataMes);
-        filme.setDataAno(dataAno);
+        filmesAssistidos.setInedito(inedito);
+        filmesAssistidos.setPosAno(posano);
+        filmesAssistidos.setDataDia(dataDia);
+        filmesAssistidos.setDataMes(dataMes);
+        filmesAssistidos.setDataAno(dataAno);
+
         filme.setId(idFilme);
+        filme.setTitulo(titulo);
+        filme.setAno(ano);
+        filme.setPoster(poster);
+        filme.setDuracao(duracao);
+        filme.setNota(Double.parseDouble(nota));
 
-        return filme;
+        filmesAssistidos.setFilme(filme);
+
+        return filmesAssistidos;
     }
 }

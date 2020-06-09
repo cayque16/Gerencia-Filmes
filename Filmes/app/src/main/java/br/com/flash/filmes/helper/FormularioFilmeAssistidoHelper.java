@@ -109,7 +109,7 @@ public class FormularioFilmeAssistidoHelper {
 
     public FilmesAssistidos pegaFilmeAssistido() {
 //        filmesAssistidos.setImdbID(pegaImdb(campoImdbId.getText().toString()));
-        filmesAssistidos.setImdbID(campoImdbId.getText().toString());
+//        filmesAssistidos.setImdbID(campoImdbId.getText().toString());
         if (campoInedito.isChecked())
             filmesAssistidos.tornaInedito();
         else
@@ -148,7 +148,7 @@ public class FormularioFilmeAssistidoHelper {
 
         campoData.setText(dateFormat.format(calendar.getTime()));
         campoInedito.setChecked(filmesAssistidos.ehInedito());
-        campoImdbId.setText(filmesAssistidos.getImdbID());
+//        campoImdbId.setText(filmesAssistidos.getImdbID());
         campoImdbId.setEnabled(false);
         campoPosAno.setText(Integer.toString(filmesAssistidos.getPosAno()));
         this.filmesAssistidos = filmesAssistidos;

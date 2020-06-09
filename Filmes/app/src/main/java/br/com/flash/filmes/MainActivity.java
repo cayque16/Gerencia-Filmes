@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<FilmeAssistidoBd>> call, Response<List<FilmeAssistidoBd>> response) {
                 filmes.clear();
                 for (FilmeAssistidoBd i :response.body()){
-                    filmes.add(i.getFilme());
+                    filmes.add(i.getFilmeAssistido());
                 }
                 listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmes, MainActivity.this));
                 //ATUALIZA O CABECALHO
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
 
                 FilmeDAO dao = new FilmeDAO(MainActivity.this);
-                dao.deletaFilmeAssistido(filme);
+//                dao.deletaFilmeAssistido(filme);
                 dao.close();
                 atualizaLista();
 

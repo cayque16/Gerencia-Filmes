@@ -98,7 +98,6 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
     private ContentValues pegaDadosDoFilmeAssistido(FilmesAssistidos filmesAssistidos) {
         ContentValues dados = new ContentValues();
-        dados.put("imdbID", filmesAssistidos.getImdbID());
         dados.put("inedito", filmesAssistidos.getInedito());
         dados.put("posAno", filmesAssistidos.getPosAno());
         dados.put("dataDia", filmesAssistidos.getDataDia());
@@ -188,8 +187,6 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
         while (c.moveToNext()) {
             FilmesAssistidos filme = new FilmesAssistidos();
-            filme.setId(c.getInt(c.getColumnIndex("id")));
-            filme.setImdbID(c.getString(c.getColumnIndex("imdbID")));
             filme.setInedito(c.getInt(c.getColumnIndex("inedito")));
             filme.setPosAno(c.getInt(c.getColumnIndex("posAno")));
             filme.setDataDia(c.getInt(c.getColumnIndex("dataDia")));
@@ -206,7 +203,6 @@ public class FilmeDAO extends SQLiteOpenHelper {
 
         while (c.moveToNext()) {
             Filme filme = new Filme();
-            filme.setId(c.getLong(c.getColumnIndex("id")));
             filme.setImdbID(c.getString(c.getColumnIndex("imdbID")));
             filme.setTitulo(c.getString(c.getColumnIndex("titulo")));
             filme.setAno(c.getInt(c.getColumnIndex("ano")));
@@ -236,13 +232,13 @@ public class FilmeDAO extends SQLiteOpenHelper {
         db.delete("Filmes_Assistidos", "posAno = ?", params);
     }
 
-    public void deletaFilmeAssistido(FilmesAssistidos filmesAssistidos) {
+   /* public void deletaFilmeAssistido(FilmesAssistidos filmesAssistidos) {
         SQLiteDatabase db = getWritableDatabase();
 
         String[] params = {Long.toString(filmesAssistidos.getId())};
 
         db.delete("Filmes_Assistidos", "id = ?", params);
-    }
+    }*/
 
     public void deletaAnoMeta(AnoMeta anoMeta) {
         SQLiteDatabase db = getReadableDatabase();
@@ -260,14 +256,14 @@ public class FilmeDAO extends SQLiteOpenHelper {
         db.update("Filmes", dados, "id = ?", params);
     }
 
-    public void alteraFilmeAssistido(FilmesAssistidos filmesAssistidos) {
+  /*  public void alteraFilmeAssistido(FilmesAssistidos filmesAssistidos) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues dados = pegaDadosDoFilmeAssistido(filmesAssistidos);
 
         String[] params = {Long.toString(filmesAssistidos.getId())};
         db.update("Filmes_Assistidos", dados, "id = ?", params);
-    }
+    }*/
 
     public void alteraAnoMeta(AnoMeta anoMeta) {
         SQLiteDatabase db = getWritableDatabase();

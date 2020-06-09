@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by cayqu on 14/08/2018.
  */
 public class Filme implements Serializable {
-    private Long id;
+    private int id;
     private String imdbID;
     private String titulo;
     private int ano;
@@ -69,11 +69,11 @@ public class Filme implements Serializable {
         this.poster = poster;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

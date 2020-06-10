@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -77,9 +76,7 @@ public class MainActivity extends AppCompatActivity {
         dialog = new Dialog(this);
         dialog = criaDialog();
         atualizaAnoMeta();
-        criaSpinnerAnoMeta();
-        atualizaLista();
-        atualizaAnoMeta();
+
         registerForContextMenu(listaFilmesAssistidos);
     }
 
@@ -183,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<AnoMetaBd> call, Response<AnoMetaBd> response) {
                 if (response.body().getAnoMeta() != null) {
                     anoMetaAtual = anoMetaAux[0] = response.body().getAnoMeta();
+                    criaSpinnerAnoMeta();
+                    atualizaLista();
                 }
             }
 
@@ -201,8 +200,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<FilmeAssistidoBd>> call, Response<List<FilmeAssistidoBd>> response) {
                 filmes.clear();
-                for (FilmeAssistidoBd i : response.body()){
-                    filmes.add(i.getFilmeAssistido());
+                if (response.body() != null) {
+                    for (FilmeAssistidoBd i : response.body()) {
+                        filmes.add(i.getFilmeAssistido());
+                    }
                 }
                 listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmes, MainActivity.this));
                 //ATUALIZA O CABECALHO

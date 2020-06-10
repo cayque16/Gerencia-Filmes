@@ -183,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<AnoMetaBd> call, Response<AnoMetaBd> response) {
                 if (response.body().getAnoMeta() != null) {
                     anoMetaAtual = anoMetaAux[0] = response.body().getAnoMeta();
-                    Log.d("teste", anoMetaAtual.toString());
                 }
             }
 
@@ -237,28 +236,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_main_add:
                 Intent vaiParaAddFilme = new Intent(this, AddFilmeActivity.class);
                 startActivity(vaiParaAddFilme);
-//                FilmeDAO dao = new FilmeDAO(this);
-//                AnoMeta ano = new AnoMeta();
-//                ano.setAno(2019);
-//                dao.deletaAnoMeta(ano);
-//                FilmesAssistidos filme = new FilmesAssistidos();
-//                filme.setPosAno(22);
-//                dao.deletaFilmeAssistidoErrado(80);
-//                filme.setDataAno(2017);
-//                filme.setDataMes(4);
-//                filme.setDataDia(10);
-//                filme.setPosAno(3);
-//                filme.setImdbID("tt1921064");
-//                filme.setIdFilme(93);
-//                filme.setInedito(1);
-//                new FilmeDAO(this).alteraFilmeAssistido(filme);
-//
-//                Toast.makeText(this, "Apagou", Toast.LENGTH_SHORT).show();
                 break;
-//            case R.id.menu_main_filmes:
-//                Intent vaiParaListaFilmes = new Intent(this, ListaFilmesActivity.class);
-//                startActivity(vaiParaListaFilmes);
-//                break;
         }
 
         return super.onOptionsItemSelected(item);

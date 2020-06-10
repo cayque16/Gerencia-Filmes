@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import br.com.flash.filmes.MainActivity;
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.converter.FilmeConverter;
 import br.com.flash.filmes.dao.FilmeDAO;
@@ -92,7 +93,8 @@ public class AddFilmeActivity extends AppCompatActivity {
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
+                        if (response.isSuccessful())
+                            Toast.makeText(AddFilmeActivity.this, "Filme salvo com sucesso!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

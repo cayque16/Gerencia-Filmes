@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,11 +56,28 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<AnoMeta> listaAnoMeta = new ArrayList<AnoMeta>();
     private Spinner spinnerAnoMeta;
     private Dialog dialog;
+    private SwipeRefreshLayout swipeMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        swipeMain = findViewById(R.id.swipe_lista_main);
+
+        swipeMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                atualizaLista();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeMain.setRefreshing(false);
+                    }
+                },2000);
+            }
+        });
 
         listaFilmesAssistidos = findViewById(R.id.main_lista);
 

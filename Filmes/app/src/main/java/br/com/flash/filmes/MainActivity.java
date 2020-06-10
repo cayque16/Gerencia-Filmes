@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,12 +30,16 @@ import java.util.TimeZone;
 
 import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.add.AddFilmeActivity;
+import br.com.flash.filmes.converter.AnoMetaConverter;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.AnoMetaBd;
 import br.com.flash.filmes.dto.FilmeAssistidoBd;
 import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.FilmesAssistidos;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -124,10 +129,26 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, mensagemErro, Toast.LENGTH_SHORT).show();
                         } else {
                             anoMetaAtual.setMeta(valorMetaNova);
-                            new FilmeDAO(MainActivity.this).alteraAnoMeta(anoMetaAtual);
-                            atualizaAnoMeta(anoMetaAtual);
-                            criaSpinnerAnoMeta();
-                            Toast.makeText(MainActivity.this, "Meta alterada!", Toast.LENGTH_LONG).show();
+                            String json = new AnoMetaConverter().convertParaJson(anoMetaAtual);
+                            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),json);
+
+                            Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().alteraAnoMeta(requestBody);
+
+                            call.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.isSuccessful()) {
+                                        atualizaAnoMeta(anoMetaAtual);
+                                        criaSpinnerAnoMeta();
+                                        Toast.makeText(MainActivity.this, "Meta alterada!", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                }
+                            });
                         }
                     }
 

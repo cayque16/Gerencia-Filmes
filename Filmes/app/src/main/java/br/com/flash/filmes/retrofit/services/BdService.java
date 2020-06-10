@@ -12,6 +12,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface BdService {
@@ -29,5 +30,8 @@ public interface BdService {
     Call<FilmeBd> getFilmeById(@Path("id") int id);
 
     @POST("/filmes/api/filmesassistido/post/")
-    Call<ResponseBody> insere(@Body RequestBody dados);
+    Call<ResponseBody> insereFilmeAssistido(@Body RequestBody dados);
+
+    @PUT("/filmes/api/anosmeta/put/")
+    Call<ResponseBody> alteraAnoMeta(@Body RequestBody dados);
 }

@@ -3,7 +3,6 @@ package br.com.flash.filmes.add;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import br.com.flash.filmes.MainActivity;
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.converter.FilmeConverter;
 import br.com.flash.filmes.dao.FilmeDAO;
@@ -88,7 +86,7 @@ public class AddFilmeActivity extends AppCompatActivity {
                 String json = new FilmeConverter().convertParaJson(filme,filmeAssistido);
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),json);
 
-                Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().insere(requestBody);
+                Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().insereFilmeAssistido(requestBody);
 
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override

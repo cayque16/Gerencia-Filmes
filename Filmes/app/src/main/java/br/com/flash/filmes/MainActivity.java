@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<FilmeAssistidoBd>> call, Response<List<FilmeAssistidoBd>> response) {
                 filmes.clear();
-                for (FilmeAssistidoBd i :response.body()){
+                for (FilmeAssistidoBd i : response.body()){
                     filmes.add(i.getFilmeAssistido());
                 }
                 listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmes, MainActivity.this));

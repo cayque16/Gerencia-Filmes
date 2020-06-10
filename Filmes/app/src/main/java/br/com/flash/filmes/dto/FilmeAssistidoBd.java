@@ -9,6 +9,7 @@ import br.com.flash.filmes.models.FilmesAssistidos;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder({
+        "id",
         "idFilme",
         "posano",
         "titulo",
@@ -22,6 +23,8 @@ import br.com.flash.filmes.models.FilmesAssistidos;
         "inedito"
 })
 public class FilmeAssistidoBd {
+    @JsonProperty("id")
+    private int id;
     @JsonProperty("idFilme")
     private int idFilme;
     @JsonProperty("posano")
@@ -44,6 +47,14 @@ public class FilmeAssistidoBd {
     private int dataAno;
     @JsonProperty("inedito")
     private int inedito;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getIdFilme() {
         return idFilme;
@@ -137,6 +148,7 @@ public class FilmeAssistidoBd {
         FilmesAssistidos filmesAssistidos = new FilmesAssistidos();
         Filme filme = new Filme();
 
+        filmesAssistidos.setId(id);
         filmesAssistidos.setInedito(inedito);
         filmesAssistidos.setPosAno(posano);
         filmesAssistidos.setDataDia(dataDia);

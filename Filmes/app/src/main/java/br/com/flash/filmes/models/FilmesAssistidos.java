@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 
 public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializable {
+    private int id;
     private int inedito; //1 para sim e 0 para nao
     private int posAno; //posicao do filme no ano
     private int dataDia;
@@ -19,6 +20,14 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializa
     @Override
     public String toString() {
         return " " + inedito + " " + posAno + " " + dataDia + " " + dataMes + " " + dataAno;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getInedito() {
@@ -85,6 +94,10 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializa
 
         return "assistido em " + dataDia + " de " + numToMes(dataMes)
                 + " de " + dataAno;
+    }
+
+    public String getDataConcatenada() {
+        return dataDia+"/"+dataMes+"/"+dataAno;
     }
 
     public String numToMes(int num) {

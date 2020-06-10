@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.flash.filmes.R;
+import br.com.flash.filmes.converter.FilmeConverter;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.FilmeBd;
 import br.com.flash.filmes.dto.Movie;
@@ -21,6 +22,9 @@ import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorFilmes;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,23 +83,40 @@ public class AddFilmeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_add_filme_ok:
                 Filme filme = helperFilme.pegaFilme();
-                FilmesAssistidos filmesAssistidos = helperFilmeAssistido.pegaFilmeAssistido();
+                FilmesAssistidos filmeAssistido = helperFilmeAssistido.pegaFilmeAssistido();
+                String json = new FilmeConverter().convertParaJson(filme,filmeAssistido);
+                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),json);
 
-                FilmeDAO dao = new FilmeDAO(this);
+                Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().insere(requestBody);
 
-                if (!dao.existeFilme(filme.getImdbID()))
-                    dao.insereFilme(filme);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-          /*      if (filmesAssistidos.getId() != 0)
-                    dao.alteraFilmeAssistido(filmesAssistidos);
-                else {
-                    filmesAssistidos.setPosAno(helperFilmeAssistido.getUltimaPosAno());
-                    dao.insereFilmeAssistido(filmesAssistidos);
-                }*/
+                    }
 
-                dao.close();
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                Toast.makeText(this, "Filme " + filme.getTitulo() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+//                FilmeDAO dao = new FilmeDAO(this);
+//
+//                //ESSE TESTE SERA FEITO NO SERVIDOR
+//               /* if (!dao.existeFilme(filme.getImdbID()))
+//                    dao.insereFilme(filme);*/
+//
+//                if (filmeAssistido.getId() != 0) {
+//                    //AQUI DEVE SER O CODIGO PARA ALTERAÇÃO
+//                } else {
+//                    filmesAssistidos.setPosAno(helperFilmeAssistido.getUltimaPosAno());
+//                    dao.insereFilmeAssistido(filmesAssistidos);
+//                }
+//
+//                dao.close();
+//
+//                Toast.makeText(this, "Filme " + filme.getTitulo() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }

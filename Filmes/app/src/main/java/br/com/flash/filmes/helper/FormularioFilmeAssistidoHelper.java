@@ -108,18 +108,18 @@ public class FormularioFilmeAssistidoHelper {
     }
 
     public FilmesAssistidos pegaFilmeAssistido() {
-//        filmesAssistidos.setImdbID(pegaImdb(campoImdbId.getText().toString()));
-//        filmesAssistidos.setImdbID(campoImdbId.getText().toString());
-        if (campoInedito.isChecked())
-            filmesAssistidos.tornaInedito();
-        else
-            filmesAssistidos.tiraInedito();
-        //filmesAssistidos.setPosAno(Integer.valueOf(campoPosAno.getText().toString()));
-        filmesAssistidos.setDataDia(calendar.get(Calendar.DAY_OF_MONTH));
-        filmesAssistidos.setDataMes(calendar.get(Calendar.MONTH) + 1);
-        filmesAssistidos.setDataAno(calendar.get(Calendar.YEAR));
-
-        return filmesAssistidos;
+        try {
+            if (campoInedito.isChecked())
+                filmesAssistidos.tornaInedito();
+            else
+                filmesAssistidos.tiraInedito();
+            filmesAssistidos.setDataDia(calendar.get(Calendar.DAY_OF_MONTH));
+            filmesAssistidos.setDataMes(calendar.get(Calendar.MONTH) + 1);
+            filmesAssistidos.setDataAno(calendar.get(Calendar.YEAR));
+            return filmesAssistidos;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 //    public void preencheListaAutoComplete() {

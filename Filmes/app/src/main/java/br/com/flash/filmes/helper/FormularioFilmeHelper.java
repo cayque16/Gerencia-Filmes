@@ -44,13 +44,17 @@ public class FormularioFilmeHelper {
     }
 
     public Filme pegaFilme() {
-        filme.setTitulo(campoTitulo.getText().toString());
-        filme.setImdbID(campoImdbID.getText().toString());
-        filme.setDuracao(Integer.parseInt(campoDuracao.getText().toString()));
-        filme.setAno(Integer.valueOf(campoAno.getText().toString()));
-        filme.setNota(Double.valueOf(campoNota.getText().toString()));
-        filme.setPoster(campoPoster.getText().toString());
-        return filme;
+        try {
+            filme.setTitulo(campoTitulo.getText().toString());
+            filme.setImdbID(campoImdbID.getText().toString());
+            filme.setDuracao(Integer.parseInt(campoDuracao.getText().toString()));
+            filme.setAno(Integer.valueOf(campoAno.getText().toString()));
+            filme.setNota(Double.valueOf(campoNota.getText().toString()));
+            filme.setPoster(campoPoster.getText().toString());
+            return filme;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void preencheFormulario(Filme filme) {

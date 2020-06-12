@@ -83,6 +83,12 @@ public class AddFilmeActivity extends AppCompatActivity {
             case R.id.menu_add_filme_ok:
                 Filme filme = helperFilme.pegaFilme();
                 FilmesAssistidos filmeAssistido = helperFilmeAssistido.pegaFilmeAssistido();
+
+                if ((filme == null) || (filmeAssistido == null)) {
+                    Toast.makeText(AddFilmeActivity.this, "Erro!!! Confira os dados.", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
                 String json = new FilmeConverter().convertParaJson(filme,filmeAssistido);
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),json);
 

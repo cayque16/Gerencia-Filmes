@@ -3,6 +3,7 @@ package br.com.flash.filmes.add;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -90,6 +91,7 @@ public class AddFilmeActivity extends AppCompatActivity {
                 }
 
                 String json = new FilmeConverter().convertParaJson(filme,filmeAssistido);
+
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),json);
 
                 Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().insereFilmeAssistido(requestBody);
@@ -106,23 +108,6 @@ public class AddFilmeActivity extends AppCompatActivity {
 
                     }
                 });
-
-//                FilmeDAO dao = new FilmeDAO(this);
-//
-//                //ESSE TESTE SERA FEITO NO SERVIDOR
-//               /* if (!dao.existeFilme(filme.getImdbID()))
-//                    dao.insereFilme(filme);*/
-//
-//                if (filmeAssistido.getId() != 0) {
-//                    //AQUI DEVE SER O CODIGO PARA ALTERAÇÃO
-//                } else {
-//                    filmesAssistidos.setPosAno(helperFilmeAssistido.getUltimaPosAno());
-//                    dao.insereFilmeAssistido(filmesAssistidos);
-//                }
-//
-//                dao.close();
-//
-//                Toast.makeText(this, "Filme " + filme.getTitulo() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }

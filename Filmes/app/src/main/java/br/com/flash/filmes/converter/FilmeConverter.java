@@ -13,6 +13,7 @@ public class FilmeConverter {
 
         try {
             js.object().
+                    key("id").value((filmeAssistido.getId())).
                     key("imdbId").value(filme.getImdbID()).
                     key("inedito").value(filmeAssistido.getInedito()).
                     key("data").value(filmeAssistido.getDataConcatenada()).

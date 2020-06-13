@@ -20,6 +20,7 @@ import br.com.flash.filmes.helper.FormularioFilmeAssistidoHelper;
 import br.com.flash.filmes.helper.FormularioFilmeHelper;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
+import br.com.flash.filmes.preferences.TokenPreferences;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorFilmes;
 import okhttp3.MediaType;
@@ -36,6 +37,7 @@ public class AddFilmeActivity extends AppCompatActivity {
     private TextView imdb;
     private String chave;
     private FilmesAssistidos filmesAssistidos = new FilmesAssistidos();
+    private TokenPreferences tokenPreferences = new TokenPreferences(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class AddFilmeActivity extends AppCompatActivity {
 
         if (filmesAssistidos != null) {
 
-            Call<FilmeBd> call = new RetrofitInicializadorBd().getBdService().getFilmeById(filmesAssistidos.getFilme().getId());
+            Call<FilmeBd> call = new RetrofitInicializadorBd().getBdService().getFilmeById(filmesAssistidos.getFilme().getId(),tokenPreferences.getToken());
 
             call.enqueue(new Callback<FilmeBd>() {
                 @Override

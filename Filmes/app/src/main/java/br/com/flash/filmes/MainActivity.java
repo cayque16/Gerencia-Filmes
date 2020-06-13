@@ -38,6 +38,9 @@ import br.com.flash.filmes.dto.AnoMetaBd;
 import br.com.flash.filmes.dto.FilmeAssistidoBd;
 import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.FilmesAssistidos;
+import br.com.flash.filmes.models.Login;
+import br.com.flash.filmes.models.Token;
+import br.com.flash.filmes.preferences.TokenPreferences;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -57,12 +60,14 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerAnoMeta;
     private Dialog dialog;
     private SwipeRefreshLayout swipeMain;
+    private TokenPreferences tokenPreferences = new TokenPreferences(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        if (!tokenPreferences.temToken())
+            buscarToken();
         swipeMain = findViewById(R.id.swipe_lista_main);
 
         swipeMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -281,6 +286,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void buscarToken() {
+        Call<Token> call = new RetrofitInicializadorBd().getBdService().getToken(new Login());
+
+        call.enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                if (response.isSuccessful()) {
+                    tokenPreferences.setToken(response.body().getTokenJwt());
+                    Toast.makeText(MainActivity.this, "Token Salvo!!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

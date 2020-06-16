@@ -96,7 +96,7 @@ public class AddFilmeActivity extends AppCompatActivity {
 
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),json);
 
-                Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().insereFilmeAssistido(requestBody);
+                Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().insereFilmeAssistido(requestBody,tokenPreferences.getToken());
 
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override

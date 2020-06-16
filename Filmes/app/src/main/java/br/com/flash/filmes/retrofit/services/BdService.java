@@ -21,22 +21,22 @@ import retrofit2.http.Path;
 public interface BdService {
 
     @GET("/filmes/api/filmes/{ano}")
-    Call<List<FilmeAssistidoBd>> buscaListaFilmesAssistidos(@Path("ano") int ano);
+    Call<List<FilmeAssistidoBd>> buscaListaFilmesAssistidos(@Path("ano") int ano, @Header("Authorization") String token);
 
     @GET("/filmes/api/anosmeta/")
-    Call<List<AnoMetaBd>> buscaAnosMeta();
+    Call<List<AnoMetaBd>> buscaAnosMeta(@Header("Authorization") String token);
 
     @GET("/filmes/api/anosmeta/{ano}")
-    Call<AnoMetaBd> getAnoMeta(@Path("ano") int ano);
+    Call<AnoMetaBd> getAnoMeta(@Path("ano") int ano, @Header("Authorization") String token);
 
     @GET("filmes/api/filmes/getfilme/{id}")
     Call<FilmeBd> getFilmeById(@Path("id") int id, @Header("Authorization") String token);
 
     @POST("/filmes/api/filmesassistido/post/")
-    Call<ResponseBody> insereFilmeAssistido(@Body RequestBody dados);
+    Call<ResponseBody> insereFilmeAssistido(@Body RequestBody dados, @Header("Authorization") String token);
 
     @PUT("/filmes/api/anosmeta/put/")
-    Call<ResponseBody> alteraAnoMeta(@Body RequestBody dados);
+    Call<ResponseBody> alteraAnoMeta(@Body RequestBody dados, @Header("Authorization") String token);
 
     @POST("/filmes/api/token/")
     Call<Token> getToken(@Body Login login);

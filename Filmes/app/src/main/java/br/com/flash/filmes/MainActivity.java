@@ -4,11 +4,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.HttpURLConnection;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (!tokenPreferences.temToken())
+//        if (!tokenPreferences.temToken())
             buscarToken();
         swipeMain = findViewById(R.id.swipe_lista_main);
 
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                             String json = new AnoMetaConverter().convertParaJson(anoMetaAtual);
                             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),json);
 
-                            Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().alteraAnoMeta(requestBody);
+                            Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().alteraAnoMeta(requestBody,tokenPreferences.getToken());
 
                             call.enqueue(new Callback<ResponseBody>() {
                                 @Override
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void preencheListaAnoMeta() {
         listaAnoMeta.clear();
-        Call<List<AnoMetaBd>> call = new RetrofitInicializadorBd().getBdService().buscaAnosMeta();
+        Call<List<AnoMetaBd>> call = new RetrofitInicializadorBd().getBdService().buscaAnosMeta(tokenPreferences.getToken());
 
         call.enqueue(new Callback<List<AnoMetaBd>>() {
             @Override
@@ -216,17 +216,19 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = new GregorianCalendar();
         calendar.setTimeZone(TimeZone.getDefault());
         final AnoMeta[] anoMetaAux = {new AnoMeta()};
-        Call<AnoMetaBd> call = new RetrofitInicializadorBd().getBdService().getAnoMeta(calendar.get(Calendar.YEAR));
+        Call<AnoMetaBd> call = new RetrofitInicializadorBd().getBdService().getAnoMeta(calendar.get(Calendar.YEAR),tokenPreferences.getToken());
 
         anoMetaAtual.setAno(calendar.get(Calendar.YEAR));
 
         call.enqueue(new Callback<AnoMetaBd>() {
             @Override
             public void onResponse(Call<AnoMetaBd> call, Response<AnoMetaBd> response) {
-                if (response.body().getAnoMeta() != null) {
-                    anoMetaAtual = anoMetaAux[0] = response.body().getAnoMeta();
-                    criaSpinnerAnoMeta();
-                    atualizaLista();
+                if (response.code() == HttpURLConnection.HTTP_OK) {
+                    if (response.body().getAnoMeta() != null) {
+                        anoMetaAtual = anoMetaAux[0] = response.body().getAnoMeta();
+                        criaSpinnerAnoMeta();
+                        atualizaLista();
+                    }
                 }
             }
 
@@ -239,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void atualizaLista() {
 
-        Call<List<FilmeAssistidoBd>> call = new RetrofitInicializadorBd().getBdService().buscaListaFilmesAssistidos(anoMetaAtual.getAno());
+        Call<List<FilmeAssistidoBd>> call = new RetrofitInicializadorBd().getBdService().buscaListaFilmesAssistidos(anoMetaAtual.getAno(),tokenPreferences.getToken());
 
         call.enqueue(new Callback<List<FilmeAssistidoBd>>() {
             @Override

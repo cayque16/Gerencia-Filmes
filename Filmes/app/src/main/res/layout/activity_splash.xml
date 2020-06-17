@@ -17,6 +17,6 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher_foreground"/>
+            android:src="@drawable/logo_sem_fundo"/>
     </FrameLayout>
 </LinearLayout>

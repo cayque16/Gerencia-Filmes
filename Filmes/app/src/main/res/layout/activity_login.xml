@@ -29,7 +29,14 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:src="@drawable/logo_sem_contorno"
+                android:layout_gravity="center"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

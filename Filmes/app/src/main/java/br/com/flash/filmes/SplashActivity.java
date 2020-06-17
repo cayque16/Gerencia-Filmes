@@ -18,7 +18,7 @@ import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int TEMPO_EXIBICAO = 3000;
+    private static final int TEMPO_EXIBICAO = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

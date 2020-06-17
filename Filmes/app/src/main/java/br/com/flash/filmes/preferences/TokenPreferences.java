@@ -26,7 +26,8 @@ public class TokenPreferences {
     }
 
     private void buscarToken() {
-        Call<Token> call = new RetrofitInicializadorBd().getBdService().getToken(new Login());
+        Login login = new LoginPreferences(getContext()).getLogin();
+        Call<Token> call = new RetrofitInicializadorBd().getBdService().getToken(login);
 
         call.enqueue(new Callback<Token>() {
             @Override

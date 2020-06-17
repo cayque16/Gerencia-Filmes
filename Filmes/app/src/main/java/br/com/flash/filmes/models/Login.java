@@ -5,9 +5,9 @@ public class Login {
     private String username;
     private String password;
 
-    public Login() {
-        this.username = "cayque";
-        this.password = "sert.neeh2ners4PSIT";
+    public Login(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public String getUsername() {

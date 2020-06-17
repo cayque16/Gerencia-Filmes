@@ -2,6 +2,14 @@ package br.com.flash.filmes.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
+
+import br.com.flash.filmes.models.Login;
+import br.com.flash.filmes.models.Token;
+import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TokenPreferences {
     private static final String TOKEN_PREFERENCES = "br.com.flash.filmes.preferences.TokenPreferences";
@@ -10,6 +18,30 @@ public class TokenPreferences {
 
     public TokenPreferences(Context context) {
         this.context = context;
+        buscarToken();
+    }
+
+    private Context getContext() {
+        return this.context;
+    }
+
+    private void buscarToken() {
+        Call<Token> call = new RetrofitInicializadorBd().getBdService().getToken(new Login());
+
+        call.enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                if (response.isSuccessful()) {
+                    setToken(response.body().getTokenJwt());
+                    Toast.makeText(getContext(), "Token Salvo!!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
+                Toast.makeText(getContext(), "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void setToken(String token) {
@@ -21,7 +53,7 @@ public class TokenPreferences {
 
     public String getToken() {
         SharedPreferences preferences = getSharedPreferences();
-        return preferences.getString(TOKEN,"");
+        return preferences.getString(TOKEN, "");
     }
 
     public boolean temToken() {
@@ -29,6 +61,6 @@ public class TokenPreferences {
     }
 
     private SharedPreferences getSharedPreferences() {
-        return context.getSharedPreferences(TOKEN_PREFERENCES,context.MODE_PRIVATE);
+        return context.getSharedPreferences(TOKEN_PREFERENCES, context.MODE_PRIVATE);
     }
 }

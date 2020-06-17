@@ -18,6 +18,7 @@ import retrofit2.Response;
 public class SplashActivity extends AppCompatActivity {
 
     private TokenPreferences tokenPreferences = new TokenPreferences(this);
+    private static final int TEMPO_EXIBICAO = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,33 +28,12 @@ public class SplashActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        buscarToken();
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(getBaseContext(), MainActivity.class));
                 finish();
             }
-        }, 5000);
-    }
-
-    private void buscarToken() {
-        Call<Token> call = new RetrofitInicializadorBd().getBdService().getToken(new Login());
-
-        call.enqueue(new Callback<Token>() {
-            @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                if (response.isSuccessful()) {
-                    tokenPreferences.setToken(response.body().getTokenJwt());
-                    Toast.makeText(getBaseContext(), "Token Salvo!!!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Token> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }, TEMPO_EXIBICAO);
     }
 }

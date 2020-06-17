@@ -3,14 +3,10 @@ package br.com.flash.filmes.helper;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -20,9 +16,7 @@ import java.util.TimeZone;
 
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.add.AddFilmeActivity;
-import br.com.flash.filmes.add.AddFilmeAssistidoActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
-import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 
 /**
@@ -102,7 +96,7 @@ public class FormularioFilmeAssistidoHelper {
         });
     }
 
-    public int getUltimaPosAno(){
+    public int getUltimaPosAno() {
         return new FilmeDAO(context).retornaUltimoFilmeAssistidoNoAnoDe(calendar.get(Calendar.YEAR))
                 .getPosAno() + 1;
     }
@@ -143,7 +137,7 @@ public class FormularioFilmeAssistidoHelper {
 
     public void preencheFormulario(FilmesAssistidos filmesAssistidos) {
         calendar.set(Calendar.YEAR, filmesAssistidos.getDataAno());
-        calendar.set(Calendar.MONTH, filmesAssistidos.getDataMes()-1);
+        calendar.set(Calendar.MONTH, filmesAssistidos.getDataMes() - 1);
         calendar.set(Calendar.DAY_OF_MONTH, filmesAssistidos.getDataDia());
 
         campoData.setText(dateFormat.format(calendar.getTime()));

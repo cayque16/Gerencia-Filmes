@@ -288,31 +288,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void buscarToken() {
-        Call<Token> call = new RetrofitInicializadorBd().getBdService().getToken(new Login());
-
-        call.enqueue(new Callback<Token>() {
-            @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                if (response.isSuccessful()) {
-                    tokenPreferences.setToken(response.body().getTokenJwt());
-                    Toast.makeText(MainActivity.this, "Token Salvo!!!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Token> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     @Override
     protected void onResume() {
         atualizaLista();
         super.onResume();
     }
-
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

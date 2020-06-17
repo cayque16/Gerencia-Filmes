@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import br.com.flash.filmes.models.Login;
 import br.com.flash.filmes.models.Token;
+import br.com.flash.filmes.preferences.LoginPreferences;
 import br.com.flash.filmes.preferences.TokenPreferences;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import retrofit2.Call;
@@ -17,7 +18,6 @@ import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private TokenPreferences tokenPreferences = new TokenPreferences(this);
     private static final int TEMPO_EXIBICAO = 3000;
 
     @Override
@@ -28,12 +28,18 @@ public class SplashActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(getBaseContext(), MainActivity.class));
-                finish();
-            }
-        }, TEMPO_EXIBICAO);
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (new LoginPreferences(getBaseContext()).temLogin()) {
+                        new TokenPreferences(getBaseContext());
+                        startActivity(new Intent(getBaseContext(), MainActivity.class));
+                    } else {
+                        startActivity(new Intent(getBaseContext(), LoginActivity.class));
+                    }
+                    finish();
+                }
+            }, TEMPO_EXIBICAO);
     }
 }

@@ -18,7 +18,7 @@ import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int TEMPO_EXIBICAO = 2000;
+    private static final int TEMPO_EXIBICAO = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +29,17 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (new LoginPreferences(getBaseContext()).temLogin()) {
-                        new TokenPreferences(getBaseContext());
-                        startActivity(new Intent(getBaseContext(), MainActivity.class));
-                    } else {
-                        startActivity(new Intent(getBaseContext(), LoginActivity.class));
-                    }
-                    finish();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (new LoginPreferences(getBaseContext()).temLogin()) {
+                    new TokenPreferences(getBaseContext(),true);
+                    startActivity(new Intent(getBaseContext(), MainActivity.class));
+                } else {
+                    startActivity(new Intent(getBaseContext(), LoginActivity.class));
                 }
-            }, TEMPO_EXIBICAO);
+                finish();
+            }
+        }, TEMPO_EXIBICAO);
     }
 }

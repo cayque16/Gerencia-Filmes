@@ -16,9 +16,9 @@ public class TokenPreferences {
     private static final String TOKEN = "token";
     private Context context;
 
-    public TokenPreferences(Context context) {
+    public TokenPreferences(Context context,Boolean buscaToken) {
         this.context = context;
-        buscarToken();
+        if (buscaToken) buscarToken();
     }
 
     private Context getContext() {

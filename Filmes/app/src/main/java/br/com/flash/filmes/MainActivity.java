@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerAnoMeta;
     private Dialog dialog;
     private SwipeRefreshLayout swipeMain;
-    private TokenPreferences tokenPreferences = new TokenPreferences(this);
+    private TokenPreferences tokenPreferences = new TokenPreferences(this,true);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

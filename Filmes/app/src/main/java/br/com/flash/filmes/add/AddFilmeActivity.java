@@ -37,7 +37,7 @@ public class AddFilmeActivity extends AppCompatActivity {
     private TextView imdb;
     private String chave;
     private FilmesAssistidos filmesAssistidos = new FilmesAssistidos();
-    private TokenPreferences tokenPreferences = new TokenPreferences(this);
+    private TokenPreferences tokenPreferences = new TokenPreferences(this,true);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -33,7 +33,7 @@ public class LoginPreferences {
     }
 
     public boolean temLogin() {
-        return getLogin() != null;
+        return !(getLogin() == null);
     }
 
     private SharedPreferences getSharedPreferences() {

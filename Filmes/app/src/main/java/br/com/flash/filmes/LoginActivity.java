@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -39,8 +38,7 @@ import java.util.List;
 
 import br.com.flash.filmes.models.Login;
 import br.com.flash.filmes.models.Token;
-import br.com.flash.filmes.preferences.LoginPreferences;
-import br.com.flash.filmes.preferences.TokenPreferences;
+import br.com.flash.filmes.preferences.FilmesPreferences;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -190,15 +188,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Call<Token> call = new RetrofitInicializadorBd().getBdService().getToken(login);
 
         call.enqueue(new Callback<Token>() {
-            private final Context context = getBaseContext();
+//            private final Context context = getBaseContext();
 
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.isSuccessful()) {
-                    new TokenPreferences(context,false).setToken(response.body().getTokenJwt());
-                    new LoginPreferences(context).setLogin(new Login(edtUsername.toString(),edtPassword.toString()));
+                    FilmesPreferences filmesPreferences = new FilmesPreferences(getBaseContext());
+                    filmesPreferences.setToken(response.body().getTokenJwt());
+                    filmesPreferences.setLogin(new Login(edtUsername.getText().toString(),edtPassword.getText().toString()));
                     showProgress(false);
-                    startActivity(new Intent(context,MainActivity.class));
+                    startActivity(new Intent(getBaseContext(),MainActivity.class));
                     finish();
                 } else if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST) {
                     getAlertaErroAutenticacao();
@@ -208,7 +207,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                Toast.makeText(context, "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
                 showProgress(false);
             }
         });

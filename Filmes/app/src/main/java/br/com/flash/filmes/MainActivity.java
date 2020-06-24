@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,10 +38,11 @@ import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.AnoMetaBd;
 import br.com.flash.filmes.dto.FilmeAssistidoBd;
 import br.com.flash.filmes.models.AnoMeta;
+import br.com.flash.filmes.models.BuscarToken;
 import br.com.flash.filmes.models.FilmesAssistidos;
 import br.com.flash.filmes.models.Login;
 import br.com.flash.filmes.models.Token;
-import br.com.flash.filmes.preferences.TokenPreferences;
+import br.com.flash.filmes.preferences.FilmesPreferences;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -49,7 +51,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BuscarToken {
 
     private List<FilmesAssistidos> filmes = new ArrayList<>();
     private ListView listaFilmesAssistidos;
@@ -60,12 +62,18 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerAnoMeta;
     private Dialog dialog;
     private SwipeRefreshLayout swipeMain;
-    private TokenPreferences tokenPreferences = new TokenPreferences(this,true);
+    private Token token = new Token();
+    private FilmesPreferences filmesPreferences = new FilmesPreferences(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (!filmesPreferences.temToken()) {
+            buscaToken();
+        } else {
+            token.setToken(filmesPreferences.getToken());
+        }
         swipeMain = findViewById(R.id.swipe_lista_main);
 
         swipeMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -154,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                             String json = new AnoMetaConverter().convertParaJson(anoMetaAtual);
                             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),json);
 
-                            Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().alteraAnoMeta(requestBody,tokenPreferences.getToken());
+                            Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().alteraAnoMeta(requestBody,token.getToken());
 
                             call.enqueue(new Callback<ResponseBody>() {
                                 @Override
@@ -186,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void preencheListaAnoMeta() {
         listaAnoMeta.clear();
-        Call<List<AnoMetaBd>> call = new RetrofitInicializadorBd().getBdService().buscaAnosMeta(tokenPreferences.getToken());
+        Call<List<AnoMetaBd>> call = new RetrofitInicializadorBd().getBdService().buscaAnosMeta(token.getToken());
 
         call.enqueue(new Callback<List<AnoMetaBd>>() {
             @Override
@@ -214,7 +222,8 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = new GregorianCalendar();
         calendar.setTimeZone(TimeZone.getDefault());
         final AnoMeta[] anoMetaAux = {new AnoMeta()};
-        Call<AnoMetaBd> call = new RetrofitInicializadorBd().getBdService().getAnoMeta(calendar.get(Calendar.YEAR),tokenPreferences.getToken());
+        Log.d("valor",token.getToken());
+        Call<AnoMetaBd> call = new RetrofitInicializadorBd().getBdService().getAnoMeta(calendar.get(Calendar.YEAR),token.getToken());
 
         anoMetaAtual.setAno(calendar.get(Calendar.YEAR));
 
@@ -239,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void atualizaLista() {
 
-        Call<List<FilmeAssistidoBd>> call = new RetrofitInicializadorBd().getBdService().buscaListaFilmesAssistidos(anoMetaAtual.getAno(),tokenPreferences.getToken());
+        Call<List<FilmeAssistidoBd>> call = new RetrofitInicializadorBd().getBdService().buscaListaFilmesAssistidos(anoMetaAtual.getAno(),token.getToken());
 
         call.enqueue(new Callback<List<FilmeAssistidoBd>>() {
             @Override
@@ -316,5 +325,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void alteraMeta(View view) {
         dialog.show();
+    }
+
+    @Override
+    public void buscaToken() {
+        Login login = filmesPreferences.getLogin();
+        Call<Token> call = new RetrofitInicializadorBd().getBdService().getToken(login);
+
+        call.enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                if (response.isSuccessful()) {
+                    token.setToken(response.body().getTokenJwt());
+                    Toast.makeText(getBaseContext(), "Token Salvo!!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
+                Toast.makeText(getBaseContext(), "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

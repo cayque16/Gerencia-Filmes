@@ -5,14 +5,31 @@ import android.content.SharedPreferences;
 
 import br.com.flash.filmes.models.Login;
 
-public class LoginPreferences {
-    private static final String LOGIN_PREFERENCES = "br.com.flash.filmes.preferences.LoginPreferences";
-    private static final String USERNAME = "username";
+public class FilmesPreferences {
+    private static final String PREFERENCES = "br.com.flash.filmes.preferences.FilmesPreferences";
+    private static final String TOKEN = "token";
+    private static final String USERNAME = "usernam";
     private static final String PASSWORD = "password";
     private Context context;
 
-    public LoginPreferences(Context context) {
+    public FilmesPreferences(Context context) {
         this.context = context;
+    }
+
+    public void setToken(String token) {
+        SharedPreferences preferences = getSharedPreferences();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(TOKEN,token);
+        editor.commit();
+    }
+
+    public String getToken() {
+        SharedPreferences preferences = getSharedPreferences();
+        return  preferences.getString(TOKEN, "");
+    }
+
+    public boolean temToken() {
+        return !getToken().isEmpty();
     }
 
     public void setLogin(Login login) {
@@ -37,6 +54,10 @@ public class LoginPreferences {
     }
 
     private SharedPreferences getSharedPreferences() {
-        return  context.getSharedPreferences(LOGIN_PREFERENCES, context.MODE_PRIVATE);
+        return context.getSharedPreferences(PREFERENCES, context.MODE_PRIVATE);
     }
 }
+
+
+
+

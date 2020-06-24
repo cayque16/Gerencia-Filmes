@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText edtPassword,edtUsername;
     private View progressBar;
     private View scrollView;
+    private AlertDialog alerta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,22 +197,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (response.isSuccessful()) {
                     new TokenPreferences(context,false).setToken(response.body().getTokenJwt());
                     new LoginPreferences(context).setLogin(new Login(edtUsername.toString(),edtPassword.toString()));
+                    showProgress(false);
                     startActivity(new Intent(context,MainActivity.class));
                     finish();
                 } else if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Erro");
-                    builder.setMessage("Não foi possível realizar login com as credenciais " +
-                            "fornecidas");
-                    builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    builder.create().show();
+                    getAlertaErroAutenticacao();
+                    showProgress(false);
                 }
-                showProgress(false);
             }
 
             @Override
@@ -220,6 +212,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 showProgress(false);
             }
         });
+    }
+
+    private void getAlertaErroAutenticacao() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Erro!!!");
+        builder.setMessage("Não foi possível realizar login com as credenciais " +
+                "fornecidas!!!");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        alerta = builder.create();
+        alerta.show();
     }
 
     private boolean isPasswordValid(String password) {

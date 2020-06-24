@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import br.com.flash.filmes.models.BuscarToken;
+import br.com.flash.filmes.interfaces.BuscarToken;
 import br.com.flash.filmes.models.Login;
 import br.com.flash.filmes.models.Token;
 import br.com.flash.filmes.preferences.FilmesPreferences;

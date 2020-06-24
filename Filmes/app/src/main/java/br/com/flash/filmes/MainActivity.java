@@ -38,7 +38,7 @@ import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.AnoMetaBd;
 import br.com.flash.filmes.dto.FilmeAssistidoBd;
 import br.com.flash.filmes.models.AnoMeta;
-import br.com.flash.filmes.models.BuscarToken;
+import br.com.flash.filmes.interfaces.BuscarToken;
 import br.com.flash.filmes.models.FilmesAssistidos;
 import br.com.flash.filmes.models.Login;
 import br.com.flash.filmes.models.Token;

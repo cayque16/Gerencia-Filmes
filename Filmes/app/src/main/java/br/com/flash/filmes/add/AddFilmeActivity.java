@@ -17,7 +17,7 @@ import br.com.flash.filmes.dto.FilmeBd;
 import br.com.flash.filmes.dto.Movie;
 import br.com.flash.filmes.helper.FormularioFilmeAssistidoHelper;
 import br.com.flash.filmes.helper.FormularioFilmeHelper;
-import br.com.flash.filmes.models.BuscarToken;
+import br.com.flash.filmes.interfaces.BuscarToken;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 import br.com.flash.filmes.models.Login;

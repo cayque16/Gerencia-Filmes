@@ -1,5 +1,7 @@
 package br.com.flash.filmes.activitys;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import retrofit2.Response;
 public class SuperActivity extends AppCompatActivity {
     protected FilmesPreferences filmesPreferences = new FilmesPreferences(this);
     protected Token token = new Token();
+    protected AlertDialog alerta;
 
     protected void buscaToken() {
         Login login =  filmesPreferences.getLogin();

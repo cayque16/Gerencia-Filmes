@@ -290,7 +290,24 @@ public class MainActivity extends SuperActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_main_sair:
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Atenção!!!");
+                builder.setMessage("Todos os dados serão perdidos, tem certeza" +
+                        " que deseja sair?");
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(MainActivity.this, "Saiu", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alerta = builder.create();
+                alerta.show();
             break;
         }
 

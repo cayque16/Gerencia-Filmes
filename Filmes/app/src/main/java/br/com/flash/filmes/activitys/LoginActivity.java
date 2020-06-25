@@ -68,7 +68,6 @@ public class LoginActivity extends SuperActivity implements LoaderCallbacks<Curs
     private EditText edtPassword,edtUsername;
     private View progressBar;
     private View scrollView;
-    private AlertDialog alerta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

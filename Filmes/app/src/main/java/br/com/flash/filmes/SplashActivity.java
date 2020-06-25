@@ -19,7 +19,7 @@ import retrofit2.Response;
 public class SplashActivity extends AppCompatActivity implements BuscarToken {
 
     private static final int TEMPO_EXIBICAO = 3000;
-    private Token token = new Token();
+    private FilmesPreferences filmesPreferences = new FilmesPreferences(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +28,11 @@ public class SplashActivity extends AppCompatActivity implements BuscarToken {
 
         getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        if (filmesPreferences.temLogin()) buscaToken();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (new FilmesPreferences(getBaseContext()).temLogin()) {
-                    buscaToken();
+                if (filmesPreferences.temLogin()) {
                     startActivity(new Intent(getBaseContext(), MainActivity.class));
                 } else {
                     startActivity(new Intent(getBaseContext(), LoginActivity.class));
@@ -45,14 +44,14 @@ public class SplashActivity extends AppCompatActivity implements BuscarToken {
 
     @Override
     public void buscaToken() {
-        Login login = new FilmesPreferences(this).getLogin();
+        Login login =  filmesPreferences.getLogin();
         Call<Token> call = new RetrofitInicializadorBd().getBdService().getToken(login);
 
         call.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.isSuccessful()) {
-                    token.setToken(response.body().getTokenJwt());
+                    filmesPreferences.setToken(response.body().getTokenJwt());
                     Toast.makeText(getBaseContext(), "Token Salvo!!!", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -15,7 +15,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import br.com.flash.filmes.R;
-import br.com.flash.filmes.add.AddFilmeActivity;
+import br.com.flash.filmes.activitys.add.AddFilmeActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.models.FilmesAssistidos;
 

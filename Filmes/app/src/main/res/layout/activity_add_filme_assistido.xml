@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="br.com.flash.filmes.add.AddFilmeAssistidoActivity">
+    tools:context=".activitys.add.AddFilmeAssistidoActivity">
 
     <AutoCompleteTextView
         android:id="@+id/add_filme_assistido_imdbID"

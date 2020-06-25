@@ -1,10 +1,11 @@
-package br.com.flash.filmes;
+package br.com.flash.filmes.activitys;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import br.com.flash.filmes.R;
 import br.com.flash.filmes.preferences.FilmesPreferences;
 
 public class SplashActivity extends SuperActivity {

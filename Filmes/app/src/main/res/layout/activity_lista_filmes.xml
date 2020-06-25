@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.flash.filmes.ListaFilmesActivity">
+    tools:context="br.com.flash.filmes.activitys.ListaFilmesActivity">
 
     <ListView
         android:id="@+id/lista_filmes_lista"

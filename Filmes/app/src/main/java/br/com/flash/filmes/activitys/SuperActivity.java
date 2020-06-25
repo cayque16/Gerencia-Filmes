@@ -1,4 +1,4 @@
-package br.com.flash.filmes;
+package br.com.flash.filmes.activitys;
 
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;

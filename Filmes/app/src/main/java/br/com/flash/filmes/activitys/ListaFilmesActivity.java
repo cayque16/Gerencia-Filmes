@@ -1,4 +1,4 @@
-package br.com.flash.filmes;
+package br.com.flash.filmes.activitys;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.List;
-
-import br.com.flash.filmes.add.AddFilmeActivity;
-import br.com.flash.filmes.add.AddFilmeAssistidoActivity;
+import br.com.flash.filmes.R;
+import br.com.flash.filmes.activitys.add.AddFilmeActivity;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.models.Filme;
 

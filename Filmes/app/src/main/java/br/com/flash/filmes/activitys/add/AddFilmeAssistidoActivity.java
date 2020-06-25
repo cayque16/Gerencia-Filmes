@@ -1,17 +1,15 @@
-package br.com.flash.filmes.add;
+package br.com.flash.filmes.activitys.add;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.helper.FormularioFilmeAssistidoHelper;
-import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 
 public class AddFilmeAssistidoActivity extends AppCompatActivity {

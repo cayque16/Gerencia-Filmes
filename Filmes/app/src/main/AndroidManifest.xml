@@ -16,19 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".activitys.LoginActivity"
             android:label="@string/title_activity_login"></activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".activitys.MainActivity" />
+        <activity android:name=".activitys.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".add.AddFilmeActivity" />
-        <activity android:name=".ListaFilmesActivity" />
-        <activity android:name=".add.AddFilmeAssistidoActivity" />
+        <activity android:name=".activitys.add.AddFilmeActivity" />
+        <activity android:name=".activitys.ListaFilmesActivity" />
+        <activity android:name=".activitys.add.AddFilmeAssistidoActivity" />
     </application>
 
 </manifest>

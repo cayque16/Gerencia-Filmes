@@ -13,7 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import br.com.flash.filmes.R;
-import br.com.flash.filmes.add.AddFilmeActivity;
+import br.com.flash.filmes.activitys.add.AddFilmeActivity;
 import br.com.flash.filmes.models.Filme;
 
 /**

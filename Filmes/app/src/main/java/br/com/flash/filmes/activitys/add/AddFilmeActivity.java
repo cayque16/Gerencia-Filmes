@@ -1,4 +1,4 @@
-package br.com.flash.filmes.add;
+package br.com.flash.filmes.activitys.add;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.flash.filmes.R;
-import br.com.flash.filmes.SuperActivity;
+import br.com.flash.filmes.activitys.SuperActivity;
 import br.com.flash.filmes.converter.FilmeConverter;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.FilmeBd;

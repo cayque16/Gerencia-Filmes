@@ -1,4 +1,4 @@
-package br.com.flash.filmes;
+package br.com.flash.filmes.activitys;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -30,8 +30,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import br.com.flash.filmes.R;
 import br.com.flash.filmes.adapters.FilmesAdapter;
-import br.com.flash.filmes.add.AddFilmeActivity;
+import br.com.flash.filmes.activitys.add.AddFilmeActivity;
 import br.com.flash.filmes.converter.AnoMetaConverter;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.AnoMetaBd;

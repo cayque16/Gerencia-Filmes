@@ -1,4 +1,4 @@
-package br.com.flash.filmes;
+package br.com.flash.filmes.activitys;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
 import android.content.CursorLoader;
@@ -36,9 +35,9 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.flash.filmes.R;
 import br.com.flash.filmes.models.Login;
 import br.com.flash.filmes.models.Token;
-import br.com.flash.filmes.preferences.FilmesPreferences;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import retrofit2.Call;
 import retrofit2.Callback;

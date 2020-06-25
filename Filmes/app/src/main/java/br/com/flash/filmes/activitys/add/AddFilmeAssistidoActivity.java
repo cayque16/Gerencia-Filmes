@@ -1,16 +1,13 @@
 package br.com.flash.filmes.activitys.add;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import br.com.flash.filmes.R;
-import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.helper.FormularioFilmeAssistidoHelper;
-import br.com.flash.filmes.models.FilmesAssistidos;
 
 public class AddFilmeAssistidoActivity extends AppCompatActivity {
 
@@ -21,7 +18,6 @@ public class AddFilmeAssistidoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_filme_assistido);
 
-//        helper = new FormularioFilmeAssistidoHelper(this);
     }
 
     @Override
@@ -37,16 +33,8 @@ public class AddFilmeAssistidoActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_add_filme_assistido_ok:
-                FilmesAssistidos filmesAssistidos = helper.pegaFilmeAssistido();
 
-                FilmeDAO dao = new FilmeDAO(this);
-
-                dao.insereFilmeAssistido(filmesAssistidos);
-                dao.close();
-
-                Toast.makeText(this, "Registro salvo com sucesso!", Toast.LENGTH_SHORT).show();
-                finish();
-                break;
+            break;
         }
 
         return super.onOptionsItemSelected(item);

@@ -12,7 +12,6 @@ import android.widget.Toast;
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.activitys.SuperActivity;
 import br.com.flash.filmes.converter.FilmeConverter;
-import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.FilmeBd;
 import br.com.flash.filmes.dto.Movie;
 import br.com.flash.filmes.helper.FormularioFilmeAssistidoHelper;
@@ -52,7 +51,7 @@ public class AddFilmeActivity extends SuperActivity {
 
         if (filmesAssistidos != null) {
 
-            Call<FilmeBd> call = new RetrofitInicializadorBd().getBdService().getFilmeById(filmesAssistidos.getFilme().getId(),token.getToken());
+            Call<FilmeBd> call = new RetrofitInicializadorBd().getBdService().getFilmeById(filmesAssistidos.getFilme().getId(), token.getToken());
 
             call.enqueue(new Callback<FilmeBd>() {
                 @Override
@@ -90,11 +89,11 @@ public class AddFilmeActivity extends SuperActivity {
                     break;
                 }
 
-                String json = new FilmeConverter().convertParaJson(filme,filmeAssistido);
+                String json = new FilmeConverter().convertParaJson(filme, filmeAssistido);
 
-                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),json);
+                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
-                Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().insereFilmeAssistido(requestBody,token.getToken());
+                Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().insereFilmeAssistido(requestBody, token.getToken());
 
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -118,35 +117,28 @@ public class AddFilmeActivity extends SuperActivity {
     public void buscaIMDB(View view) {
         chave = imdb.getText().toString();
 
-        if (!new FilmeDAO(this).existeFilme(chave)) {
 
-            Call<Movie> call = new RetrofitInicializadorFilmes().getFilmeService().buscaFilme(chave);
+        Call<Movie> call = new RetrofitInicializadorFilmes().getFilmeService().buscaFilme(chave);
 
-            call.enqueue(new Callback<Movie>() {
-                @Override
-                public void onResponse(Call<Movie> call, Response<Movie> response) {
-                    String resposta = response.body().getResponse();
-                    if (resposta.equals("True")) {
-                        Filme filme = response.body().getFilme();
+        call.enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                String resposta = response.body().getResponse();
+                if (resposta.equals("True")) {
+                    Filme filme = response.body().getFilme();
 
-                        FormularioFilmeHelper helper = new FormularioFilmeHelper(AddFilmeActivity.this);
-                        helper.preencheFormulario(filme);
-                    } else {
-                        Toast.makeText(AddFilmeActivity.this, "Filme não encontrado!!!", Toast.LENGTH_SHORT).show();
-                    }
+                    FormularioFilmeHelper helper = new FormularioFilmeHelper(AddFilmeActivity.this);
+                    helper.preencheFormulario(filme);
+                } else {
+                    Toast.makeText(AddFilmeActivity.this, "Filme não encontrado!!!", Toast.LENGTH_SHORT).show();
                 }
+            }
 
-                @Override
-                public void onFailure(Call<Movie> call, Throwable t) {
-                    Toast.makeText(AddFilmeActivity.this, "Não foi possível carregar os dados!!!", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            FormularioFilmeHelper helper = new FormularioFilmeHelper(AddFilmeActivity.this);
-            helper.preencheFormulario(new FilmeDAO(this).retornaUmFilme(chave));
-//            helper.campoInedito.setText(R.string.jaVisto);
-//            new FormularioFilmeAssistidoHelper(AddFilmeActivity.this).campoInedito.setChecked(false);
-//            new FormularioFilmeAssistidoHelper(AddFilmeActivity.this).campoInedito.setEnabled(false);
-        }
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                Toast.makeText(AddFilmeActivity.this, "Não foi possível carregar os dados!!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +23,8 @@ import java.util.List;
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.R.color;
 import br.com.flash.filmes.R.id;
-import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
-
-/**
- * Created by cayqu on 13/08/2018.
- */
 
 public class FilmesAdapter extends BaseAdapter {
     private List<FilmesAssistidos> list;
@@ -83,9 +77,6 @@ public class FilmesAdapter extends BaseAdapter {
 
         TextView tv3 = v.findViewById(R.id.list_adapter_posicao_ano);
         tv3.setText(filmeAssistido.getPosAnoFormatado());
-
-//        para visualizar o id de um filme assistido
-//        tv3.setText(Long.toString(filme.getId()));
 
         TextView tv4 = v.findViewById(R.id.list_adapter_data);
         tv4.setText(filmeAssistido.getDataFormatada());
@@ -141,7 +132,6 @@ public class FilmesAdapter extends BaseAdapter {
                             ByteArrayOutputStream saida = new ByteArrayOutputStream();
                             imgAux.compress(Bitmap.CompressFormat.JPEG, 100, saida);
                             filme.setPosterBytes(saida.toByteArray());
-                            new FilmeDAO(context).alteraFilme(filme);
                         }
                     }
                 });

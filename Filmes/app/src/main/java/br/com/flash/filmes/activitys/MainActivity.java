@@ -35,7 +35,6 @@ import br.com.flash.filmes.R;
 import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.activitys.add.AddFilmeActivity;
 import br.com.flash.filmes.converter.AnoMetaConverter;
-import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.AnoMetaBd;
 import br.com.flash.filmes.dto.FilmeAssistidoBd;
 import br.com.flash.filmes.models.AnoMeta;
@@ -223,7 +222,6 @@ public class MainActivity extends SuperActivity {
         Calendar calendar = new GregorianCalendar();
         calendar.setTimeZone(TimeZone.getDefault());
         final AnoMeta[] anoMetaAux = {new AnoMeta()};
-        Log.d("valor",token.getToken());
         Call<AnoMetaBd> call = new RetrofitInicializadorBd().getBdService().getAnoMeta(calendar.get(Calendar.YEAR),token.getToken());
 
         anoMetaAtual.setAno(calendar.get(Calendar.YEAR));
@@ -289,10 +287,14 @@ public class MainActivity extends SuperActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.menu_main_altera_meta:
+                dialog.show();
+                break;
             case R.id.menu_main_sair:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Atenção!!!");
                 builder.setMessage("Tem certeza que deseja sair?");
+
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -301,17 +303,17 @@ public class MainActivity extends SuperActivity {
                         finish();
                     }
                 });
+
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 });
+
                 alerta = builder.create();
                 alerta.show();
-            case R.id.menu_main_altera_meta:
-                dialog.show();
-            break;
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -323,27 +325,27 @@ public class MainActivity extends SuperActivity {
         super.onResume();
     }
 
+    //CRIA UM MENU AO PRESSIONAR E SEGURAR UM ITEM DA LISTA
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        //captura o filme que foi clicado
         final FilmesAssistidos filme = (FilmesAssistidos) listaFilmesAssistidos.getItemAtPosition(info.position);
 
         MenuItem deletar = menu.add("Deletar");
+        MenuItem informacoes = menu.add("Informacoes");
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
 
-                FilmeDAO dao = new FilmeDAO(MainActivity.this);
-//                dao.deletaFilmeAssistido(filme);
-                dao.close();
-                atualizaLista();
-
                 return false;
             }
         });
-    }
-
-    public void alteraMeta(View view) {
-        dialog.show();
+        informacoes.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return false;
+            }
+        });
     }
 }

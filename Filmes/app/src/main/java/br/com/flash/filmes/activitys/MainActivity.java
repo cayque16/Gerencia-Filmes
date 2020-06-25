@@ -309,6 +309,8 @@ public class MainActivity extends SuperActivity {
                 });
                 alerta = builder.create();
                 alerta.show();
+            case R.id.menu_main_altera_meta:
+                dialog.show();
             break;
         }
 

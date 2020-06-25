@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <item
+        android:id="@+id/menu_main_altera_meta"
+        android:title="Alterar Meta"></item>
     <item
         android:id="@+id/menu_main_sair"
         android:title="Logout"></item>

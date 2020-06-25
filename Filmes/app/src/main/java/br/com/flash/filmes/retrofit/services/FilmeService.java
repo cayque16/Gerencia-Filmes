@@ -5,10 +5,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-/**
- * Created by cayqu on 21/08/2018.
- */
-
 public interface FilmeService {
 
     @GET("/?apikey=9eb1dfef")

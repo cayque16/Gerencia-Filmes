@@ -4,10 +4,6 @@ import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
-/**
- * Created by cayqu on 14/08/2018.
- */
-
 public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializable {
     private int id;
     private int inedito; //1 para sim e 0 para nao

@@ -1,9 +1,5 @@
 package br.com.flash.filmes.models;
 
-/**
- * Created by cayqu on 27/08/2018.
- */
-
 public class AnoMeta {
     private int id;
     private int ano, meta;

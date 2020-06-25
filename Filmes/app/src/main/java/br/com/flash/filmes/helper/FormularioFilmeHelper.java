@@ -16,10 +16,6 @@ import br.com.flash.filmes.R;
 import br.com.flash.filmes.activitys.add.AddFilmeActivity;
 import br.com.flash.filmes.models.Filme;
 
-/**
- * Created by cayqu on 16/08/2018.
- */
-
 public class FormularioFilmeHelper {
 
     private TextView campoTitulo, campoImdbID;

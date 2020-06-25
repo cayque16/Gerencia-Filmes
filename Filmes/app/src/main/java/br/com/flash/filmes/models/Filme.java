@@ -2,9 +2,6 @@ package br.com.flash.filmes.models;
 
 import java.io.Serializable;
 
-/**
- * Created by cayqu on 14/08/2018.
- */
 public class Filme implements Serializable {
     private int id;
     private String imdbID;

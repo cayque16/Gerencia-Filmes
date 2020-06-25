@@ -1,16 +1,10 @@
 package br.com.flash.filmes.dto;
 
-import android.content.Intent;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import br.com.flash.filmes.models.Filme;
-
-/**
- * Created by cayqu on 22/08/2018.
- */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder({

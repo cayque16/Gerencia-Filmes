@@ -6,10 +6,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-/**
- * Created by cayqu on 21/08/2018.
- */
-
 public class RetrofitInicializadorFilmes {
     private final Retrofit retrofit;
 

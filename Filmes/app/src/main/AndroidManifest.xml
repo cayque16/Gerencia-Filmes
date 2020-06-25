@@ -27,7 +27,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activitys.add.AddFilmeActivity" />
-        <activity android:name=".activitys.ListaFilmesActivity" />
         <activity android:name=".activitys.add.AddFilmeAssistidoActivity" />
     </application>
 

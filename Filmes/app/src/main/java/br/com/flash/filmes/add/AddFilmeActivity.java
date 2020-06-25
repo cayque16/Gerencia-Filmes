@@ -2,7 +2,6 @@ package br.com.flash.filmes.add;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,18 +10,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.flash.filmes.R;
+import br.com.flash.filmes.SuperActivity;
 import br.com.flash.filmes.converter.FilmeConverter;
 import br.com.flash.filmes.dao.FilmeDAO;
 import br.com.flash.filmes.dto.FilmeBd;
 import br.com.flash.filmes.dto.Movie;
 import br.com.flash.filmes.helper.FormularioFilmeAssistidoHelper;
 import br.com.flash.filmes.helper.FormularioFilmeHelper;
-import br.com.flash.filmes.interfaces.BuscarToken;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
-import br.com.flash.filmes.models.Login;
-import br.com.flash.filmes.models.Token;
-import br.com.flash.filmes.preferences.FilmesPreferences;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorFilmes;
 import okhttp3.MediaType;
@@ -32,25 +28,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddFilmeActivity extends AppCompatActivity  implements BuscarToken {
+public class AddFilmeActivity extends SuperActivity {
 
     private FormularioFilmeHelper helperFilme;
     private FormularioFilmeAssistidoHelper helperFilmeAssistido;
     private TextView imdb;
     private String chave;
     private FilmesAssistidos filmesAssistidos = new FilmesAssistidos();
-    private Token token = new Token();
-    private FilmesPreferences filmesPreferences = new FilmesPreferences(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_filme);
-        if (!filmesPreferences.temToken()) {
-            buscaToken();
-        } else {
-            token.setToken(filmesPreferences.getToken());
-        }
+
+        token.setToken(getTokenRefresh());
         imdb = findViewById(R.id.add_filme_imdbID);
 
         Intent intent = getIntent();
@@ -157,26 +148,5 @@ public class AddFilmeActivity extends AppCompatActivity  implements BuscarToken 
 //            new FormularioFilmeAssistidoHelper(AddFilmeActivity.this).campoInedito.setChecked(false);
 //            new FormularioFilmeAssistidoHelper(AddFilmeActivity.this).campoInedito.setEnabled(false);
         }
-    }
-
-    @Override
-    public void buscaToken() {
-        Login login = new FilmesPreferences(this).getLogin();
-        Call<Token> call = new RetrofitInicializadorBd().getBdService().getToken(login);
-
-        call.enqueue(new Callback<Token>() {
-            @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                if (response.isSuccessful()) {
-                    token.setToken(response.body().getTokenJwt());
-                    Toast.makeText(getBaseContext(), "Token Salvo!!!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Token> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

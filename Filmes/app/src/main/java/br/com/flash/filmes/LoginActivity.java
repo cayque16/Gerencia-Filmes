@@ -46,7 +46,7 @@ import retrofit2.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends SuperActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -193,11 +193,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.isSuccessful()) {
-                    FilmesPreferences filmesPreferences = new FilmesPreferences(getBaseContext());
                     filmesPreferences.setToken(response.body().getTokenJwt());
                     filmesPreferences.setLogin(new Login(edtUsername.getText().toString(),edtPassword.getText().toString()));
                     showProgress(false);
-                    startActivity(new Intent(getBaseContext(),MainActivity.class));
+                    startActivity(new Intent(getBaseContext(), MainActivity.class));
                     finish();
                 } else if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST) {
                     getAlertaErroAutenticacao();

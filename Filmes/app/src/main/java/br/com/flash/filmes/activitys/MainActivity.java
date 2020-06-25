@@ -78,7 +78,7 @@ public class MainActivity extends SuperActivity {
                     public void run() {
                         swipeMain.setRefreshing(false);
                     }
-                },2000);
+                }, 2000);
             }
         });
 
@@ -160,9 +160,9 @@ public class MainActivity extends SuperActivity {
                         } else {
                             anoMetaAtual.setMeta(valorMetaNova);
                             String json = new AnoMetaConverter().convertParaJson(anoMetaAtual);
-                            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),json);
+                            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
-                            Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().alteraAnoMeta(requestBody,token.getToken());
+                            Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().alteraAnoMeta(requestBody, token.getToken());
 
                             call.enqueue(new Callback<ResponseBody>() {
                                 @Override
@@ -199,7 +199,7 @@ public class MainActivity extends SuperActivity {
         call.enqueue(new Callback<List<AnoMetaBd>>() {
             @Override
             public void onResponse(Call<List<AnoMetaBd>> call, Response<List<AnoMetaBd>> response) {
-                for (AnoMetaBd i :response.body()){
+                for (AnoMetaBd i : response.body()) {
                     listaAnoMeta.add(i.getAnoMeta());
                 }
                 ArrayAdapter<AnoMeta> adapter = new ArrayAdapter<AnoMeta>(MainActivity.this, R.layout.adapter_spinner_ano_meta, listaAnoMeta);
@@ -222,7 +222,7 @@ public class MainActivity extends SuperActivity {
         Calendar calendar = new GregorianCalendar();
         calendar.setTimeZone(TimeZone.getDefault());
         final AnoMeta[] anoMetaAux = {new AnoMeta()};
-        Call<AnoMetaBd> call = new RetrofitInicializadorBd().getBdService().getAnoMeta(calendar.get(Calendar.YEAR),token.getToken());
+        Call<AnoMetaBd> call = new RetrofitInicializadorBd().getBdService().getAnoMeta(calendar.get(Calendar.YEAR), token.getToken());
 
         anoMetaAtual.setAno(calendar.get(Calendar.YEAR));
 
@@ -247,7 +247,7 @@ public class MainActivity extends SuperActivity {
 
     private void atualizaLista() {
 
-        Call<List<FilmeAssistidoBd>> call = new RetrofitInicializadorBd().getBdService().buscaListaFilmesAssistidos(anoMetaAtual.getAno(),token.getToken());
+        Call<List<FilmeAssistidoBd>> call = new RetrofitInicializadorBd().getBdService().buscaListaFilmesAssistidos(anoMetaAtual.getAno(), token.getToken());
 
         call.enqueue(new Callback<List<FilmeAssistidoBd>>() {
             @Override
@@ -289,7 +289,7 @@ public class MainActivity extends SuperActivity {
         switch (item.getItemId()) {
             case R.id.menu_main_altera_meta:
                 dialog.show();
-                break;
+                return true;
             case R.id.menu_main_sair:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Atenção!!!");
@@ -313,10 +313,10 @@ public class MainActivity extends SuperActivity {
 
                 alerta = builder.create();
                 alerta.show();
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -1,14 +1,13 @@
 package br.com.flash.filmes.activitys;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import br.com.flash.filmes.R;
@@ -40,9 +39,9 @@ public class ListaFilmesActivity extends AppCompatActivity {
     }
 
     private void atualizaLista() {
-        ArrayAdapter<Filme> adapter = new ArrayAdapter<>(this,
+        /*ArrayAdapter<Filme> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, new FilmeDAO(this).buscaFilmes());
-        lista.setAdapter(adapter);
+        lista.setAdapter(adapter);*/
     }
 
     @Override

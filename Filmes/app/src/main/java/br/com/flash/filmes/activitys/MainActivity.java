@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -58,6 +59,7 @@ public class MainActivity extends SuperActivity {
     private Spinner spinnerAnoMeta;
     private Dialog dialog;
     private SwipeRefreshLayout swipeMain;
+    private FloatingActionButton btnAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,14 @@ public class MainActivity extends SuperActivity {
         percentualAssistidos = findViewById(R.id.main_percentual_assistido);
         metaDoAno = findViewById(R.id.main_meta);
         spinnerAnoMeta = findViewById(R.id.main_spinner_ano_meta);
+        btnAdd = findViewById(R.id.main_btn_add);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), AddFilmeActivity.class));
+            }
+        });
 
         dialog = new Dialog(this);
         dialog = criaDialog();
@@ -279,10 +289,9 @@ public class MainActivity extends SuperActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.menu_main_add:
-                Intent vaiParaAddFilme = new Intent(this, AddFilmeActivity.class);
-                startActivity(vaiParaAddFilme);
-                break;
+            case R.id.menu_main_sair:
+                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+            break;
         }
 
         return super.onOptionsItemSelected(item);

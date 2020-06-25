@@ -292,12 +292,13 @@ public class MainActivity extends SuperActivity {
             case R.id.menu_main_sair:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Atenção!!!");
-                builder.setMessage("Todos os dados serão perdidos, tem certeza" +
-                        " que deseja sair?");
+                builder.setMessage("Tem certeza que deseja sair?");
                 builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(MainActivity.this, "Saiu", Toast.LENGTH_SHORT).show();
+                        filmesPreferences.limparPreferences();
+                        startActivity(new Intent(getBaseContext(), LoginActivity.class));
+                        finish();
                     }
                 });
                 builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {

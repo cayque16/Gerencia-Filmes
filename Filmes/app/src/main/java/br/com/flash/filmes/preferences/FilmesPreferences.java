@@ -8,8 +8,9 @@ import br.com.flash.filmes.models.Login;
 public class FilmesPreferences {
     private static final String PREFERENCES = "br.com.flash.filmes.preferences.FilmesPreferences";
     private static final String TOKEN = "token";
-    private static final String USERNAME = "usernam";
+    private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
+    private static final String NULL = "null";
     private Context context;
 
     public FilmesPreferences(Context context) {
@@ -25,7 +26,7 @@ public class FilmesPreferences {
 
     public String getToken() {
         SharedPreferences preferences = getSharedPreferences();
-        return  preferences.getString(TOKEN, "");
+        return  preferences.getString(TOKEN, NULL);
     }
 
     public boolean temToken() {
@@ -42,15 +43,26 @@ public class FilmesPreferences {
 
     public Login getLogin(){
         SharedPreferences preferences = getSharedPreferences();
-        String username = preferences.getString(USERNAME,"");
-        String password = preferences.getString(PASSWORD,"");
-        if (username.equals("") || password.equals(""))
+        String username = preferences.getString(USERNAME,NULL);
+        String password = preferences.getString(PASSWORD,NULL);
+        if (username.equals(NULL) || password.equals(NULL))
             return null;
         return new Login(username,password);
     }
 
     public boolean temLogin() {
         return !(getLogin() == null);
+    }
+
+    public void limparPreferences() {
+        SharedPreferences preferences = getSharedPreferences();
+        SharedPreferences.Editor editor = preferences.edit();
+        //Limpando o login
+        editor.putString(USERNAME, NULL);
+        editor.putString(PASSWORD, NULL);
+        //Limpando o token
+        editor.putString(TOKEN,NULL);
+        editor.commit();
     }
 
     private SharedPreferences getSharedPreferences() {

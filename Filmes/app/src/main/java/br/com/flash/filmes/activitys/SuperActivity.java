@@ -1,7 +1,6 @@
 package br.com.flash.filmes.activitys;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 

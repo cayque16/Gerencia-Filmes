@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
-public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializable {
+public class FilmesAssistidos extends SuperModel implements Comparable<FilmesAssistidos>, Serializable {
     private int id;
     private int inedito; //1 para sim e 0 para nao
     private int posAno; //posicao do filme no ano
@@ -12,6 +12,14 @@ public class FilmesAssistidos implements Comparable<FilmesAssistidos>, Serializa
     private int dataMes;
     private int dataAno;
     private Filme filme;
+
+    public static final String DB_COLUNA_ID_FILME = "idFilme";
+    public static final String DB_COLUNA_ID_ANO_META = "idAnoMeta";
+    public static final String DB_COLUNA_POS_ANO = "posAno";
+    public static final String DB_COLUNA_DATA_DIA = "dataDia";
+    public static final String DB_COLUNA_DATA_MES = "dataMes";
+    public static final String DB_COLUNA_DATA_ANO = "dataAno";
+    public static final String DB_COLUNA_INEDITO = "inedito";
 
     @Override
     public String toString() {

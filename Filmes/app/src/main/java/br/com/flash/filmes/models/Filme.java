@@ -2,7 +2,7 @@ package br.com.flash.filmes.models;
 
 import java.io.Serializable;
 
-public class Filme implements Serializable {
+public class Filme extends SuperModel implements Serializable {
     private int id;
     private String imdbID;
     private String titulo;
@@ -11,6 +11,14 @@ public class Filme implements Serializable {
     private double nota; //nota do IMDB
     private String poster;
     private byte[] posterBytes;
+
+    public static final String DB_COLUNA_IMDB = "imdbID";
+    public static final String DB_COLUNA_TITULO = "titulo";
+    public static final String DB_COLUNA_ANO = "ano";
+    public static final String DB_COLUNA_DURACAO = "duracao";
+    public static final String DB_COLUNA_NOTA = "nota";
+    public static final String DB_COLUNA_POSTER = "poster";
+    public static final String DB_COLUNA_POSTER_BYTES = "posterBytes";
 
     public String getImdbID() {
         return imdbID;

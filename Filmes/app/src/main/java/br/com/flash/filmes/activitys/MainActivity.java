@@ -32,9 +32,11 @@ import java.util.List;
 import java.util.TimeZone;
 
 import br.com.flash.filmes.R;
+import br.com.flash.filmes.TesteActivity;
 import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.activitys.add.AddFilmeActivity;
 import br.com.flash.filmes.converter.AnoMetaConverter;
+import br.com.flash.filmes.dao.AnoMetaDAO;
 import br.com.flash.filmes.dto.AnoMetaBd;
 import br.com.flash.filmes.dto.FilmeAssistidoBd;
 import br.com.flash.filmes.models.AnoMeta;
@@ -104,7 +106,8 @@ public class MainActivity extends SuperActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getBaseContext(), AddFilmeActivity.class));
+//                startActivity(new Intent(getBaseContext(), AddFilmeActivity.class));
+                startActivity(new Intent(getBaseContext(), TesteActivity.class));
             }
         });
 

@@ -2,11 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <item
-        android:id="@+id/menu_main_altera_meta"
-        android:title="Alterar Meta"></item>
-    <item
-        android:id="@+id/menu_main_sair"
-        android:title="Logout"></item>
+        android:icon="@drawable/ic_more_vert_white"
+        android:title=""
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/menu_main_altera_meta"
+                android:icon="@drawable/ic_edit_black"
+                android:title="Alterar Meta"></item>
+            <item
+                android:id="@+id/menu_main_sobre"
+                android:icon="@drawable/ic_info_black"
+                android:title="Sobre"></item>
+            <item
+                android:id="@+id/menu_main_sair"
+                android:icon="@drawable/ic_exit_black"
+                android:title="Logout"></item>
+        </menu>
+    </item>
 </menu>

@@ -317,6 +317,9 @@ public class MainActivity extends SuperActivity {
                 alerta = builder.create();
                 alerta.show();
                 return true;
+            case R.id.menu_main_sobre:
+                startActivity(new Intent(this, SobreActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -16,13 +16,14 @@ import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 import br.com.flash.filmes.models.SuperModel;
 
-public abstract class CriaBanco extends SQLiteOpenHelper {
+public abstract class AbstractDAO extends SQLiteOpenHelper {
 
     protected static final String NOME_BANCO = "Filmes.db";
     protected static final int VERSAO_BANCO = 1;
     protected static final String TAG_LOG_BD = "DB_LOG";
+    protected String nomeTabela;
 
-    public CriaBanco(Context context) {
+    public AbstractDAO(Context context) {
         super(context, NOME_BANCO, null,VERSAO_BANCO);
     }
 
@@ -77,9 +78,23 @@ public abstract class CriaBanco extends SQLiteOpenHelper {
 
     }
 
-    public abstract void insere(SuperModel model);
+    public void insere(SuperModel model) {
+        SQLiteDatabase db = getWritableDatabase();
+        insereIdSeNecessario(model);
+        ContentValues dados = pegaDados(model);
+        db.insert(getNomeTabela(), null, dados);
+    }
 
-    public abstract List<SuperModel> buscaTodos();
+    public List<SuperModel> buscaTodos() {
+        String sql ="SELECT * FROM " + getNomeTabela();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(sql, null);
+
+        List<SuperModel> model = populaDados(c);
+        c.close();
+
+        return model;
+    }
 
     protected abstract ContentValues pegaDados(SuperModel model);
 
@@ -93,5 +108,13 @@ public abstract class CriaBanco extends SQLiteOpenHelper {
 
     protected String geraUUID() {
         return UUID.randomUUID().toString();
+    }
+
+    protected String getNomeTabela() {
+        return nomeTabela;
+    }
+
+    protected void setNomeTabela(String nomeTabela) {
+        this.nomeTabela = nomeTabela;
     }
 }

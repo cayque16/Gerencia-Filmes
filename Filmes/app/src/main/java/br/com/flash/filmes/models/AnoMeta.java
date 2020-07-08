@@ -2,7 +2,7 @@ package br.com.flash.filmes.models;
 
 public class AnoMeta extends SuperModel{
     private int id;
-    private int ano, meta, sincronizado;
+    private int ano, meta;
 
     public static final String DB_TABELA = "ano_meta";
     public static final String DB_COLUNA_ANO = "ano";
@@ -38,14 +38,6 @@ public class AnoMeta extends SuperModel{
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getSincronizado() {
-        return sincronizado;
-    }
-
-    public void setSincronizado(int sincronizado) {
-        this.sincronizado = sincronizado;
     }
 
     @Override

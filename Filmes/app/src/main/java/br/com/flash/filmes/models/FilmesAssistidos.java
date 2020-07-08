@@ -12,7 +12,11 @@ public class FilmesAssistidos extends SuperModel implements Comparable<FilmesAss
     private int dataMes;
     private int dataAno;
     private Filme filme;
+    private String idFilme;
+    private AnoMeta anoMeta;
+    private String idAnoMeta;
 
+    public static final String DB_TABELA = "filme_assistido";
     public static final String DB_COLUNA_ID_FILME = "idFilme";
     public static final String DB_COLUNA_ID_ANO_META = "idAnoMeta";
     public static final String DB_COLUNA_POS_ANO = "posAno";
@@ -80,6 +84,30 @@ public class FilmesAssistidos extends SuperModel implements Comparable<FilmesAss
 
     public void setFilme(Filme filme) {
         this.filme = filme;
+    }
+
+    public AnoMeta getAnoMeta() {
+        return anoMeta;
+    }
+
+    public void setAnoMeta(AnoMeta anoMeta) {
+        this.anoMeta = anoMeta;
+    }
+
+    public String getIdFilme() {
+        return idFilme;
+    }
+
+    public void setIdFilme(String idFilme) {
+        this.idFilme = idFilme;
+    }
+
+    public String getIdAnoMeta() {
+        return idAnoMeta;
+    }
+
+    public void setIdAnoMeta(String idAnoMeta) {
+        this.idAnoMeta = idAnoMeta;
     }
 
     public String getPosAnoFormatado() {

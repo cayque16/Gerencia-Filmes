@@ -12,6 +12,7 @@ public class Filme extends SuperModel implements Serializable {
     private String poster;
     private byte[] posterBytes;
 
+    public static final String DB_TABELA = "filmes";
     public static final String DB_COLUNA_IMDB = "imdbID";
     public static final String DB_COLUNA_TITULO = "titulo";
     public static final String DB_COLUNA_ANO = "ano";

@@ -37,7 +37,7 @@ public class SobreActivity extends AppCompatActivity {
    public void vaiParaEmail(String email) {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         email = "mailto:"+Uri.encode(email) +
-                "?subject=" + Uri.encode("My Movie");
+                "?subject=" + Uri.encode("My Movies");
         Uri uri = Uri.parse(email);
         emailIntent.setData(uri);
         startActivity(Intent.createChooser(emailIntent, "Enviar email..."));

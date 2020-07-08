@@ -29,6 +29,7 @@ public class FilmesDAO extends AbstractDAO {
         dados.put(Filme.DB_COLUNA_NOTA, filme.getNota());
         dados.put(Filme.DB_COLUNA_POSTER, filme.getPoster());
         dados.put(Filme.DB_COLUNA_SINCRONIZADO, filme.getSincronizado());
+        dados.put(Filme.DB_COLUNA_DESATIVADO, filme.getDesativado());
         dados.put(Filme.DB_COLUNA_POSTER_BYTES, filme.getPosterBytes());
 
         return dados;
@@ -48,6 +49,7 @@ public class FilmesDAO extends AbstractDAO {
             filme.setNota(c.getDouble(c.getColumnIndex(Filme.DB_COLUNA_NOTA)));
             filme.setPoster(c.getString(c.getColumnIndex(Filme.DB_COLUNA_POSTER)));
             filme.setSincronizado(c.getInt(c.getColumnIndex(Filme.DB_COLUNA_SINCRONIZADO)));
+            filme.setDesativado(c.getInt(c.getColumnIndex(Filme.DB_COLUNA_DESATIVADO)));
             filme.setPosterBytes(c.getBlob(c.getColumnIndex(Filme.DB_COLUNA_POSTER_BYTES)));
 
             filmes.add(filme);

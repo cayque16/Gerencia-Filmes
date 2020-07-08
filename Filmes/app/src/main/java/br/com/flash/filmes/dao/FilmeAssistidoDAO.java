@@ -29,6 +29,7 @@ public class FilmeAssistidoDAO extends AbstractDAO{
         dados.put(FilmesAssistidos.DB_COLUNA_DATA_MES, filmesAssistidos.getDataMes());
         dados.put(FilmesAssistidos.DB_COLUNA_DATA_ANO, filmesAssistidos.getDataAno());
         dados.put(FilmesAssistidos.DB_COLUNA_SINCRONIZADO, filmesAssistidos.getSincronizado());
+        dados.put(FilmesAssistidos.DB_COLUNA_DESATIVADO, filmesAssistidos.getDesativado());
         dados.put(FilmesAssistidos.DB_COLUNA_INEDITO, filmesAssistidos.getInedito());
 
         return dados;
@@ -48,6 +49,7 @@ public class FilmeAssistidoDAO extends AbstractDAO{
             filmeAssistido.setDataMes(c.getInt(c.getColumnIndex(FilmesAssistidos.DB_COLUNA_DATA_MES)));
             filmeAssistido.setDataAno(c.getInt(c.getColumnIndex(FilmesAssistidos.DB_COLUNA_DATA_ANO)));
             filmeAssistido.setSincronizado(c.getInt(c.getColumnIndex(FilmesAssistidos.DB_COLUNA_SINCRONIZADO)));
+            filmeAssistido.setDesativado(c.getInt(c.getColumnIndex(FilmesAssistidos.DB_COLUNA_DESATIVADO)));
             filmeAssistido.setInedito(c.getInt(c.getColumnIndex(FilmesAssistidos.DB_COLUNA_INEDITO)));
 
             filmeAssistidos.add(filmeAssistido);

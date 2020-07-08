@@ -19,7 +19,7 @@ import br.com.flash.filmes.models.SuperModel;
 public abstract class AbstractDAO extends SQLiteOpenHelper {
 
     protected static final String NOME_BANCO = "Filmes.db";
-    protected static final int VERSAO_BANCO = 1;
+    protected static final int VERSAO_BANCO = 2;
     protected static final String TAG_LOG_BD = "DB_LOG";
     protected String nomeTabela;
 
@@ -33,6 +33,7 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
                 AnoMeta.DB_COLUNA_ID + " CHAR(36) PRIMARY KEY, " +
                 AnoMeta.DB_COLUNA_ANO + " INTEGER, " +
                 AnoMeta.DB_COLUNA_SINCRONIZADO + " INTEGER DEFAULT 0, " +
+                AnoMeta.DB_COLUNA_DESATIVADO + " INTEGER DEFAULT 0, " +
                 AnoMeta.DB_COLUNA_META + " INTEGER);";
         try {
             sqLiteDatabase.execSQL(sql);
@@ -49,6 +50,7 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
                 Filme.DB_COLUNA_NOTA + " NUMERIC, " +
                 Filme.DB_COLUNA_POSTER + " TEXT, " +
                 Filme.DB_COLUNA_SINCRONIZADO + " INTEGER DEFAULT 0, " +
+                Filme.DB_COLUNA_DESATIVADO + " INTEGER DEFAULT 0, " +
                 Filme.DB_COLUNA_POSTER_BYTES + " TEXT);";
         try {
             sqLiteDatabase.execSQL(sql);
@@ -65,6 +67,7 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
                 FilmesAssistidos.DB_COLUNA_DATA_MES + " INTEGER, " +
                 FilmesAssistidos.DB_COLUNA_DATA_ANO + " INTEGER, " +
                 FilmesAssistidos.DB_COLUNA_SINCRONIZADO + " INTEGER DEFAULT 0, " +
+                FilmesAssistidos.DB_COLUNA_DESATIVADO + " INTEGER DEFAULT 0, " +
                 FilmesAssistidos.DB_COLUNA_INEDITO + " INTEGER);";
         try {
             sqLiteDatabase.execSQL(sql);
@@ -75,7 +78,16 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        String sql = "";
+        switch (i) {
+            case 1: //indo para a versao 2
+                sql = "ALTER TABLE ano_meta ADD COLUMN desativado INTEGER DEFAULT 0";
+                sqLiteDatabase.execSQL(sql);
+                sql = "ALTER TABLE filmes ADD COLUMN desativado INTEGER DEFAULT 0";
+                sqLiteDatabase.execSQL(sql);
+                sql = "ALTER TABLE filme_assistido ADD COLUMN desativado INTEGER DEFAULT 0";
+                sqLiteDatabase.execSQL(sql);
+        }
     }
 
     public void insere(SuperModel model) {

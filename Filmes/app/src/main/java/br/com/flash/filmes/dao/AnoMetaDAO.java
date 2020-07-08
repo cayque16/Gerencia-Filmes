@@ -26,6 +26,7 @@ public class AnoMetaDAO extends AbstractDAO {
             anoMeta.setMeta(c.getInt(c.getColumnIndex(AnoMeta.DB_COLUNA_META)));
             anoMeta.setAno(c.getInt(c.getColumnIndex(AnoMeta.DB_COLUNA_ANO)));
             anoMeta.setSincronizado(c.getInt(c.getColumnIndex(AnoMeta.DB_COLUNA_SINCRONIZADO)));
+            anoMeta.setDesativado(c.getInt(c.getColumnIndex(AnoMeta.DB_COLUNA_DESATIVADO)));
 
             anoMetas.add(anoMeta);
         }
@@ -41,6 +42,7 @@ public class AnoMetaDAO extends AbstractDAO {
         dados.put(AnoMeta.DB_COLUNA_ID, anoMeta.getIdString());
         dados.put(AnoMeta.DB_COLUNA_ANO, anoMeta.getAno());
         dados.put(AnoMeta.DB_COLUNA_SINCRONIZADO, anoMeta.getSincronizado());
+        dados.put(AnoMeta.DB_COLUNA_DESATIVADO, anoMeta.getDesativado());
         dados.put(AnoMeta.DB_COLUNA_META, anoMeta.getMeta());
 
         return dados;

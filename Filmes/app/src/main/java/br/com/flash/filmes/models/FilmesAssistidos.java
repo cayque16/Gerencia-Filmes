@@ -27,7 +27,19 @@ public class FilmesAssistidos extends SuperModel implements Comparable<FilmesAss
 
     @Override
     public String toString() {
-        return " " + inedito + " " + posAno + " " + dataDia + " " + dataMes + " " + dataAno;
+        return "FilmesAssistidos{" +
+                "id=" + id +
+                ", inedito=" + inedito +
+                ", posAno=" + posAno +
+                ", dataDia=" + dataDia +
+                ", dataMes=" + dataMes +
+                ", dataAno=" + dataAno +
+                ", idFilme='" + idFilme + '\'' +
+                ", idAnoMeta='" + idAnoMeta + '\'' +
+                ", idString='" + idString + '\'' +
+                ", sincronizado=" + sincronizado +
+                ", desativado=" + desativado +
+                '}';
     }
 
     public int getId() {

@@ -16,6 +16,10 @@ public class AnoMeta extends SuperModel{
         this.meta = meta;
     }
 
+    public AnoMeta(int ano) {
+        this.ano = ano;
+    }
+
     public int getMeta() {
         return meta;
     }

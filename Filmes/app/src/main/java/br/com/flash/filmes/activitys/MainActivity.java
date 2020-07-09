@@ -37,10 +37,13 @@ import br.com.flash.filmes.adapters.FilmesAdapter;
 import br.com.flash.filmes.activitys.add.AddFilmeActivity;
 import br.com.flash.filmes.converter.AnoMetaConverter;
 import br.com.flash.filmes.dao.AnoMetaDAO;
+import br.com.flash.filmes.dao.FilmeAssistidoDAO;
+import br.com.flash.filmes.dao.FilmesDAO;
 import br.com.flash.filmes.dto.AnoMetaBd;
 import br.com.flash.filmes.dto.FilmeAssistidoBd;
 import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.FilmesAssistidos;
+import br.com.flash.filmes.models.SuperModel;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -106,8 +109,8 @@ public class MainActivity extends SuperActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(getBaseContext(), AddFilmeActivity.class));
-                startActivity(new Intent(getBaseContext(), TesteActivity.class));
+                startActivity(new Intent(getBaseContext(), AddFilmeActivity.class));
+//                startActivity(new Intent(getBaseContext(), TesteActivity.class));
             }
         });
 
@@ -250,7 +253,7 @@ public class MainActivity extends SuperActivity {
 
     private void atualizaLista() {
 
-        Call<List<FilmeAssistidoBd>> call = new RetrofitInicializadorBd().getBdService().buscaListaFilmesAssistidos(anoMetaAtual.getAno(), token.getToken());
+        /*Call<List<FilmeAssistidoBd>> call = new RetrofitInicializadorBd().getBdService().buscaListaFilmesAssistidos(anoMetaAtual.getAno(), token.getToken());
 
         call.enqueue(new Callback<List<FilmeAssistidoBd>>() {
             @Override
@@ -275,7 +278,17 @@ public class MainActivity extends SuperActivity {
             public void onFailure(Call<List<FilmeAssistidoBd>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
+        List<SuperModel> filmesAssistidos = filmeAssistidoDAO.buscaTodos();
+        listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmesAssistidos,this));
+        //ATUALIZA O CABECALHO
+        int quantidadeAssistidos = filmes.size();
+        float percentual = (quantidadeAssistidos / (float) anoMetaAtual.getMeta()) * 100;
+        DecimalFormat df = new DecimalFormat("0.00");
+        totalAssistidos.setText(Integer.toString(quantidadeAssistidos));
+        percentualAssistidos.setText("(" + df.format(percentual) + "%)");
+        metaDoAno.setText(Integer.toString(anoMetaAtual.getMeta()));
     }
 
     @Override

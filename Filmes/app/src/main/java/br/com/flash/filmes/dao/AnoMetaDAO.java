@@ -3,6 +3,7 @@ package br.com.flash.filmes.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +47,30 @@ public class AnoMetaDAO extends AbstractDAO {
         dados.put(AnoMeta.DB_COLUNA_META, anoMeta.getMeta());
 
         return dados;
+    }
+
+    @Override
+    public String insereSeNaoExiste(SuperModel model) {
+        String idInserido = getIdAnoMeta(((AnoMeta) model).getAno());
+        if (idInserido == null) {
+            ((AnoMeta) model).setMeta(50);
+            Long idRow = insere(model);
+            idInserido = getLinhaPorId(idRow).getIdString();
+        }
+        return idInserido;
+    }
+
+    public String getIdAnoMeta(int ano) {
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM " + getNomeTabela() +
+                " WHERE " + AnoMeta.DB_COLUNA_ANO + " = ? LIMIT 1";
+        Cursor c = db.rawQuery(sql, new String[]{Integer.toString(ano)});
+        List<SuperModel> superModels = populaDados(c);
+        c.close();
+        if (c.getCount() > 0) {
+            return superModels.get(0).getIdString();
+        } else {
+            return null;
+        }
     }
 }

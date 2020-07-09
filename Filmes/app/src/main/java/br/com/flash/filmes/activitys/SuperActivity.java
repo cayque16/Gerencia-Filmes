@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import br.com.flash.filmes.dao.AnoMetaDAO;
+import br.com.flash.filmes.dao.FilmeAssistidoDAO;
+import br.com.flash.filmes.dao.FilmesDAO;
 import br.com.flash.filmes.models.Login;
 import br.com.flash.filmes.models.Token;
 import br.com.flash.filmes.preferences.FilmesPreferences;
@@ -16,6 +19,10 @@ public class SuperActivity extends AppCompatActivity {
     protected FilmesPreferences filmesPreferences = new FilmesPreferences(this);
     protected Token token = new Token();
     protected AlertDialog alerta;
+
+    protected FilmeAssistidoDAO filmeAssistidoDAO = new FilmeAssistidoDAO(this);
+    protected AnoMetaDAO anoMetaDAO = new AnoMetaDAO(this);
+    protected FilmesDAO filmesDAO = new FilmesDAO(this);
 
     protected void buscaToken() {
         Login login =  filmesPreferences.getLogin();

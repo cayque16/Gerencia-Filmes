@@ -1,6 +1,7 @@
 package br.com.flash.filmes.models;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Filme extends SuperModel implements Serializable {
     private int id;
@@ -64,7 +65,19 @@ public class Filme extends SuperModel implements Serializable {
 
     @Override
     public String toString() {
-        return imdbID + ": " + titulo;
+        return "Filme{" +
+                "id=" + id +
+                ", imdbID='" + imdbID + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", ano=" + ano +
+                ", duracao=" + duracao +
+                ", nota=" + nota +
+                ", poster='" + poster + '\'' +
+                ", posterBytes=" + Arrays.toString(posterBytes) +
+                ", idString='" + idString + '\'' +
+                ", sincronizado=" + sincronizado +
+                ", desativado=" + desativado +
+                '}';
     }
 
     public String getPoster() {

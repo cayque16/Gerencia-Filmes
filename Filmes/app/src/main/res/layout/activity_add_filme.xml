@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:hint="IMDB ID..."
             android:inputType="number"
-            android:text="tt" />
+            android:text="tt0848228" />
 
         <Button
             android:layout_width="230dp"

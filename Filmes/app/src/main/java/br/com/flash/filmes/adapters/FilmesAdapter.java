@@ -23,17 +23,27 @@ import java.util.List;
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.R.color;
 import br.com.flash.filmes.R.id;
+import br.com.flash.filmes.dao.AnoMetaDAO;
+import br.com.flash.filmes.dao.FilmeAssistidoDAO;
+import br.com.flash.filmes.dao.FilmesDAO;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
+import br.com.flash.filmes.models.SuperModel;
 
 public class FilmesAdapter extends BaseAdapter {
-    private List<FilmesAssistidos> list;
+    private List<SuperModel> list;
     private Context context;
     private Handler handler = new Handler();
+    private FilmesDAO filmesDAO;
+    private AnoMetaDAO anoMetaDAO;
+    private FilmeAssistidoDAO filmeAssistidoDAO;
 
-    public FilmesAdapter(List<FilmesAssistidos> list, Context context) {
+    public FilmesAdapter(List<SuperModel> list, Context context) {
         this.list = list;
         this.context = context;
+        filmesDAO = new FilmesDAO(context);
+        anoMetaDAO = new AnoMetaDAO(context);
+        filmeAssistidoDAO = new FilmeAssistidoDAO(context);
     }
 
     @Override
@@ -55,8 +65,8 @@ public class FilmesAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        FilmesAssistidos filmeAssistido = list.get(i);
-        Filme filme = filmeAssistido.getFilme();
+        FilmesAssistidos filmeAssistido = (FilmesAssistidos) list.get(i);
+        Filme filme = (Filme) filmesDAO.get(filmeAssistido.getIdFilme());
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.list_adapter_filmes_assistidos, null);

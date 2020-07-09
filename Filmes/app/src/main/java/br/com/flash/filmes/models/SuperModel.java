@@ -10,6 +10,15 @@ public abstract class SuperModel {
     public static final String DB_COLUNA_SINCRONIZADO = "sincronizado";
     public static final String DB_COLUNA_DESATIVADO = "desativado";
 
+    @Override
+    public String toString() {
+        return "SuperModel{" +
+                "idString='" + idString + '\'' +
+                ", sincronizado=" + sincronizado +
+                ", desativado=" + desativado +
+                '}';
+    }
+
     public String getIdString() {
         return idString;
     }

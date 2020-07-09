@@ -3,6 +3,7 @@ package br.com.flash.filmes.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,5 +57,29 @@ public class FilmesDAO extends AbstractDAO {
         }
 
         return filmes;
+    }
+
+    @Override
+    public String insereSeNaoExiste(SuperModel model) {
+        String idInserido = getIdDoFilme(((Filme) model).getImdbID());
+        if (idInserido == null) {
+            Long idRow = insere(model);
+            idInserido = getLinhaPorId(idRow).getIdString();
+        }
+        return idInserido;
+    }
+
+    public String getIdDoFilme(String imdbId) {
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM "
+                + getNomeTabela() + " WHERE " + Filme.DB_COLUNA_IMDB + " = ? LIMIT 1";
+        Cursor c = db.rawQuery(sql, new String[]{imdbId});
+        List<SuperModel> superModels = populaDados(c);
+        c.close();
+        if (c.getCount() > 0) {
+            return superModels.get(0).getIdString();
+        } else {
+            return null;
+        }
     }
 }

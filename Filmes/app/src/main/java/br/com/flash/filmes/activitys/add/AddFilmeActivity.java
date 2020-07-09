@@ -2,6 +2,7 @@ package br.com.flash.filmes.activitys.add;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -9,20 +10,20 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLException;
+
 import br.com.flash.filmes.R;
 import br.com.flash.filmes.activitys.SuperActivity;
-import br.com.flash.filmes.converter.FilmeConverter;
+import br.com.flash.filmes.dao.AnoMetaDAO;
 import br.com.flash.filmes.dto.FilmeBd;
 import br.com.flash.filmes.dto.Movie;
 import br.com.flash.filmes.helper.FormularioFilmeAssistidoHelper;
 import br.com.flash.filmes.helper.FormularioFilmeHelper;
+import br.com.flash.filmes.models.AnoMeta;
 import br.com.flash.filmes.models.Filme;
 import br.com.flash.filmes.models.FilmesAssistidos;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorBd;
 import br.com.flash.filmes.retrofit.RetrofitInicializadorFilmes;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,6 +35,7 @@ public class AddFilmeActivity extends SuperActivity {
     private TextView imdb;
     private String chave;
     private FilmesAssistidos filmesAssistidos = new FilmesAssistidos();
+    private static final String LOG_ADD_FILME = "logAddFilme";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +90,22 @@ public class AddFilmeActivity extends SuperActivity {
                     Toast.makeText(AddFilmeActivity.this, "Erro!!! Confira os dados.", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                String idInseridoFilme, idInseridoAnoMeta;
+                idInseridoFilme = filmesDAO.insereSeNaoExiste(filme);
+                idInseridoAnoMeta = anoMetaDAO.insereSeNaoExiste(new AnoMeta(filmeAssistido.getDataAno()));
+                filmeAssistido.setIdFilme(idInseridoFilme);
+                filmeAssistido.setIdAnoMeta(idInseridoAnoMeta);
+                Log.d(LOG_ADD_FILME,filmeAssistido.toString());
+                try {
+                    filmeAssistidoDAO.insere(filmeAssistido);
+                } catch (Exception e) {
+                    Log.d(LOG_ADD_FILME,e.toString());
+                }
+                Log.d(LOG_ADD_FILME,"foi inserido");
 
-                String json = new FilmeConverter().convertParaJson(filme, filmeAssistido);
+//                Toast.makeText(AddFilmeActivity.this, "Filme salvo com sucesso!", Toast.LENGTH_SHORT).show();
+
+                /*String json = new FilmeConverter().convertParaJson(filme, filmeAssistido);
 
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
@@ -106,9 +122,9 @@ public class AddFilmeActivity extends SuperActivity {
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
 
                     }
-                });
-                finish();
-                break;
+                });*/
+//                finish();
+//                break;
         }
 
         return super.onOptionsItemSelected(item);

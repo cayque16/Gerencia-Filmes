@@ -90,11 +90,11 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
         }
     }
 
-    public void insere(SuperModel model) {
+    public Long insere(SuperModel model) {
         SQLiteDatabase db = getWritableDatabase();
         insereIdSeNecessario(model);
         ContentValues dados = pegaDados(model);
-        db.insert(getNomeTabela(), null, dados);
+        return db.insert(getNomeTabela(), null, dados);
     }
 
     public List<SuperModel> buscaTodos() {
@@ -106,6 +106,16 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
         c.close();
 
         return model;
+    }
+
+    public SuperModel getLinhaPorId(Long id) {
+        String sql = "SELECT * FROM " + getNomeTabela() + " WHERE rowid = ? LIMIT 1";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(sql,new String[]{Long.toString(id)});
+
+        List<SuperModel> superModels = populaDados(c);
+        c.close();
+        return superModels.get(0);
     }
 
     protected abstract ContentValues pegaDados(SuperModel model);
@@ -128,5 +138,17 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
 
     protected void setNomeTabela(String nomeTabela) {
         this.nomeTabela = nomeTabela;
+    }
+
+    public abstract String insereSeNaoExiste(SuperModel model);
+
+    public SuperModel get(String id) {
+        String sql = "SELECT * FROM " + getNomeTabela() + " WHERE id = ? LIMIT 1";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(sql,new String[]{id});
+
+        List<SuperModel> superModels = populaDados(c);
+        c.close();
+        return superModels.get(0);
     }
 }

@@ -3,6 +3,7 @@ package br.com.flash.filmes.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,8 @@ public class FilmeAssistidoDAO extends AbstractDAO{
         FilmesAssistidos filmesAssistidos = (FilmesAssistidos) model;
 
         dados.put(FilmesAssistidos.DB_COLUNA_ID, filmesAssistidos.getIdString());
-        dados.put(FilmesAssistidos.DB_COLUNA_ID_FILME, filmesAssistidos.getFilme().getIdString());
-        dados.put(FilmesAssistidos.DB_COLUNA_ID_ANO_META, filmesAssistidos.getAnoMeta().getIdString());
+        dados.put(FilmesAssistidos.DB_COLUNA_ID_FILME, filmesAssistidos.getIdFilme());
+        dados.put(FilmesAssistidos.DB_COLUNA_ID_ANO_META, filmesAssistidos.getIdAnoMeta());
         dados.put(FilmesAssistidos.DB_COLUNA_POS_ANO, filmesAssistidos.getPosAno());
         dados.put(FilmesAssistidos.DB_COLUNA_DATA_DIA, filmesAssistidos.getDataDia());
         dados.put(FilmesAssistidos.DB_COLUNA_DATA_MES, filmesAssistidos.getDataMes());
@@ -56,5 +57,34 @@ public class FilmeAssistidoDAO extends AbstractDAO{
         }
 
         return filmeAssistidos;
+    }
+
+    @Override
+    public String insereSeNaoExiste(SuperModel model) {
+        return null;
+    }
+
+    @Override
+    public Long insere(SuperModel model) {
+        criaPosAno(model);
+        return super.insere(model);
+    }
+
+    private void criaPosAno(SuperModel model) {
+        String sql = "SELECT * FROM " + getNomeTabela() + " WHERE (" +
+                FilmesAssistidos.DB_COLUNA_POS_ANO + " = " +
+                "SELECT( MAX("+FilmesAssistidos.DB_COLUNA_POS_ANO+") FROM "
+                + getNomeTabela() + " WHERE " + FilmesAssistidos.DB_COLUNA_DATA_ANO + " = ?) " +
+                "AND ("+FilmesAssistidos.DB_COLUNA_DATA_ANO + " = ?))";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(sql, new String[]{Integer.toString(((FilmesAssistidos) model).getDataAno()),Integer.toString(((FilmesAssistidos) model).getDataAno())});
+
+        List<SuperModel> superModels = populaDados(c);
+
+        try {
+            ((FilmesAssistidos) model).setPosAno(((FilmesAssistidos) superModels.get(0)).getPosAno() + 1);
+        } catch (IndexOutOfBoundsException e) {
+            ((FilmesAssistidos) model).setPosAno(0);
+        }
     }
 }

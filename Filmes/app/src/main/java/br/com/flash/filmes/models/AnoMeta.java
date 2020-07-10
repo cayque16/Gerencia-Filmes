@@ -46,7 +46,7 @@ public class AnoMeta extends SuperModel{
 
     @Override
     public String toString() {
-        return "Id: "+ idString +"Ano: " + ano + " Meta: " + meta;
+        return "Ano: " + ano + " Meta: " + meta;
     }
 
     @Override

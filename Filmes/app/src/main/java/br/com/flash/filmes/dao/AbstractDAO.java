@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
 
     protected static final String NOME_BANCO = "Filmes.db";
     protected static final int VERSAO_BANCO = 2;
-    protected static final String TAG_LOG_BD = "DB_LOG";
+    protected static final String LOG_ABSTRACT_DAO = "abstractLogDao";
     protected String nomeTabela;
 
     public AbstractDAO(Context context) {
@@ -38,7 +39,7 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
         try {
             sqLiteDatabase.execSQL(sql);
         } catch (SQLException e) {
-            Log.d(TAG_LOG_BD,e.toString());
+            Log.d(LOG_ABSTRACT_DAO,e.toString());
         }
 
         sql = "CREATE TABLE filmes (" +
@@ -55,7 +56,7 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
         try {
             sqLiteDatabase.execSQL(sql);
         } catch (SQLException e) {
-            Log.d(TAG_LOG_BD,e.toString());
+            Log.d(LOG_ABSTRACT_DAO,e.toString());
         }
 
         sql = "CREATE TABLE filme_assistido (" +
@@ -72,7 +73,7 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
         try {
             sqLiteDatabase.execSQL(sql);
         } catch (SQLException e) {
-            Log.d(TAG_LOG_BD,e.toString());
+            Log.d(LOG_ABSTRACT_DAO,e.toString());
         }
     }
 
@@ -97,15 +98,37 @@ public abstract class AbstractDAO extends SQLiteOpenHelper {
         return db.insert(getNomeTabela(), null, dados);
     }
 
+    public void altera(SuperModel superModel) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues dados = pegaDados(superModel);
+
+        String[] params = {superModel.getIdString()};
+        db.update(getNomeTabela(),dados,"id = ?",params);
+    }
+
     public List<SuperModel> buscaTodos() {
         String sql ="SELECT * FROM " + getNomeTabela();
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(sql, null);
 
-        List<SuperModel> model = populaDados(c);
+        List<SuperModel> superModels = populaDados(c);
         c.close();
 
-        return model;
+        return superModels;
+    }
+
+    public List<SuperModel> buscaTodos(@NonNull String orderBy, boolean asc) {
+        String ordem = asc == true  ? "ASC" : "DESC";
+
+        String sql ="SELECT * FROM " + getNomeTabela() + " ORDER BY " + orderBy + " " + ordem;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(sql, null);
+
+        List<SuperModel> superModels = populaDados(c);
+        c.close();
+
+        return superModels;
     }
 
     public SuperModel getLinhaPorId(Long id) {

@@ -73,4 +73,15 @@ public class AnoMetaDAO extends AbstractDAO {
             return null;
         }
     }
+
+    public AnoMeta getAnoMetaPorAno(int ano) {
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM " + getNomeTabela() +
+                " WHERE " + AnoMeta.DB_COLUNA_ANO + " = ? LIMIT 1";
+        Cursor c = db.rawQuery(sql, new String[]{Integer.toString(ano)});
+        List<SuperModel> superModels = populaDados(c);
+        c.close();
+
+        return (AnoMeta) superModels.get(0);
+    }
 }

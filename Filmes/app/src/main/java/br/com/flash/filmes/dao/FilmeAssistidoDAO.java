@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,11 +72,11 @@ public class FilmeAssistidoDAO extends AbstractDAO{
     }
 
     private void criaPosAno(SuperModel model) {
-        String sql = "SELECT * FROM " + getNomeTabela() + " WHERE (" +
+        String sql = "SELECT * FROM " + getNomeTabela() + " WHERE " +
                 FilmesAssistidos.DB_COLUNA_POS_ANO + " = " +
-                "SELECT( MAX("+FilmesAssistidos.DB_COLUNA_POS_ANO+") FROM "
+                "(SELECT MAX("+FilmesAssistidos.DB_COLUNA_POS_ANO+") FROM "
                 + getNomeTabela() + " WHERE " + FilmesAssistidos.DB_COLUNA_DATA_ANO + " = ?) " +
-                "AND ("+FilmesAssistidos.DB_COLUNA_DATA_ANO + " = ?))";
+                "AND ("+FilmesAssistidos.DB_COLUNA_DATA_ANO + " = ?)";
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(sql, new String[]{Integer.toString(((FilmesAssistidos) model).getDataAno()),Integer.toString(((FilmesAssistidos) model).getDataAno())});
 
@@ -84,7 +85,23 @@ public class FilmeAssistidoDAO extends AbstractDAO{
         try {
             ((FilmesAssistidos) model).setPosAno(((FilmesAssistidos) superModels.get(0)).getPosAno() + 1);
         } catch (IndexOutOfBoundsException e) {
-            ((FilmesAssistidos) model).setPosAno(0);
+            ((FilmesAssistidos) model).setPosAno(1);
         }
+    }
+
+    public List<SuperModel> buscaFilmesAssistidosNoAnoDe(int ano) {
+        String sql = "SELECT * FROM "+getNomeTabela()+" WHERE "
+                +FilmesAssistidos.DB_COLUNA_DATA_ANO+" = ? ORDER BY "
+                +FilmesAssistidos.DB_COLUNA_POS_ANO+" DESC";
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String[] params = {Integer.toString(ano)};
+
+        Cursor c = db.rawQuery(sql, params);
+        List<SuperModel> filmesAssistidos = populaDados(c);
+        c.close();
+
+        return filmesAssistidos;
     }
 }

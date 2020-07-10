@@ -59,7 +59,7 @@ public class MainActivity extends SuperActivity {
     private TextView totalAssistidos, percentualAssistidos;
     private TextView metaDoAno;
     private AnoMeta anoMetaAtual = new AnoMeta();
-    private ArrayList<AnoMeta> listaAnoMeta = new ArrayList<AnoMeta>();
+    private List<SuperModel> listaAnoMeta = new ArrayList<SuperModel>();
     private Spinner spinnerAnoMeta;
     private Dialog dialog;
     private SwipeRefreshLayout swipeMain;
@@ -123,14 +123,14 @@ public class MainActivity extends SuperActivity {
 
     private void criaSpinnerAnoMeta() {
         preencheListaAnoMeta();
-        ArrayAdapter<AnoMeta> adapter = new ArrayAdapter<AnoMeta>(this, R.layout.adapter_spinner_ano_meta, listaAnoMeta);
+        ArrayAdapter<SuperModel> adapter = new ArrayAdapter<SuperModel>(this, R.layout.adapter_spinner_ano_meta, listaAnoMeta);
         spinnerAnoMeta.setAdapter(adapter);
 
         //captura o clique do spinner que altera o ano
         spinnerAnoMeta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                AnoMeta anoMeta = listaAnoMeta.get(i);
+                AnoMeta anoMeta = (AnoMeta) listaAnoMeta.get(i);
                 atualizaAnoMeta(anoMeta);
             }
 
@@ -165,26 +165,11 @@ public class MainActivity extends SuperActivity {
                             Toast.makeText(MainActivity.this, mensagemErro, Toast.LENGTH_SHORT).show();
                         } else {
                             anoMetaAtual.setMeta(valorMetaNova);
-                            String json = new AnoMetaConverter().convertParaJson(anoMetaAtual);
-                            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+                            anoMetaDAO.altera(anoMetaAtual);
 
-                            Call<ResponseBody> call = new RetrofitInicializadorBd().getBdService().alteraAnoMeta(requestBody, token.getToken());
-
-                            call.enqueue(new Callback<ResponseBody>() {
-                                @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    if (response.isSuccessful()) {
-                                        atualizaAnoMeta(anoMetaAtual);
-                                        criaSpinnerAnoMeta();
-                                        Toast.makeText(MainActivity.this, "Meta alterada!", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                                }
-                            });
+                            atualizaAnoMeta(anoMetaAtual);
+                            criaSpinnerAnoMeta();
+                            Toast.makeText(MainActivity.this, "Meta alterada!", Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -201,8 +186,8 @@ public class MainActivity extends SuperActivity {
     private void preencheListaAnoMeta() {
         listaAnoMeta.clear();
         Call<List<AnoMetaBd>> call = new RetrofitInicializadorBd().getBdService().buscaAnosMeta(token.getToken());
-
-        call.enqueue(new Callback<List<AnoMetaBd>>() {
+        listaAnoMeta = anoMetaDAO.buscaTodos(AnoMeta.DB_COLUNA_ANO,true);
+      /*  call.enqueue(new Callback<List<AnoMetaBd>>() {
             @Override
             public void onResponse(Call<List<AnoMetaBd>> call, Response<List<AnoMetaBd>> response) {
                 for (AnoMetaBd i : response.body()) {
@@ -216,7 +201,7 @@ public class MainActivity extends SuperActivity {
             public void onFailure(Call<List<AnoMetaBd>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 
     private void atualizaAnoMeta(AnoMeta anoMeta) {
@@ -227,12 +212,14 @@ public class MainActivity extends SuperActivity {
     private void atualizaAnoMeta() {
         Calendar calendar = new GregorianCalendar();
         calendar.setTimeZone(TimeZone.getDefault());
-        final AnoMeta[] anoMetaAux = {new AnoMeta()};
-        Call<AnoMetaBd> call = new RetrofitInicializadorBd().getBdService().getAnoMeta(calendar.get(Calendar.YEAR), token.getToken());
 
         anoMetaAtual.setAno(calendar.get(Calendar.YEAR));
 
-        call.enqueue(new Callback<AnoMetaBd>() {
+        anoMetaAtual = anoMetaDAO.getAnoMetaPorAno(calendar.get(Calendar.YEAR));
+        criaSpinnerAnoMeta();
+        atualizaLista();
+
+        /*call.enqueue(new Callback<AnoMetaBd>() {
             @Override
             public void onResponse(Call<AnoMetaBd> call, Response<AnoMetaBd> response) {
                 if (response.code() == HttpURLConnection.HTTP_OK) {
@@ -248,7 +235,7 @@ public class MainActivity extends SuperActivity {
             public void onFailure(Call<AnoMetaBd> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Não foi possível connectar!!!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 
     private void atualizaLista() {
@@ -280,10 +267,10 @@ public class MainActivity extends SuperActivity {
             }
         });*/
 
-        List<SuperModel> filmesAssistidos = filmeAssistidoDAO.buscaTodos();
+        List<SuperModel> filmesAssistidos = filmeAssistidoDAO.buscaFilmesAssistidosNoAnoDe(anoMetaAtual.getAno());
         listaFilmesAssistidos.setAdapter(new FilmesAdapter(filmesAssistidos,this));
         //ATUALIZA O CABECALHO
-        int quantidadeAssistidos = filmes.size();
+        int quantidadeAssistidos = filmesAssistidos.size();
         float percentual = (quantidadeAssistidos / (float) anoMetaAtual.getMeta()) * 100;
         DecimalFormat df = new DecimalFormat("0.00");
         totalAssistidos.setText(Integer.toString(quantidadeAssistidos));

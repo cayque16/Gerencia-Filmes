@@ -95,15 +95,9 @@ public class AddFilmeActivity extends SuperActivity {
                 idInseridoAnoMeta = anoMetaDAO.insereSeNaoExiste(new AnoMeta(filmeAssistido.getDataAno()));
                 filmeAssistido.setIdFilme(idInseridoFilme);
                 filmeAssistido.setIdAnoMeta(idInseridoAnoMeta);
-                Log.d(LOG_ADD_FILME,filmeAssistido.toString());
-                try {
-                    filmeAssistidoDAO.insere(filmeAssistido);
-                } catch (Exception e) {
-                    Log.d(LOG_ADD_FILME,e.toString());
-                }
-                Log.d(LOG_ADD_FILME,"foi inserido");
+                filmeAssistidoDAO.insere(filmeAssistido);
 
-//                Toast.makeText(AddFilmeActivity.this, "Filme salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddFilmeActivity.this, filme.getTitulo() + " salvo com sucesso!", Toast.LENGTH_SHORT).show();
 
                 /*String json = new FilmeConverter().convertParaJson(filme, filmeAssistido);
 
@@ -123,8 +117,8 @@ public class AddFilmeActivity extends SuperActivity {
 
                     }
                 });*/
-//                finish();
-//                break;
+                finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
